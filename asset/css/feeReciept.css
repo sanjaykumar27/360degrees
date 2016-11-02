@@ -1,0 +1,54 @@
+
+/* This css is used for generating the fee reciept, and refund reciept
+    Created on : 1 Sep, 2016, 2:38:26 PM
+    Author     : sanjay
+*/
+
+.backgroundtb
+{
+    height: 350px;
+    padding-left: 0px;
+    padding-right: 50px;
+    padding-bottom: 15px;
+}
+.tr-head
+{
+    height:25px;
+    text-align: center;
+    background-color: #e57e37;
+    color: #e4d9d1;
+    padding-top: 0px;
+}
+.subtitle{ height:0px  }
+.tr-td
+{
+    width:25px;
+    height:0px;
+}
+.space{
+    width: 60px;
+    background-color: #ced7d3;
+}
+.td-space{height: 10px;}
+.recieptno
+{ 
+    height: 19px;
+    font-size: 15px;
+}
+.reciept{width:82px;
+         font-size: 15px;
+}
+.date{width:50px}
+.reciept-h{font-size: 15px}
+.footer{height: 105px}
+.tdd{height:150px;}
+.tdd-i{ height: 70px}
+
+.size-2{width: 302px}
+.size-3{width:285px}
+.alignn{align:center;}
+.recieptnoo
+{
+    height: 22px;
+    font-size: 15px;
+}

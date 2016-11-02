@@ -1,0 +1,112 @@
+
+
+.checkbox label:after, 
+.radio label:after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.checkbox .cr,
+.radio .cr {
+    position: relative;
+    display: inline-block;
+    border: 1px solid #a9a9a9;
+    border-radius: .25em;
+    width: 1.3em;
+    height: 1.3em;
+    float: left;
+    margin-right: .5em;
+}
+
+.radio .cr {
+    border-radius: 50%;
+}
+
+.checkbox .cr .cr-icon,
+.radio .cr .cr-icon {
+    position: absolute;
+    font-size: .8em;
+    line-height: 0;
+    top: 50%;
+    left: 20%;
+}
+
+.radio .cr .cr-icon {
+    margin-left: 0.04em;
+}
+
+.checkbox label input[type="checkbox"],
+.radio label input[type="radio"] {
+    display: none;
+}
+
+.checkbox label input[type="checkbox"] + .cr > .cr-icon,
+.radio label input[type="radio"] + .cr > .cr-icon {
+    transform: scale(3) rotateZ(-20deg);
+    opacity: 0;
+    transition: all .3s ease-in;
+}
+
+.checkbox label input[type="checkbox"]:checked + .cr > .cr-icon,
+.radio label input[type="radio"]:checked + .cr > .cr-icon {
+    transform: scale(1) rotateZ(0deg);
+    opacity: 1;
+}
+
+.checkbox label input[type="checkbox"]:disabled + .cr,
+.radio label input[type="radio"]:disabled + .cr {
+    opacity: .5;
+}
+
+/* free reciept */
+.backgroundtb
+    {
+        height: 350px;
+        padding-left: 0px;
+        padding-right: 50px;
+        padding-bottom: 15px;
+    }
+    .tr-head
+    {
+        height:25px;
+        text-align: center;
+        background-color: #e57e37;
+        color: #e4d9d1;
+        padding-top: 0px;
+    }
+    .subtitle{ height:0px  }
+    .tr-td
+    {
+        width:25px;
+        height:0px;
+    }
+    .space{
+        width: 60px;
+        background-color: #ced7d3;
+    }
+    .td-space{height: 10px;}
+    .recieptno
+    { 
+        height: 19px;
+        font-size: 15px;
+    }
+    .reciept{width:82px;
+             font-size: 15px;
+    }
+    .date{width:50px}
+    .reciept-h{font-size: 15px}
+    .footer{height: 105px}
+    .tdd{height:150px;}
+    .tdd-i{ height: 70px}
+
+    .size-2{width: 302px}
+    .size-3{width:285px}
+    .alignn{align:center;}
+    .recieptnoo
+    {
+        height: 22px;
+        font-size: 15px;
+    }
+    
+    
