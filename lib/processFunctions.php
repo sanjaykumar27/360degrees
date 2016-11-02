@@ -226,7 +226,7 @@
 
       $formFields['processAddInstitute'] = array(
           "institutename" => "r|string",
-          "insituteweburl" => "r|url",
+          "insituteweburl" => "o|url",
           "instituteaddress1" => "r|string",
           "instituteaddress2" => "o|string",
           "institutecityid" => "r|int",

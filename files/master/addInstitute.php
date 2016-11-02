@@ -320,12 +320,15 @@
                       <img src="../../asset/images/institute-logo/<?php echo $institutedetailsArray['institutelogo'] ?>" 
                            width="20" onclick=" showHideDiv('enlarge_logo')" /> 
 
-                  <?php }
-                ?>
+                  <?php } if (!empty($institutedetailsArray['institutelogo'])){
+                      $logo = $institutedetailsArray['institutelogo']; }
+                      else
+                      { $logo =""; }?>
+                
 
                 <input type="file" name="institutelogo" class="form-control" >
                 <div id="enlarge_logo" style="display: none">
-                    <img src="../../asset/images/institute-logo/<?php echo $institutedetailsArray['institutelogo'] ?>" 
+                    <img src="../../asset/images/institute-logo/<?php echo $logo ?>" 
                          width="200" /></div>
             </div>
 
@@ -336,12 +339,12 @@
                 <select name="status" class="form-control">
                     <?php
                      
-                      if ($institutedetailsArray['status'] == 0) {
+                      if (!empty($institutedetailsArray['status']) && $institutedetailsArray['status'] == 0) {
                           ?>
                           <option value="0"> Inactive </option>
                           <option value="1"> Active </option>
                           <?php
-                      } elseif ($institutedetailsArray['status'] == 1) {
+                      } elseif (!empty($institutedetailsArray['status']) && $institutedetailsArray['status'] == 1) {
                           ?>
                           <option value="1"> Active </option>
                           <?php
