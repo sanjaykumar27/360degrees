@@ -1172,7 +1172,7 @@ function createSession() {
         }
 
         /* it will store the information about the user who is logged in */
-        if (logUser($_SESSION['userid'], session_id(), $_SERVER['REMOTE_ADDR'], 'INSERT')) {
+        if (logUser('Insert')) {
             
         } else {
             addError(0, null, DIR_BASE);

@@ -413,7 +413,7 @@
                       setcookie(COOKIE_NAME, $row['username'], time() + COOKIE_TIME, "/");
                   }
 
-                  if (logUser($_SESSION['userid'], session_id(), $_SERVER['REMOTE_ADDR'], 'Insert')) {
+                  if (logUser('Insert')) {
                       header("Location: " . DIR_FILES . "/dashboard.php?t=" . serialize(time()));
                       exit();
                   } else {
