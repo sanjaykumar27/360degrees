@@ -3,8 +3,32 @@
   require_once "config/config.php";
   require_once DIR_FUNCTIONS;
   require_once VIEW_HEADER;
-
-
+/*
+$str = array(1,2,3);
+$str = serialize($str);
+$str = base64_encode($str);
+$str = unserialize(base64_decode($str));
+echoThis($str);
+*/
+ $errortype = array (
+                E_ERROR              => 'Error',
+                E_WARNING            => 'Warning',
+                E_PARSE              => 'Parsing Error',
+                E_NOTICE             => 'Notice',
+                E_CORE_ERROR         => 'Core Error',
+                E_CORE_WARNING       => 'Core Warning',
+                E_COMPILE_ERROR      => 'Compile Error',
+                E_COMPILE_WARNING    => 'Compile Warning',
+                E_USER_ERROR         => 'User Error',
+                E_USER_WARNING       => 'User Warning',
+                E_USER_NOTICE        => 'User Notice',
+                E_STRICT             => 'Runtime Notice',
+                E_USER_DEPRECATED   => 'User Depricated Error',
+                E_RECOVERABLE_ERROR  => 'Catchable Fatal Error'
+                );
+                echoThis($errortype);die;
+?>
+<?php 
   /* ------------------------------------------------------------------------- -- 
     function listFolderFiles($dir){
     // $excludeArray = array('nbproject');

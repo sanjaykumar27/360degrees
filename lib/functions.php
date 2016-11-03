@@ -17,136 +17,101 @@ register_shutdown_function('fatalErrorHandeler');
 if ((session_status() == PHP_SESSION_NONE)) {
     @session_start();
 }
+
 // user defined error handling function
-function customErrorHandler($errno, $errmsg, $filename, $linenum, $vars) 
-{
+function customErrorHandler($errno, $errmsg, $filename, $linenum, $vars) {
+
     // timestamp for the error entry
     $dt = date("d-m-Y g:i (A)");
-
+        
     // define an assoc array of error string
     // in reality the only entries we should
     // consider are E_WARNING, E_NOTICE, E_USER_ERROR,
     // E_USER_WARNING and E_USER_NOTICE
-    $errortype = array (
-                E_ERROR              => 'Error',
-                E_WARNING            => 'Warning',
-                E_PARSE              => 'Parsing Error',
-                E_NOTICE             => 'Notice',
-                E_CORE_ERROR         => 'Core Error',
-                E_CORE_WARNING       => 'Core Warning',
-                E_COMPILE_ERROR      => 'Compile Error',
-                E_COMPILE_WARNING    => 'Compile Warning',
-                E_USER_ERROR         => 'User Error',
-                E_USER_WARNING       => 'User Warning',
-                E_USER_NOTICE        => 'User Notice',
-                E_STRICT             => 'Runtime Notice',
-                E_RECOVERABLE_ERROR  => 'Catchable Fatal Error'
-                );
+    $errortype = array(
+        E_ERROR => 'Error',
+        E_WARNING => 'Warning',
+        E_PARSE => 'Parsing Error',
+        E_NOTICE => 'Notice',
+        E_CORE_ERROR => 'Core Error',
+        E_CORE_WARNING => 'Core Warning',
+        E_COMPILE_ERROR => 'Compile Error',
+        E_COMPILE_WARNING => 'Compile Warning',
+        E_USER_ERROR => 'User Error',
+        E_USER_WARNING => 'User Warning',
+        E_USER_NOTICE => 'User Notice',
+        E_STRICT => 'Runtime Notice',
+        E_USER_DEPRECATED => 'User Depricated Error',
+        E_RECOVERABLE_ERROR => 'Catchable Fatal Error'
+    );
     // set of errors for which a var trace will be saved
-    $user_errors = array(E_USER_ERROR, E_USER_WARNING, E_USER_NOTICE);
-    
-    $err = "<| Error Occurred |>\n";
+    $user_errors = $errortype; //array(E_USER_ERROR, E_USER_WARNING, E_USER_NOTICE);
+
+    $err = "< ======== Error Occurred ======= >\n\n";
     $err .= "\tDate: " . $dt . "\n";
     $err .= "\tError No:  " . $errno . "\n";
     $err .= "\tError Type: " . $errortype[$errno] . "\n";
-    $err .= "\tError Message: " . $errmsg . "\n";
+    $err .= "\tError Message:  " . $errmsg . "\n";
     $err .= "\tPage Name: " . $filename . "\n";
     $err .= "\tLine Num: " . $linenum . "\n";
+
 
     if (in_array($errno, $user_errors)) {
         $err .= "\t<vartrace>" . wddx_serialize_value($vars, "Variables") . "</vartrace>\n";
     }
-    $err .= "====================\n\n";    
-    
-    $error = array($dt, $errno, $errortype[$errno], $errmsg, $filename, $linenum);
-    
-    if(!DEVELOPMENT_ENVIRONMENT){
+    $err .= "\n < ============================ >\n";
+
+
+
+    //$error = array($dt, $errno, $errortype[$errno], $errmsg, $filename, $linenum);
+
+    if (!DEVELOPMENT_ENVIRONMENT) {
         $error = "";
     }
-    
-    $subject = "Critical User Error";
-    $headers  = "MIME-Version: 1.0\r\n";
-    $headers .= "Content-type: text/html; charset=utf-8\r\n";
-    
-    error_log($err, 3, "/opt/logs/error/error.log");
-    mail("schourasia@ebizneeds.com", $subject, $err , $headers); 
-    
-    $redirect = "/360degrees/error.php?".http_build_query($error);
-    header( "Location: $redirect" );
-}
-/*
-function customErrorHandler($errNo, $errString, $errFile, $errLine) {  // date_default_timezone_set('Asia');
-    $backTrace = debug_backtrace();
-    $functionName = $backTrace[0]['function'];
-    $currentDate = date('d/m/Y: H:i:s');
-    $customerrHandler = " ($currentDate) :- Error Happened ($errNo) : \t $errString\t$errFile\t at $errLine \tin function $functionName () \n";
-    $fileHandler = fopen(DIR_ERROR, 'a+');
-    fwrite($fileHandler, $customerrHandler);
 
-   // header('Location: /360degrees/error.php?error='.$customerrHandler);
-    $errorDisplay = '<div class="container">
-        <div class="alert alert-danger">
+    $subject = "Critical User Error";
+    $headers = "MIME-Version: 1.0\r\n";
+    $headers .= "Content-type: text/html; charset=utf-8\r\n";
+
+    error_log($err, 3, "/opt/logs/error/error.log");
+    //mail("schourasia@ebizneeds.com", $subject, $err , $headers); 
+
+    echo <<< HTML
+    <script type="text/javascript"> 
+   $(function(){
+    var html = `<div class="container"><div class="alert alert-danger">
             <h1> Oops...</h1>
             <p> Sorry, an unexpected error has occured. </p> 
-            <p>  We are terribly sorry for this. However, the technical team has been notified and they will 
+            <p> We are terribly sorry for this. However, the technical team has been notified and they will 
                 attend to it ASAP.  </p>
             <p>
                 If you wish to restart please click here or go back. 
             </p>
+           
         </div>
-        
-        <button data-toggle="collapse" data-target="#error" class="btn btn-danger">Show Error</button>
+    
+    <button data-toggle="collapse" data-target="#error" class="btn btn-danger">Show Error 
+            <i class="fa fa-arrow-down" aria-hidden="true"></i></button>
+  
+         <div id="error" class="collapse" style="white-space:pre-wrap;"><br>
+          $err
+         </div><br><br>
+       
+        <a href="javascript:history.go(-1)" class="btn btn-primary">Go to Previous Page</a>
+        <a href="<?php echo DIR_FILES; ?>/dashboard.php" class="btn btn-success">Go to Dashboard</a>
+</div></div>
+`;
+  $('#mainContainer').html(html);
+            });
+ </script>
+HTML;
 
-         <div id="error" class="collapse"><br>
-                <li>Error Object:  $errString  <br></li> 
-                <li>Location:   $errFile<br></li>   
-                <li>Line No:  $errLine  <br></li>
-            </div>
-    </div>';
- switch ($errNo) {
-        case E_WARNING:
-            echo $errorDisplay; 
-            break;
-            die;
 
-        case E_ERROR:
-            echo $errorDisplay; 
-            break;
 
-        case E_PARSE:
-            echo $errorDisplay; 
-            break; die; 
-
-        case E_USER_ERROR:
-           echo $errorDisplay; 
-            break; die;
-
-        case E_RECOVERABLE_ERROR:
-            echo $errorDisplay; 
-            break; die;
-
-        case E_CORE_ERROR:
-           echo $errorDisplay; 
-            break; die;
-
-        case E_CORE_WARNING:
-           echo $errorDisplay; 
-            break; die;
-
-        case E_COMPILE_ERROR:
-           echo $errorDisplay; 
-            break; die;
-
-        case E_COMPILE_WARNING:
-           echo $errorDisplay; 
-            break; die;
-
-        default:
-         echo $errorDisplay; 
-            break; die;
-    }
+    // $redirect = "/360degrees/error.php?".http_build_query($error);
+    // header( "Location: $redirect" );
 }
-*/
+
 function fatalErrorHandeler() {
     $last_error = error_get_last();
     $type = $last_error['type'];
@@ -170,7 +135,7 @@ function fatalErrorHandeler() {
             customErrorHandler(E_COMPILE_WARNING, $last_error['message'], $last_error['file'], $last_error['line']);
             break;
         case 8: /*  E COMPILE WARNING   */
-            customErrorHandler(E_USER_DEPRECATED, $last_error['message'], $last_error['file'], $last_error['line']);
+            customErrorHandler(E_NOTICE, $last_error['message'], $last_error['file'], $last_error['line']);
             break;
     }
 }
@@ -261,7 +226,7 @@ function dbConnect() {
 /* to execute update queries */
 
 function dbUpdate($sql) {
-    
+
     if (is_array($sql) == 0) {
         $sqlarray[] = $sql;
     } else {
@@ -1209,19 +1174,19 @@ function logOut() {
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
-   
+
     // update the logged list for log out of that session/userid
-   $status = logUser('Update');
- 
+    $status = logUser('Update');
+
     if (isset($_COOKIE[COOKIE_NAME])) {
         setcookie(COOKIE_NAME, null, time() - 3600, '/');
     }
-    
-    if ($status){
-    session_destroy();
-    session_write_close();
-    header('Location:' . DIR_BASE . 'index.php?s=45');
-    exit();
+
+    if ($status) {
+        session_destroy();
+        session_write_close();
+        header('Location:' . DIR_BASE . 'index.php?s=45');
+        exit();
     }
 }
 
@@ -2286,9 +2251,10 @@ function writeToFile($file, $data) {
 }
 
 function sqlRowCount($dbObj) {
-    
+
     $rowCount = mysqli_num_rows($dbObj);
-    echoThis($rowCount);die;
+    echoThis($rowCount);
+    die;
     return $rowCount;
 }
 
@@ -2328,37 +2294,35 @@ function loadCookie() {
     }
 }
 
-
 /* this function maintain the log of user logged in or logged out */
 
 function logUser($action) {
-    
+
     /* get user id from the session */
-    $userid = $_SESSION['userid'];   
+    $userid = $_SESSION['userid'];
     /* get ip address of logged in system */
     $ip = $_SERVER['REMOTE_ADDR'];
-  
+
     /* insert query , executed when user is logged in */
-    $Insert = "INSERT INTO tbluserlogged SET userid = '$userid', phpsessid = '".session_id()."', 
-                ip_address = '$ip', logged_in = CURRENT_TIMESTAMP"; 
-    
+    $Insert = "INSERT INTO tbluserlogged SET userid = '$userid', phpsessid = '" . session_id() . "', 
+                ip_address = '$ip', logged_in = CURRENT_TIMESTAMP";
+
     /* update query executed when used logged out form the system */
-    $Update = "UPDATE tbluserlogged SET logged_out = NOW() WHERE userid = '$userid' AND phpsessid = '". session_id()."'";
-    
+    $Update = "UPDATE tbluserlogged SET logged_out = NOW() WHERE userid = '$userid' AND phpsessid = '" . session_id() . "'";
+
     /* assigning function name dynamically to the variable 
      * like dbUpdate / dbInsert 
      */
-    $doAction = "db$action"; 
-    
+    $doAction = "db$action";
+
     /* passing values to the function dynamically */
-    $doSql = "${$action}";  
- 
+    $doSql = "${$action}";
+
     /* call_user_func call the function dynamically 
      * first parameter function name and second parameter is the function values 
      */
     return call_user_func($doAction, $doSql);
 }
-
 
 /* * ******************************************************************************************
  *  Function to extract the maximum id or last inserted record id from the specified table.

@@ -222,7 +222,7 @@ function examDatesValidate(){
     </script>
 
 
-<div class="container">
+<div class="container" id="mainContainer">
     <!---- This Modal Is basically used For Confirmation of  action performed while Inserting record through form...---->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">

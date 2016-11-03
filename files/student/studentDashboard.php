@@ -12,7 +12,7 @@ require_once VIEW_HEADER;
 ?>
 <script type="text/javascript">
     function showHideDiv(divName) {
-        $('#' + divName).modal('show');
+        $('#' + divName).hide();
     }
     
    $(document).ready(function ($) {
@@ -49,7 +49,7 @@ $page = (int) (isset($_GET['page']) && !empty($_GET['page']) ? $_GET['page'] : 1
 $totalRows = 0;
 ?>
 
-<div class="container">
+<div class="container" name="mainContainer" id="mainContainer">
     <?php renderMsg() ?>
     <div class="searchfrm">
         <form action="" method="GET" id="imform" name="myForm" onsubmit="return validateForm()"> 
@@ -188,7 +188,7 @@ function getStudentsDetails()
     $groupBy = " GROUP BY T1.studentid ";
     $limit = "LIMIT " . $startPage . ',' . ROW_PER_PAGE;
 
-    $sql = " SELECT T1.studentid, T1.scholarnumber,
+    $sql3 = " SELECT T1.studentid, T1.scholarnumber,
             T1.firstname, T1.middlename, T1.lastname,  T1.status,
             T6.classname, T7.sectionname
                
