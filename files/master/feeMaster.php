@@ -129,7 +129,7 @@
 
     //start selectize with first two fields
     addSelectize('#classid');
-   // addInputize('#amount, #duedate');
+    addInputize('#amount, #duedate');
     
     
 

@@ -188,7 +188,7 @@ function getStudentsDetails()
     $groupBy = " GROUP BY T1.studentid ";
     $limit = "LIMIT " . $startPage . ',' . ROW_PER_PAGE;
 
-    $sql3 = " SELECT T1.studentid, T1.scholarnumber,
+    $sql = " SELECT T1.studentid, T1.scholarnumber,
             T1.firstname, T1.middlename, T1.lastname,  T1.status,
             T6.classname, T7.sectionname
                

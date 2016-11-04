@@ -117,25 +117,25 @@ function fatalErrorHandeler() {
     $type = $last_error['type'];
     switch ($type) {
         case 1: /*  E_ERROR / FATAL ERROR   */
-            customErrorHandler(E_ERROR, $last_error['message'], $last_error['file'], $last_error['line']);
+            customErrorHandler(E_ERROR, $last_error['message'], $last_error['file'], $last_error['line'],'');
             break;
         case 4: /*  E_PARSE / PARSE ERROR / SYNTAX ERROR  */
-            customErrorHandler(E_PARSE, $last_error['message'], $last_error['file'], $last_error['line']);
+            customErrorHandler(E_PARSE, $last_error['message'], $last_error['file'], $last_error['line'],'');
             break;
         case 16: /*  NOT FATAL ERROR PHP STARTUP   */
-            customErrorHandler(E_NOTICE, $last_error['message'], $last_error['file'], $last_error['line']);
+            customErrorHandler(E_NOTICE, $last_error['message'], $last_error['file'], $last_error['line'],'');
             break;
         case 32: /*   FATAL COMPILE TIME ERROR   */
-            customErrorHandler(E_STRICT, $last_error['message'], $last_error['file'], $last_error['line']);
+            customErrorHandler(E_STRICT, $last_error['message'], $last_error['file'], $last_error['line'],'');
             break;
         case 64: /*  E COMPLILE ERROR   */
-            customErrorHandler(E_CORE_ERROR, $last_error['message'], $last_error['file'], $last_error['line']);
+            customErrorHandler(E_CORE_ERROR, $last_error['message'], $last_error['file'], $last_error['line'],'');
             break;
         case 128: /*  E COMPILE WARNING   */
-            customErrorHandler(E_COMPILE_WARNING, $last_error['message'], $last_error['file'], $last_error['line']);
+            customErrorHandler(E_COMPILE_WARNING, $last_error['message'], $last_error['file'], $last_error['line'],'');
             break;
         case 8: /*  E COMPILE WARNING   */
-            customErrorHandler(E_NOTICE, $last_error['message'], $last_error['file'], $last_error['line']);
+            customErrorHandler(E_NOTICE, $last_error['message'], $last_error['file'], $last_error['line'],'');
             break;
     }
 }
@@ -1894,7 +1894,7 @@ function getSelectizeData($dataDetails) {
         'labelField' => 'classname',
         'searchField' => 'classdisplayname',
         'selectizeFieldName' => '#classname',
-            //'addInputize' => '#duedate,#amount',
+        'addInputize' => '#duedate,#amount',
     );
 
     $data['classMaster'] = array(
@@ -1905,7 +1905,6 @@ function getSelectizeData($dataDetails) {
         'selectizeFieldName' => '#classname',
         'addInputize' => '#classname,#sectionname,#subjectid,#examstartdate,#examenddate',
     );
-
     $data['addRoute'] = array(
         'dataName' => 'pickuppointname',
         'valueField' => 'pickuppointid',
@@ -1959,7 +1958,7 @@ function initSelectize($dataDetails) {
 JS;
 
         //DELETE SHORTLY 
-        $addInputize = "";
+        //$addInputize = "";
         if ($addInputize !== '') {
             initInputize();
             echo "\n addInputize('$addInputize'); ";
@@ -2456,10 +2455,10 @@ function checkUserGroup() {
     }
 }
 
-/* * *******************************************************************************************
+/******************************************************************************************** 
  * Function for updating record status in database. User can make active or inactive of any records they want.
  * Written by : Abhishek K. Sharma
- * ******************************************************************************************* */
+ ********************************************************************************************/
 
 function statusUpdate($tblName, $currentState, $condition) {
     if ($currentState == 0) {
@@ -2638,6 +2637,8 @@ function renderHeaderLinks($roleType) {
             'Institute' => 'addInstitute.php',
             'Add User' => 'addUser.php',
             'Academic Year' => 'addAcademicYear.php',
+            'Class Master' => 'classMaster.php',
+            'Class Structure' => 'classStructure.php',
             'Subject' => 'addSubject.php',
             'Collection' => 'collectionType.php',
             'User' => 'User.php',
@@ -2692,7 +2693,7 @@ function renderHeaderLinks($roleType) {
         'Student Services' => 'student-services-icon.jpg',);
 
     $role = array(
-        'Admin' => array('Master' => 'Add User,Institute,Academic Year,Subject,Collection,Fees,Fee Rule,Other Fee',
+        'Admin' => array('Master' => 'Add User,Institute,Academic Year,Class Master,Class Structure,Subject,Collection,Fees,Fee Rule,Other Fee',
             'Student' => 'Student,Create Student,Quick Registration',
             'Transport' => 'Mileage Entry,Fuel Entry,Vehicle Dashboard,Vehicle,Driver,Pick Up Point,Route',
             'Fees' => 'Fee Collect,Cheque Management,Bank Fees',
@@ -3243,6 +3244,9 @@ function bcPage() {
         'studentDocument' => 'Student Documents',
         'studentFeeDetails' => 'Student Fee Details',
         'feeCollectionProcessing' => 'Fee Collection Processing',
+        'classMaster' => 'Class Master',
+        'classStructure' => 'Class Structure',
+        'addUser' => 'Add New User',
         'loadScholarData' => 0,
     );
 

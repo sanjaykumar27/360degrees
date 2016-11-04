@@ -12,7 +12,7 @@ require_once '../lib/functions.php';
 require_once VIEW_HEADER;
 require_once '../lib/reportfunctions.php';
 
-echo $a;
+
 ?>
 <!-- ----------------------- Style section for this page --------------------- -->
 <style>
