@@ -16,15 +16,7 @@ require_once VIEW_HEADER;
 ?>
 
 <style>
-    .table {
-        border-bottom:0px !important;
-    }
-    .table th, .table td {
-        border: 1px !important;
-    }
-    .fixed-table-container {
-        border:0px !important;
-    }
+    
 </style>
 
 <script type="text/javascript">

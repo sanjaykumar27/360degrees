@@ -201,7 +201,9 @@
           $date2 = $searchTerm['monthend'];
           $totalFeeInstallments .= " AND  t2.duedate >= '$date1' AND t2.duedate <= '$date2' ";
       }
-
+      else{
+          $totalFeeInstallments .= " AND t2.duedate <= '$currentDate' ";
+      }
       $resInst = dbSelect($totalFeeInstallments);
       if (mysqli_num_rows($resInst) > 0) {
           while ($row = mysqli_fetch_assoc($resInst)) {

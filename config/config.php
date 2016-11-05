@@ -33,20 +33,23 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') { // or any other host
 else 
 {
     // Production enviornment
- /*  define('DEVELOPMENT_ENVIRONMENT', true);
     define('DB_NAME', 'db360school');
     define('DB_USER', 'root');
     define('DB_PASSWORD', '!@#database#@!');
     define('DB_HOST', '173.194.249.86'); 
     define('DB_PORT', 3306);
-    define('DB_SOCKET', '/cloudsql/probable-axon-144107:db360school');*/
-    define('DEVELOPMENT_ENVIRONMENT', true);
+    define('DB_SOCKET', '/cloudsql/probable-axon-144107:db360school');
+    define('DEVELOPMENT_ENVIRONMENT', false);
+
+    /*define('DEVELOPMENT_ENVIRONMENT', true);
     define('DB_NAME', '360_test');
     define('DB_USER', 'root');
     define('DB_PASSWORD', '123456');
     define('DB_HOST', 'localhost');
     define('DB_PORT', '3306');
-    define('DB_SOCKET', ''); 
+    define('DB_SOCKET', '');
+        * 
+        */ 
     
     define('REDIRECT_USER', 'index.php');
     define('DS', DIRECTORY_SEPARATOR);

@@ -73,7 +73,8 @@ function customErrorHandler($errno, $errmsg, $filename, $linenum, $vars) {
     $headers = "MIME-Version: 1.0\r\n";
     $headers .= "Content-type: text/html; charset=utf-8\r\n";
 
-    error_log($err, 3, "/opt/logs/error/error.log");
+    //error_log($err, 3, "/opt/logs/error/error.log");
+    error_log($err, 3,DIR_ERROR);
     //mail("schourasia@ebizneeds.com", $subject, $err , $headers); 
 
     echo <<< HTML
