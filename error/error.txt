@@ -1,0 +1,60 @@
+< ======== Error Occurred ======= >
+
+	Date: 07-11-2016 12:33 (PM)
+	Error No:  1024
+	Error Type: User Notice
+	Error Message:  Unknown column 'sss' in 'where clause'
+	Page Name: /home/sanjay/root/360degrees/lib/functions.php
+	Line Num: 342
+
+ < ============================ >
+< ======== Error Occurred ======= >
+
+	Date: 07-11-2016 12:33 (PM)
+	Error No:  2
+	Error Type: Warning
+	Error Message:  mysqli_num_rows() expects parameter 1 to be mysqli_result, null given
+	Page Name: /home/sanjay/root/360degrees/files/student/studentFeeDetails.php
+	Line Num: 625
+
+ < ============================ >
+< ======== Error Occurred ======= >
+
+	Date: 07-11-2016 12:33 (PM)
+	Error No:  8
+	Error Type: Notice
+	Error Message:  Undefined index: mode
+	Page Name: /home/sanjay/root/360degrees/files/student/studentPersonal.php
+	Line Num: 26
+
+ < ============================ >
+< ======== Error Occurred ======= >
+
+	Date: 07-11-2016 12:34 (PM)
+	Error No:  8
+	Error Type: Notice
+	Error Message:  Undefined variable: medicaldetailsArray
+	Page Name: /home/sanjay/root/360degrees/files/student/studentMedical.php
+	Line Num: 76
+
+ < ============================ >
+< ======== Error Occurred ======= >
+
+	Date: 07-11-2016 12:34 (PM)
+	Error No:  8
+	Error Type: Notice
+	Error Message:  Undefined variable: a
+	Page Name: /home/sanjay/root/360degrees/files/dashboard.php
+	Line Num: 15
+
+ < ============================ >
+< ======== Error Occurred ======= >
+
+	Date: 07-11-2016 12:37 (PM)
+	Error No:  8
+	Error Type: Notice
+	Error Message:  Undefined variable: a
+	Page Name: /home/sanjay/root/360degrees/files/dashboard.php
+	Line Num: 15
+
+ < ============================ >

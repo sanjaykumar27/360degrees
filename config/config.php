@@ -47,9 +47,8 @@ else
     define('DB_PASSWORD', '123456');
     define('DB_HOST', 'localhost');
     define('DB_PORT', '3306');
-    define('DB_SOCKET', '');
-        * 
-        */ 
+    define('DB_SOCKET', '');*/
+        
     
     define('REDIRECT_USER', 'index.php');
     define('DS', DIRECTORY_SEPARATOR);

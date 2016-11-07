@@ -23,7 +23,7 @@ function customErrorHandler($errno, $errmsg, $filename, $linenum, $vars) {
 
     // timestamp for the error entry
     $dt = date("d-m-Y g:i (A)");
-        
+
     // define an assoc array of error string
     // in reality the only entries we should
     // consider are E_WARNING, E_NOTICE, E_USER_ERROR,
@@ -65,22 +65,26 @@ function customErrorHandler($errno, $errmsg, $filename, $linenum, $vars) {
 
     //$error = array($dt, $errno, $errortype[$errno], $errmsg, $filename, $linenum);
 
-    if (!DEVELOPMENT_ENVIRONMENT) {
-        $error = "";
-    }
+
 
     $subject = "Critical User Error";
     $headers = "MIME-Version: 1.0\r\n";
     $headers .= "Content-type: text/html; charset=utf-8\r\n";
 
-    //error_log($err, 3, "/opt/logs/error/error.log");
-    error_log($err, 3,DIR_ERROR);
+    error_log($err, 3, "/opt/logs/error/error.log");
     //mail("schourasia@ebizneeds.com", $subject, $err , $headers); 
-
+    if (!DEVELOPMENT_ENVIRONMENT) {
+        $err = "";
+    }
     echo <<< HTML
-    <script type="text/javascript"> 
+   <style>
+     html,body{height:100%; padding-top: 60px;}
+    .wrapper{min-height:100%; position:relative}
+    .full{position:absolute; top:0; left:0; width:100%; height:100%;}
+    </style>
+   <script type="text/javascript"> 
    $(function(){
-    var html = `<div class="container"><div class="alert alert-danger">
+    var html = `<div class="container-fluid"><div class="wrapper"><div class="alert alert-danger">
             <h1> Oops...</h1>
             <p> Sorry, an unexpected error has occured. </p> 
             <p> We are terribly sorry for this. However, the technical team has been notified and they will 
@@ -99,10 +103,12 @@ function customErrorHandler($errno, $errmsg, $filename, $linenum, $vars) {
          </div><br><br>
        
         <a href="javascript:history.go(-1)" class="btn btn-primary">Go to Previous Page</a>
-        <a href="<?php echo DIR_FILES; ?>/dashboard.php" class="btn btn-success">Go to Dashboard</a>
-</div></div>
+        <a href="<?php echo DIR_FILES; ?>/dashboard.php" class="btn btn-success">Go to Dashboard</a><br>
+</div></div></div><br>
 `;
-  $('#mainContainer').html(html);
+ 
+           jQuery('body').prepend(html);
+  
             });
  </script>
 HTML;
@@ -118,25 +124,25 @@ function fatalErrorHandeler() {
     $type = $last_error['type'];
     switch ($type) {
         case 1: /*  E_ERROR / FATAL ERROR   */
-            customErrorHandler(E_ERROR, $last_error['message'], $last_error['file'], $last_error['line'],'');
+            customErrorHandler(E_ERROR, $last_error['message'], $last_error['file'], $last_error['line'], '');
             break;
         case 4: /*  E_PARSE / PARSE ERROR / SYNTAX ERROR  */
-            customErrorHandler(E_PARSE, $last_error['message'], $last_error['file'], $last_error['line'],'');
+            customErrorHandler(E_PARSE, $last_error['message'], $last_error['file'], $last_error['line'], '');
             break;
         case 16: /*  NOT FATAL ERROR PHP STARTUP   */
-            customErrorHandler(E_NOTICE, $last_error['message'], $last_error['file'], $last_error['line'],'');
+            customErrorHandler(E_NOTICE, $last_error['message'], $last_error['file'], $last_error['line'], '');
             break;
         case 32: /*   FATAL COMPILE TIME ERROR   */
-            customErrorHandler(E_STRICT, $last_error['message'], $last_error['file'], $last_error['line'],'');
+            customErrorHandler(E_STRICT, $last_error['message'], $last_error['file'], $last_error['line'], '');
             break;
         case 64: /*  E COMPLILE ERROR   */
-            customErrorHandler(E_CORE_ERROR, $last_error['message'], $last_error['file'], $last_error['line'],'');
+            customErrorHandler(E_CORE_ERROR, $last_error['message'], $last_error['file'], $last_error['line'], '');
             break;
         case 128: /*  E COMPILE WARNING   */
-            customErrorHandler(E_COMPILE_WARNING, $last_error['message'], $last_error['file'], $last_error['line'],'');
+            customErrorHandler(E_COMPILE_WARNING, $last_error['message'], $last_error['file'], $last_error['line'], '');
             break;
         case 8: /*  E COMPILE WARNING   */
-            customErrorHandler(E_NOTICE, $last_error['message'], $last_error['file'], $last_error['line'],'');
+            customErrorHandler(E_NOTICE, $last_error['message'], $last_error['file'], $last_error['line'], '');
             break;
     }
 }
@@ -2456,10 +2462,10 @@ function checkUserGroup() {
     }
 }
 
-/******************************************************************************************** 
+/* * ****************************************************************************************** 
  * Function for updating record status in database. User can make active or inactive of any records they want.
  * Written by : Abhishek K. Sharma
- ********************************************************************************************/
+ * ****************************************************************************************** */
 
 function statusUpdate($tblName, $currentState, $condition) {
     if ($currentState == 0) {
@@ -2638,8 +2644,8 @@ function renderHeaderLinks($roleType) {
             'Institute' => 'addInstitute.php',
             'Add User' => 'addUser.php',
             'Academic Year' => 'addAcademicYear.php',
-           // 'Class Master' => 'classMaster.php',
-            //'Class Structure' => 'classStructure.php',
+            'Class Master' => 'classMaster.php',
+            'Class Structure' => 'classStructure.php',
             'Subject' => 'addSubject.php',
             'Collection' => 'collectionType.php',
             'User' => 'User.php',
@@ -2694,7 +2700,7 @@ function renderHeaderLinks($roleType) {
         'Student Services' => 'student-services-icon.jpg',);
 
     $role = array(
-        'Admin' => array('Master' => 'Add User,Institute,Academic Year,Subject,Collection,Fees,Fee Rule,Other Fee',
+        'Admin' => array('Master' => 'Add User,Institute,Academic Year,Class Master,Class Structure,Subject,Collection,Fees,Fee Rule,Other Fee',
             'Student' => 'Student,Create Student,Quick Registration',
             'Transport' => 'Mileage Entry,Fuel Entry,Vehicle Dashboard,Vehicle,Driver,Pick Up Point,Route',
             'Fees' => 'Fee Collect,Cheque Management,Bank Fees',

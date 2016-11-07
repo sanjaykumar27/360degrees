@@ -16,13 +16,38 @@ require_once VIEW_HEADER;
 ?>
 
 <style>
-    
+
 </style>
 
 <script type="text/javascript">
     $(function ()
     {
-        $('#exams, #subjectid, #classid, #sectionid').selectize({hideSelected: 'true'});
+        $('#exams, #subjectid, #classid, #sectionid, #examname').selectize({hideSelected: 'true'});
+       
+        $('#checkBoxTips').click(function (e) {
+            setPopover(this);
+            e.stopPropagation();
+        });
+
+        $('#popupsave').click(function () {
+            $("#CheckBoxPopover").hide();
+           
+        });
+        
+        var $pop = $("#CheckBoxPopover");
+        
+        function setPopover(element) {
+            setPopoverPosition(element);
+            var title = $(element).attr("title");
+            $pop.find("h3.popover-title").text(title);
+            $pop.show();
+        }
+        
+        function setPopoverPosition(element) {
+            var offset = $(element).offset();
+            $pop.css('left', offset.left + 20);
+            $pop.css('top', offset.top - 65);
+        }
     });
 
     function displayErrorJS(err) {
@@ -41,53 +66,18 @@ require_once VIEW_HEADER;
         $('#jsErrorAlert').modal('toggle');
     }
 
-    $(function () {
-        // create a single access point for your popover
-        var $pop = $("#CheckBoxPopover");
-
-        $('#checkBoxTips').click(function (e) {
-            setPopover(this);
-            e.stopPropagation();
-        });
-
-        $('#popupsave').click(function () {
-            $pop.hide();
-        });
-
-        function setPopover(element) {
-            setPopoverPosition(element);
-            if ($(element).is(":checked")) {
-                var title = $(element).attr("title");
-                $pop.find("h3.popover-title").text(title);
-                $pop.show();
-            } else {
-                var $checkedBoxes = $('#checkBoxTips input')
-                if ($checkedBoxes.length > 0) {
-                    setPopover($checkedBoxes[0]);
-                }
-            }
-        }
-
-        function setPopoverPosition(element) {
-            var offset = $(element).offset();
-            $pop.css('left', offset.left + 20);
-            $pop.css('top', offset.top - 65);
-        }
-    });
-
     function removeNum(rowNum) {
         $("#newrow" + rowNum).remove();
     }
-
 
     var exam = "<td></td>";
 
     var rowNum = 0;
     function addExamRow() {
-
+        rowNum++;
         exam = '<td><div class="col-lg-12">\
                         <label>Exam Name<div id="forExamsTour"></div></label>\
-                        <select multiple="multiple" id="exams' + rowNum + '" name="exams[]" required="true">\
+                        <select multiple="multiple" id="examname' + rowNum + '" name="exams[]" required="true">\
                             <option value="1">Formative Assessment I</option>\
                             <option value="2">Formative Assessment II</option>\
                             <option value="3">Formative Assessment III</option>\
@@ -105,7 +95,7 @@ require_once VIEW_HEADER;
 <?php echo populateSelect("subjectname", submitFailFieldValue("subjectid")); ?>\n\
                         </select><small> (Type subject name and select.)</small></div>\n\
                                 </td><td width="150" style="padding-top: 30px;">\n\
-                    <div class="checkbox" id="checkBoxTips'+ rowNum +'"><label><input type="checkbox" value="">Is Optional</label>\n\
+                    <div class="checkbox" id="checkBoxTips' + rowNum + '"><label><input type="checkbox" value="">Is Optional</label>\n\
                     </div></td><td width="200"><div class="col-lg-12">\n\
                         <label>Exam Components <div id="forExamsTour"></div></label>\n\
                         <select multiple="multiple" id="exams' + rowNum + '" name="examcomponent[]" required="true">\n\
@@ -122,7 +112,33 @@ require_once VIEW_HEADER;
                     </div></td></tr>');
         $('#subjectid' + rowNum).selectize({hideSelected: 'true'});
         $('#exams' + rowNum).selectize({hideSelected: 'true'});
-        $('#examsname' + rowNum).selectize({hideSelected: 'true'});
+        $('#examname' + rowNum).selectize({hideSelected: 'true'});
+
+
+        $('#checkBoxTips' + rowNum).click(function (e) {
+            $("#CheckBoxPopover").show();
+            setPopoverPosition(this);
+        });
+
+        $('#popupsave' + nowNum).click(function () {
+            $("#CheckBoxPopover").hide();
+            setPopoverPosition(this);
+        });
+        
+        var $pop = $("#CheckBoxPopover");
+        
+        function setPopover(element) {
+            setPopoverPosition(element);
+            var title = $(element).attr("title");
+            $pop.find("h3.popover-title").text(title);
+            $pop.show();
+        }
+        
+        function setPopoverPosition(element) {
+            var offset = $(element).offset();
+            $pop.css('left', offset.left + 20);
+            $pop.css('top', offset.top - 65);
+        }
         exam = '<td></td>';
     }
 
@@ -187,7 +203,7 @@ require_once VIEW_HEADER;
                 <td>
                     <div class="col-lg-12">
                         <label>Exam Name<div id="forExamsTour"></div></label>
-                        <select multiple="multiple" id="exams" name="exams[]" required="true">
+                        <select multiple="multiple" id="examname" name="exams[]" required="true">
                             <option value="1">Formative Assessment I</option>
                             <option value="2">Formative Assessment II</option>
                             <option value="3">Formative Assessment III</option>

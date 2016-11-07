@@ -1,138 +1,288 @@
 <?php
-
-  require_once "config/config.php";
-  require_once DIR_FUNCTIONS;
-  require_once VIEW_HEADER;
 /*
-$str = array(1,2,3);
-$str = serialize($str);
-$str = base64_encode($str);
-$str = unserialize(base64_decode($str));
-echoThis($str);
-*/
- $errortype = array (
-                E_ERROR              => 'Error',
-                E_WARNING            => 'Warning',
-                E_PARSE              => 'Parsing Error',
-                E_NOTICE             => 'Notice',
-                E_CORE_ERROR         => 'Core Error',
-                E_CORE_WARNING       => 'Core Warning',
-                E_COMPILE_ERROR      => 'Compile Error',
-                E_COMPILE_WARNING    => 'Compile Warning',
-                E_USER_ERROR         => 'User Error',
-                E_USER_WARNING       => 'User Warning',
-                E_USER_NOTICE        => 'User Notice',
-                E_STRICT             => 'Runtime Notice',
-                E_USER_DEPRECATED   => 'User Depricated Error',
-                E_RECOVERABLE_ERROR  => 'Catchable Fatal Error'
-                );
-                echoThis($errortype);die;
+ * 360 - School Empowerment System.
+ * Developer: Ankur Mishra (amishra@ebizneeds.com.au) | www.ebizneeds.com.au 
+ * Page details here: Page to add new subjects
+ * Updates here: 
+ */
+/* assign if selectize needs to be loaded for this page */
+$loadSelectize = rtrim(basename($_SERVER['PHP_SELF']), '.php');
+/* Selectize load bool ends */
+
+//call the main config file, functions file and header
+require_once "./config/config.php";
+require_once DIR_FUNCTIONS;
+require_once VIEW_HEADER;
 ?>
-<?php 
-  /* ------------------------------------------------------------------------- -- 
-    function listFolderFiles($dir){
-    // $excludeArray = array('nbproject');
 
-    $allowedFolder = array(
-    'student' => array('create','view','reports'),
-    'fees' =>  array('collect', 'others' => array('cheque','bank','paytm'),'reports'),
-    'master' => array('create'),
-    'transport' => array('create','view','maintainence','reports'),
-    'reports' => 'financial'
-    );
-    echoThis($allowedFolder);
-    die;
-    $ffs = scandir($dir);
-    foreach ($ffs as $key => $value){
-    if($value == '.git' || $value == 'PHPExcel-1.8' || $value == 'asset' || $value == 'config' || $value == 'fpdf' || $value == 'html2pdf'){
-    unset($ffs[$key]);
-    }
-    }
+<style>
 
-    echo '<ol>';
-    foreach($ffs as $ff){
-    if($ff != '.' && $ff != '..'){
-    echo '<li>'.$ff;
+</style>
 
-    if(is_dir($dir.'/'.$ff)) listFolderFiles($dir.'/'.$ff);
-    echo '</li>';
-    }
-    }
-    echo '</ol>';
-    }
-
-    //listFolderFiles("/home/sanjay/webdev/360degrees/");
-
-    // echoThis(basename((dirname(__FILE__))));
-
-    function html_escape($html_escape) {
-    $html_escape = cleanVar($html_escape);
-    return $html_escape;
-    }
-
-
-    $ctitle = "<AS<html>DFA 5 SD'sa 12F!@#$%^ &*():'`.\"/[]>";
-
-    function removeSpecialChar($ctitle) {
-    //  $string = addslashes($ctitle);
-    $string = serialize($ctitle);
-    $string = addslashes($string);
-    $string = str_replace("'","\'", $ctitle); // Removes special chars.
-    $string = trim(filter_var(preg_replace('/[^A-Za-z0-9-\\\]/', '', $string), FILTER_SANITIZE_STRING));
-    echoThis($string);
-    }
-
-    echo removeSpecialChar(html_entity_decode($ctitle));
-
-    /*
-    function DirLineCounter( $dir , $result = array('lines_html' => false, 'files_count' => false, 'lines_count' => false ), $complete_table = true )
+<script type="text/javascript">
+    $(function ()
     {
+        $('#exams, #subjectid, #classid, #sectionid').selectize({hideSelected: 'true'});
+    });
 
-    $file_read = array( 'php', 'html', 'js', 'css' );
-    $dir_ignore = array();
-    $scan_result = scandir( $dir );
-    foreach ( $scan_result as $key => $value ) {
-    if ( !in_array( $value, array( '.', '..' ) ) ) {
-    if ( is_dir( $dir . DIRECTORY_SEPARATOR . $value ) ) {
-    if ( in_array( $value, $dir_ignore ) ) {
-    continue;
-    }
-    $result = DirLineCounter( $dir . DIRECTORY_SEPARATOR . $value, $result, false );
-    }
-    else {
-    $type = explode( '.', $value );
-    $type = array_reverse( $type );
-    if( !in_array( $type[0], $file_read ) ) {
-    continue;
-    }
-    $lines = 0;
-    $handle = fopen( $dir . DIRECTORY_SEPARATOR . $value, 'r' );
-    while ( !feof( $handle ) ) {
-    if ( is_bool( $handle ) ) {
-    break;
-    }
-    $line = fgets( $handle );
-    $lines++;
-    }
-    fclose( $handle );
-    $result['lines_html'][] = '<tr><td>' . $dir . '</td><td>' . $value . '</td><td>' . $lines . '</td></tr>';
-    $result['lines_count'] = $result['lines_count'] + $lines;
-    $result['files_count'] = $result['files_count'] + 1;
+    function displayErrorJS(err) {
+        var errMsg = [];
+        errMsg[0] = "Enteries for Examination, Exam start & end Dates should match...!";
+        errMsg[1] = "Please enter Dates in Valid(dd/mm/yyyy) format..!";
 
-    }
-    }
+
+        var strModal = '<div id="jsErrorAlert" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'.concat(
+                '<div class="modal-dialog"><div class="modal-content"><div class="modal-header"></strong>Warning..!</strong></div>',
+                '<div class="modal-body"><div class="alert alert-danger alert-dismissible fade in" role="alert">',
+                errMsg[err] + '</div></div>',
+                '<div class="modal-footer"><button type="button" class="btn btn-danger" data-dismiss="modal">Close</button></div></div></div></div>');
+
+        $(strModal).appendTo('body');
+        $('#jsErrorAlert').modal('toggle');
     }
 
-    if ( $complete_table ) {
-    $lines_html = implode('', $result['lines_html']) . '<tr><td></td><td style="border: 1px solid #222">Files Total: ' . $result['files_count'] . '</td><td style="border: 1px solid #222">Lines Total: ' . $result['lines_count'] . '</td></tr>';
-    return '<table><tr><td style="width: 60%; background-color:#ddd;">Dir</td><td style="width: 30%; background-color:#ddd;">File</td><td style="width: 10%; background-color:#ddd;">Lines</td></tr>' . $lines_html . '</table>';
+    $(function () {
+        // create a single access point for your popover
+        var $pop = $("#CheckBoxPopover");
 
-    }
-    else {
-    return $result;
-    }
+        $('#checkBoxTips').click(function (e) {
+            setPopover(this);
+            e.stopPropagation();
+        });
+
+        $('#popupsave').click(function () {
+            $pop.hide();
+        });
+
+        function setPopover(element) {
+            setPopoverPosition(element);
+            if ($(element).is(":checked")) {
+                var title = $(element).attr("title");
+                $pop.find("h3.popover-title").text(title);
+                $pop.show();
+            } else {
+                var $checkedBoxes = $('#checkBoxTips input')
+                if ($checkedBoxes.length > 0) {
+                    setPopover($checkedBoxes[0]);
+                }
+            }
+        }
+
+        function setPopoverPosition(element) {
+            var offset = $(element).offset();
+            $pop.css('left', offset.left + 20);
+            $pop.css('top', offset.top - 65);
+        }
+    });
+
+    function removeNum(rowNum) {
+        $("#newrow" + rowNum).remove();
     }
 
-    echo DirLineCounter( '.' );
-   */
-?>
+
+    var exam = "<td></td>";
+
+    var rowNum = 0;
+    function addExamRow() {
+
+        exam = '<td><div class="col-lg-12">\
+                        <label>Exam Name<div id="forExamsTour"></div></label>\
+                        <select multiple="multiple" id="exams' + rowNum + '" name="exams[]" required="true">\
+                            <option value="1">Formative Assessment I</option>\
+                            <option value="2">Formative Assessment II</option>\
+                            <option value="3">Formative Assessment III</option>\
+                            <option value="4">Formative Assessment IV</option>\
+                            <option value="5">Annual</option>\
+                        </select></div></td>';
+        addSubjectRow();
+    }
+
+
+    function addSubjectRow() {
+        rowNum++;
+        $("#examstructure").append('<tr>' + exam + '<td><div class="col-lg-12"><label>Subjects <div id="forSubTour"></div></label>\n\
+                        <select multiple="multiple" id="subjectid' + rowNum + '" name="subjectid[]" required="true" >\n\
+<?php echo populateSelect("subjectname", submitFailFieldValue("subjectid")); ?>\n\
+                        </select><small> (Type subject name and select.)</small></div>\n\
+                                </td><td width="150" style="padding-top: 30px;">\n\
+                    <div class="checkbox" id="checkBoxTips' + rowNum + '"><label><input type="checkbox" value="">Is Optional</label>\n\
+                    </div></td><td width="200"><div class="col-lg-12">\n\
+                        <label>Exam Components <div id="forExamsTour"></div></label>\n\
+                        <select multiple="multiple" id="exams' + rowNum + '" name="examcomponent[]" required="true">\n\
+                            <option value="1">Written</option><option value="2">Verbal</option>\n\
+                            <option value="3">Projects</option><option value="4">Activities</option>\n\
+                        </select></div></td><td><div class=" col-lg-12"><label for="examdate">Exam Date</label>\n\
+                        <input type="text" id="examdate"  name="examdate[0]" required="true" class="form-control"\n\
+                               value="<?php echo submitFailFieldValue("examdate[0]"); ?>">\n\
+                        <small>Enter the date in  when the assigned amount is due.  </small>\n\
+                        <div class="hidden" id="divduedate"><code>Exam date is required.</code></div>\n\
+                    </div></td><td width="150"><div class="col-lg-12">\n\
+                        <label>Marks <div id="forSubTour"></div></label>\n\
+                        <input type="text" class="form-control" id="marks" name="marks">\n\
+                    </div></td></tr>');
+        $('#subjectid' + rowNum).selectize({hideSelected: 'true'});
+        $('#exams' + rowNum).selectize({hideSelected: 'true'});
+        $('#examsname' + rowNum).selectize({hideSelected: 'true'});
+        exam = '<td></td>';
+    }
+
+
+</script>
+
+
+<div class="container" id="mainContainer">
+    <!---- This Modal Is basically used For Confirmation of  action performed while Inserting record through form...---->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <div class="alert alert-warning" role="alert">
+                        You are about to create the structure of following class (s), please pay special attention.  
+                    </div>		
+                </div>
+                <div class="modal-body">
+                    <div class="row-fluid"> <!--- Data is Appended To This Div Through writeIt() Function ----></div>
+                    <div class="alert alert-warning" role="alert">
+                        Please make sure entries are correct , as once submitted action couldn't be reverted.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Edit</button>
+                    <button type="button" id="submitform" class="btn btn-primary">Save</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!----  Modal Ends Here ...---->
+
+
+
+    <form action="<?php echo PROCESS_FORM; ?>" method="post" id="imForm">
+        <table class="table" id="examstructure">
+            <tr>
+                <?php renderMsg(); ?>
+                <td colspan="2">
+                    <div class="col-lg-12" >
+                        <label for="classid"> Class <div id="forClassTour"></div></label>
+                        <select multiple="multiple" id="classid" name="classid[]" required="true" >
+                            <?php echo populateSelect("classname", submitFailFieldValue("classid")); ?>
+                        </select> 
+                        <small>Type & Select only classes with the same structure.</small>
+                    </div>
+                </td>
+
+                <td colspan="2">
+                    <div>
+                        <label for="sectionid"> Sections <div id="forSecTour"></div></label> 
+                        <select multiple="multiple" id="sectionid" name="sectionid[]" required="true" >
+                            <?php echo populateSelect("sectionname", submitFailFieldValue("sectionid")); ?>
+                        </select>
+                    </div>
+                </td>
+                <td colspan="2"></td>
+            </tr>
+
+            <tr >
+                <td>
+                    <div class="col-lg-12">
+                        <label>Exam Name<div id="forExamsTour"></div></label>
+                        <select multiple="multiple" id="exams" name="exams[]" required="true">
+                            <option value="1">Formative Assessment I</option>
+                            <option value="2">Formative Assessment II</option>
+                            <option value="3">Formative Assessment III</option>
+                            <option value="4">Formative Assessment IV</option>
+                            <option value="5">Annual</option>
+                        </select>
+                        <small> (Type all exam type for this class & Sections.)</small>
+                    </div>
+                </td>
+
+                <td>
+                    <div class="col-lg-12">
+                        <label>Subjects <div id="forSubTour"></div></label>
+                        <select multiple="multiple" id="subjectid" name="subjectid[]" required="true" >
+                            <?php echo populateSelect("subjectname", submitFailFieldValue("subjectid")); ?>
+                        </select>
+                        <small> (Type subject name and select.)</small>
+                    </div>
+                </td>
+
+                <td width="150" style="padding-top: 30px;">
+                    <div class="checkbox" id="checkBoxTips" >
+                        <label><input type="checkbox" value="">Is Optional</label>
+                    </div>
+                </td>
+                <td width="200">
+                    <div class="col-lg-12">
+                        <label>Exam Components <div id="forExamsTour"></div></label>
+                        <select multiple="multiple" id="exams" name="examcomponent[]" required="true">
+                            <option value="1">Written</option>
+                            <option value="2">Verbal</option>
+                            <option value="3">Projects</option>
+                            <option value="4">Activities</option>
+                        </select>
+                    </div>
+                </td>
+
+                <td>
+                    <div class=" col-lg-12">
+                        <label for="examdate">Exam Date</label>
+                        <input type="text" id="examdate"  name="examdate[0]" required="true" class="form-control"
+                               value="<?php echo submitFailFieldValue("examdate[0]"); ?>">
+                        <small>Enter the date in  when the assigned amount is due.  </small>
+                        <div class="hidden" id="divduedate"><code>Exam date is required.</code></div>
+                    </div>  
+                </td>
+
+                <td width="150">
+                    <div class="col-lg-12">
+                        <label>Marks <div id="forSubTour"></div></label>
+                        <input type="text" class="form-control" id="marks" name="marks">
+                    </div> 
+                </td>
+            </tr>
+        </table>
+        <div class="col-lg-2 pull-right">
+            <label>Add New Rows </label><br>
+            <button type="button" class="btn btn-primary btn-round" id="add" 
+                    onclick="addSubjectRow();" title="click to add another subject">
+                <span class="glyphicon glyphicon-plus"></span>
+            </button> 
+            <button type="button" class="btn btn-success btn-round" id="add" 
+                    onclick="addExamRow();" title="Click to add another exam">
+                <span class="glyphicon glyphicon-plus"></span>
+            </button> 
+        </div>
+
+        <span class="clearfix"><p>&nbsp;</p></span> 
+
+        <div class="controls" align="center"> <div id="forSaveTour"></div>
+            <input id="clearDiv" type="button" tabindex="42" value="Cancel" class="btn">
+            <!-- Button trigger modal -->
+            <input type="button" id="save"  name="save" value="SAVE" class="btn btn-success">
+        </div>
+    </form>
+    <div id="popover-markup"> 
+        <a href="#" class="trigger btn btn-default">Popover link</a> 
+        <div class="head hide">Lorem Ipsum</div>
+        <div class="content hide">
+            <div class="form-group">
+                <input 
+                    type="text" 
+                    class="form-control" 
+                    placeholder="Type something…">
+            </div>
+            <button type="submit" class="btn btn-default btn-block">
+                Submit
+            </button>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+<?php
+require VIEW_FOOTER;
