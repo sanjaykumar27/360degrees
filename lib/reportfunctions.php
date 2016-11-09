@@ -1,3 +1,4 @@
+
 <?php
 
   /*
@@ -204,6 +205,7 @@
       else{
           $totalFeeInstallments .= " AND t2.duedate <= '$currentDate' ";
       }
+
       $resInst = dbSelect($totalFeeInstallments);
       if (mysqli_num_rows($resInst) > 0) {
           while ($row = mysqli_fetch_assoc($resInst)) {
@@ -365,7 +367,7 @@
                             t4.classname,t5.sectionname,  
                             SUM(t7.feeinstallmentamount) as feeamount, 
                             t8.feeinstallment, t6.feecollectionid ,t9.collectionname, t7.feemodeid,
-                            t6.receiptid
+                            t6.receiptid, t6.remarks
                         
                         FROM tblstudent as t1, 
                         tblstudentacademichistory as t2, 

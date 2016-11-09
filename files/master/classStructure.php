@@ -116,13 +116,12 @@ require_once VIEW_HEADER;
 
 
         $('#checkBoxTips' + rowNum).click(function (e) {
-            $("#CheckBoxPopover").show();
-            setPopoverPosition(this);
+            setPopover(this);
+            e.stopPropagation();
         });
 
-        $('#popupsave' + nowNum).click(function () {
-            $("#CheckBoxPopover").hide();
-            setPopoverPosition(this);
+        $('#popupsave').click(function () {
+             $("#CheckBoxPopover").hide();
         });
         
         var $pop = $("#CheckBoxPopover");
@@ -175,6 +174,7 @@ require_once VIEW_HEADER;
 
 
     <form action="<?php echo PROCESS_FORM; ?>" method="post" id="imForm">
+        <h2>&nbsp;Create Class Structure</h2><br>
         <table class="table" id="examstructure">
             <tr>
                 <?php renderMsg(); ?>
@@ -276,9 +276,9 @@ require_once VIEW_HEADER;
         <div class="controls" align="center"> <div id="forSaveTour"></div>
             <input id="clearDiv" type="button" tabindex="42" value="Cancel" class="btn">
             <!-- Button trigger modal -->
-            <input type="button" id="save"  name="save" value="SAVE" class="btn btn-success">
+            <input type="submit" id="save"  name="save" value="SAVE" class="btn btn-success">
         </div>
-    </form>
+   </form>
     <div id='CheckBoxPopover' class="popover fade right in" style="display: hidden;">
         <div class="arrow"></div>
         <h3 class="popover-title">Enter Due Dates and Amount</h3>
@@ -294,9 +294,9 @@ require_once VIEW_HEADER;
             <br><button id="popupsave" class="btn btn-success">Save</button>
         </div>
     </div>
-
 </div>
 
 
 <?php
+
 require VIEW_FOOTER;

@@ -2874,3 +2874,6 @@ function processImportstudentfee() {
 function processStudentStatus(){
 }
 
+function processClassStructure(){
+    
+}

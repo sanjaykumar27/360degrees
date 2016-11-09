@@ -1,3 +1,4 @@
+
 <?php
 
     /*
@@ -85,7 +86,13 @@
                     $studentname = $value['firstname'].' '.$value['middlename'].' '.$value['lastname'];
                     $classname = $value['classname'].'-'.$value['sectionname'];
                     $refund = "<td>-</td>";
-                    $dateCollected= date("d/m/Y", strtotime($value['dated']));
+                    $dateCollected = strstr($value['remarks'], '2');
+                    if($dateCollected != ''){
+                        $dateCollected= date("d/m/Y", strtotime($dateCollected));
+                    }
+                    else{
+                        $dateCollected = date("d/m/Y", strtotime($value['dated']));
+                    }
                     
                     if (isset($value['refunded'])) {
                         $studentid = $value['studentid'];

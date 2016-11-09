@@ -1,3 +1,5 @@
+
+
 <?php
   require_once "config/config.php";
   require_once DIR_FUNCTIONS;
@@ -9,7 +11,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
         <title>PHPExcel Reader Example #05</title>
+
     </head>
     <body>
 
@@ -24,7 +28,7 @@
 //	$inputFileType = 'Excel2003XML';
 //	$inputFileType = 'OOCalc';
 //	$inputFileType = 'Gnumeric';
-          $inputFileName = '/home/sanjay/Videos/import/Paota/StudentInformation.xls';
+          $inputFileName = '/home/sanjay/Videos/chb updated fee/CHB/FeeCollection_XII_SCI.xls';
           echo 'Loading file ', pathinfo($inputFileName, PATHINFO_BASENAME), ' using IOFactory with a defined reader type of ', $inputFileType, '<br />';
           $objReader = PHPExcel_IOFactory::createReader($inputFileType);
           echo 'Turning Formatting off for Load<br />';
@@ -32,11 +36,11 @@
           $objPHPExcel = $objReader->load($inputFileName);
           echo '<hr />';
           $sheetData = $objPHPExcel->getActiveSheet()->toArray(null, true, true, true);
-         
-          for ($i = 0; $i < 16; $i++) {
+
+          for ($i = 0; $i < 13; $i++) {
               unset($sheetData[$i]);
           }
-        
+
           foreach ($sheetData as $key => &$row) {
               $row = array_filter($row, function($cell) {
                   return !is_null($cell);
@@ -44,119 +48,71 @@
               );
               if (count($row) == 0) {
                   unset($sheetData[$key]);
-                //  echoThis($sheetData[$key]); 
               }
           }
-        unset($row);
+          unset($row);
           
-         //Delete the last element of the array
-          // current excel has signtuare fields at the bottom
-          //they must be deleted, before import. 
-          
-        $sheetData = array_slice($sheetData,0,count($sheetData)-1);
-         
-         
-        $cnt = 0;
-       
-       // echoThis(($sheetData));
-        // die;
+          $sheetData = array_slice($sheetData,0,count($sheetData)-2);
+          $cnt = 0;
 
-
+         // echoThis($sheetData);
           foreach ($sheetData as $key => $data) {
-              $mobilenumber = "";
-              $landlinenumber = "";
-              if (isset($data['AB']) && strlen($data['AB']) > 10 && (strpos($data['AB'], '-') > 0)) {
-                  $landlinenumber = cleanVar($data['AB']);
-                  if (isset($data['AC'])) {
-                      $mobilenumber = cleanVar($data['AC']);
-                  }
-              } elseif (isset($data['AC'])) {
-                  $mobilenumber = cleanVar($data['AC']);
+              $intsessassocid = $_SESSION['instsessassocid'];
+              if ($data['W'] == 'Cash') {
+                  $feemodeid = '305';
+              } else {
+                  $feemodeid = '304';
               }
 
-              $scholarnumber = cleanVar($data['D']);
-              $studentname = cleanVar($data['F']); 
-              $fathername =  cleanVar($data['I']);
-              $mothername = cleanVar($data['K']);
-              $class = cleanVar($data['M']);
-              $section = cleanVar($data['N']);
-             
-              $dob = date('Y-m-d', strtotime($data['AD']));
-              $doj = date('Y-m-d', strtotime($data['AE']));
-              $category = "";
-              $bloodgroup = "";
-              $height = "";
-              $weight = "";
-              $house = "";
-              $hygiene = "";
-              $visionleft = "";
-              $visionright = "";
-              $studentype = "";
-              $gender = "";
-              
-              if (isset($data['AF'])) {
-                  $category = getstudentmasterData($data['AF']);
-              }
-              if (isset($data['AK'])) {
-                  $bloodgroup = getstudentmasterData($data['AK']);
+              $feeruleid = '-';
+              $transferFee = 0;
+
+              if ($data['Y'] != '-') {
+                  $feeruleid = getfeeruleid($data[Y]);
               }
 
-              if (isset($data['AG'])) {
-                  $height = cleanVar($data['AG']);
+              if ($data['Y'] == 'Transfer Fee') {
+                  $transferFee = 200;
               }
 
-              if (isset($data['AH'])) {
-                  $weight = cleanVar($data['AH']);
-              }
 
-              if (isset($data['AL'])) {
-                  $hygiene = cleanVar($data['AL']);
-             }
+              $sql[] = "INSERT INTO `Fee_Data`(`scholarnumber`, `intsessassocid`, `studentname`, `installment`,
+                 `amount`, `Late_Fees`, `Conveyance`, `Penalty`, `TC`, `Other_Charges`, `Bounce_Cheque`, 
+                 `Collection_Amount`, `recieptid`, `feemodeid`, `dateofcollection`,`feeruleid`, `transferfee`) 
+                 
+                VALUES('$data[B]', '$intsessassocid',  '$data[D]', '$data[H]', '$data[J]', '$data[K]', 
+                '$data[L]', '$data[M]', '$data[N]', '$data[O]', '$data[Q]', '$data[S]', '$data[U]',
+                 '$feemodeid', '$data[X]','$feeruleid', '$transferFee')";
 
-              if (isset($data['AI'])) {
-                  $house = cleanVar($data['AI']);
-              }
-
-              if (isset($data['AM'])) {
-                  $visionleft = cleanVar($data['AM']);
-              }
-
-              if (isset($data['AN'])) {
-                  $visionright = cleanVar($data['AN']);
-             }
-
-             if (isset($data['AO'])) {
-                  $studentype = getstudentmasterData($data['AO']);
-             }
-
-              if (isset($data['AP'])) {
-                  $gender = getstudentmasterData($data['AP']);
-              }
-              
-              $address = cleanVar($data['AA']);
-
-              $sql[] = "INSERT INTO `student_data`(`scholarnumber`, `studentname`, `fathername`, `mothername`, `class`,
-                 `section`, `address`, `landlineno`, `mobile`, `dob`, `doj`, `category`, `height`, `weight`,
-                 `house`,  `bloodgroup`, `dentalhygiene`, `visionleft`, `visionright`, `studenttype`, 
-                 `gender`) 
-                 VALUES ('$scholarnumber', '$studentname', '$fathername', '$mothername', '$class', '$section',
-                '$address', '$landlinenumber', '$mobilenumber', '$dob', '$doj', '$category','$height',
-                '$weight', '$house','$bloodgroup','$hygiene','$visionleft','$visionright','$studentype','$gender')";
+              $transferFee = 0;
 
               $cnt++;
           }
-        //   echoThis($sql); die;
+         // echoThis($sql); die;
           $result = dbInsert($sql);
 
           echoThis("Total Rows Imported : " . $cnt);
-
-          function getstudentmasterData($masterCollectionName) {
-              $sql = "SELECT `mastercollectionid` FROM `tblmastercollection` WHERE `collectionname` = '$masterCollectionName' ";
-              $result = dbSelect($sql);
-              $row = mysqli_fetch_assoc($result);
-              $returnArray = $row['mastercollectionid'];
-              return $returnArray;
-          }
         ?>
     <body>
 </html>
+
+<?php
+
+  function getfeeruleid($rulename) {
+
+      if ($ruleName == '25% Management Rebate') {
+          $ruleName = 'MANAGEMENT RULE 25%';
+      }
+      $intsessassocid = $_SESSION['instsessassocid'];
+      $sql = "SELECT `feeruleid` FROM `tblfeerule` WHERE `feerulename` = '$rulename'  AND `instsessassocid` = '$intsessassocid'";
+
+      $result = dbSelect($sql);
+      if (mysqli_num_rows($result) > 0) {
+          $row = mysqli_fetch_assoc($result);
+          $feeruleName = $row['feeruleid'];
+          return $feeruleName;
+      } else {
+          return 0;
+      }
+  }
+?>

@@ -9,8 +9,8 @@
  */
 
 /*    Error detecting funtion   */
-set_error_handler('customErrorHandler');
-register_shutdown_function('fatalErrorHandeler');
+//set_error_handler('customErrorHandler');
+//register_shutdown_function('fatalErrorHandeler');
 
 /* check before anything if session exists for login purpose */
 
@@ -113,7 +113,7 @@ function customErrorHandler($errno, $errmsg, $filename, $linenum, $vars) {
  </script>
 HTML;
 
-
+die;
 
     // $redirect = "/360degrees/error.php?".http_build_query($error);
     // header( "Location: $redirect" );
@@ -2644,8 +2644,8 @@ function renderHeaderLinks($roleType) {
             'Institute' => 'addInstitute.php',
             'Add User' => 'addUser.php',
             'Academic Year' => 'addAcademicYear.php',
-           // 'Class Master' => 'classMaster.php',
-            //'Class Structure' => 'classStructure.php',
+            'Class Master' => 'classMaster.php',
+            'Class Structure' => 'classStructure.php',
             'Subject' => 'addSubject.php',
             'Collection' => 'collectionType.php',
             'User' => 'User.php',
@@ -2700,7 +2700,7 @@ function renderHeaderLinks($roleType) {
         'Student Services' => 'student-services-icon.jpg',);
 
     $role = array(
-        'Admin' => array('Master' => 'Add User,Institute,Academic Year,Subject,Collection,Fees,Fee Rule,Other Fee',
+        'Admin' => array('Master' => 'Add User,Institute,Academic Year,Class Master,Class Structure,Subject,Collection,Fees,Fee Rule,Other Fee',
             'Student' => 'Student,Create Student,Quick Registration',
             'Transport' => 'Mileage Entry,Fuel Entry,Vehicle Dashboard,Vehicle,Driver,Pick Up Point,Route',
             'Fees' => 'Fee Collect,Cheque Management,Bank Fees',
