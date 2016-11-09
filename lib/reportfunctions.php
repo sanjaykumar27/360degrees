@@ -1,4 +1,3 @@
-
 <?php
 
   /*
@@ -205,7 +204,6 @@
       else{
           $totalFeeInstallments .= " AND t2.duedate <= '$currentDate' ";
       }
-
       $resInst = dbSelect($totalFeeInstallments);
       if (mysqli_num_rows($resInst) > 0) {
           while ($row = mysqli_fetch_assoc($resInst)) {
@@ -362,12 +360,12 @@
       $limit = " LIMIT $startPage," . ROW_PER_PAGE;
 
       $sqlCollection = "   SELECT t1.studentid,t1.scholarnumber, t6.receiptid, t6.feecollectionid , 
-                            DATE(t7.datecreated) as dated,
+                            DATE(t6.datecreated) as dated,
                             t1.firstname,t1.middlename,t1.lastname,
                             t4.classname,t5.sectionname,  
                             SUM(t7.feeinstallmentamount) as feeamount, 
                             t8.feeinstallment, t6.feecollectionid ,t9.collectionname, t7.feemodeid,
-                            t6.receiptid, t6.remarks
+                            t6.receiptid
                         
                         FROM tblstudent as t1, 
                         tblstudentacademichistory as t2, 
@@ -404,10 +402,10 @@
           $where .= " AND t7.feemodeid= ' " . $searchTerms['paymentmode'] . "' ";
       }
       if (isset($searchTerms['monthstart']) && !empty($searchTerms['monthstart'])) {
-          $where .= " AND DATE(t7.datecreated)>= '" . $searchTerms['monthstart'] . "' ";
+          $where .= " AND DATE(t6.datecreated)>= '" . $searchTerms['monthstart'] . "' ";
       }
       if (isset($searchTerms['monthend']) && !empty($searchTerms['monthend'])) {
-          $where .= " AND DATE(t7.datecreated)<= '" . $searchTerms['monthend'] . "' ";
+          $where .= " AND DATE(t6.datecreated)<= '" . $searchTerms['monthend'] . "' ";
       }
 
       /*
