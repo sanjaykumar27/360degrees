@@ -28,7 +28,7 @@
 //	$inputFileType = 'Excel2003XML';
 //	$inputFileType = 'OOCalc';
 //	$inputFileType = 'Gnumeric';
-          $inputFileName = '/home/sanjay/Videos/chb updated fee/CHB/FeeCollection_XII_SCI.xls';
+          $inputFileName = '/home/sanjay/Videos/import/CHB/Fee-Collection/CHB_NOV/FeeCollection_NR.xls';
           echo 'Loading file ', pathinfo($inputFileName, PATHINFO_BASENAME), ' using IOFactory with a defined reader type of ', $inputFileType, '<br />';
           $objReader = PHPExcel_IOFactory::createReader($inputFileType);
           echo 'Turning Formatting off for Load<br />';
@@ -55,7 +55,7 @@
           $sheetData = array_slice($sheetData,0,count($sheetData)-2);
           $cnt = 0;
 
-         // echoThis($sheetData);
+          //echoThis($sheetData); die;
           foreach ($sheetData as $key => $data) {
               $intsessassocid = $_SESSION['instsessassocid'];
               if ($data['W'] == 'Cash') {
@@ -67,11 +67,11 @@
               $feeruleid = '-';
               $transferFee = 0;
 
-              if ($data['Y'] != '-') {
-                  $feeruleid = getfeeruleid($data[Y]);
+              if (isset($data['Y'] ) && $data['Y'] != '-') {
+                  $feeruleid = getfeeruleid($data['Y']);
               }
 
-              if ($data['Y'] == 'Transfer Fee') {
+              if (isset($data['Y']) && $data['Y'] == 'Transfer Fee') {
                   $transferFee = 200;
               }
 
@@ -88,7 +88,7 @@
 
               $cnt++;
           }
-         // echoThis($sql); die;
+          //echoThis($sql); die;
           $result = dbInsert($sql);
 
           echoThis("Total Rows Imported : " . $cnt);
@@ -98,13 +98,13 @@
 
 <?php
 
-  function getfeeruleid($rulename) {
+  function getfeeruleid($ruleName) {
 
       if ($ruleName == '25% Management Rebate') {
           $ruleName = 'MANAGEMENT RULE 25%';
       }
       $intsessassocid = $_SESSION['instsessassocid'];
-      $sql = "SELECT `feeruleid` FROM `tblfeerule` WHERE `feerulename` = '$rulename'  AND `instsessassocid` = '$intsessassocid'";
+      $sql = "SELECT `feeruleid` FROM `tblfeerule` WHERE `feerulename` = '$ruleName'  AND `instsessassocid` = '$intsessassocid'";
 
       $result = dbSelect($sql);
       if (mysqli_num_rows($result) > 0) {

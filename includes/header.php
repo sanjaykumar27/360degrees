@@ -6,7 +6,6 @@
    * Updates here: 
    */
   ob_start();
-  
   validUser(); // chech the user is valid or not
 
   /*
@@ -54,7 +53,8 @@
         <script src="<?php echo DIR_ASSET; ?>/js/jquery-3.1.1.js"></script>
         <script src="<?php echo DIR_ASSET; ?>/js/bootstrap.js"></script>
         <script src="<?php echo DIR_ASSET; ?>/js/bootstrap-multiselect.js" type="text/javascript"></script>
-        
+        <script src="<?php echo DIR_LIB; ?>/common.js" type="text/javascript"></script>
+
            <?php if (isset($loadSelectize) && ($loadSelectize !== "")) : ?>
             <script type="text/javascript" src="<?php echo DIR_ASSET; ?>/js/selectize.js"></script>
             <link rel="stylesheet" href="<?php echo DIR_ASSET; ?>/css/selectize.bootstrap3.css" type="text/css"/>  

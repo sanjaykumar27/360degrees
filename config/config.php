@@ -42,7 +42,7 @@ else
     define('DEVELOPMENT_ENVIRONMENT', false);
 
     /*define('DEVELOPMENT_ENVIRONMENT', true);
-    define('DB_NAME', '360_cloud');
+    define('DB_NAME', '360_test');
     define('DB_USER', 'root');
     define('DB_PASSWORD', '123456');
     define('DB_HOST', 'localhost');

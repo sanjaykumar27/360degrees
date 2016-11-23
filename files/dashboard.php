@@ -205,14 +205,14 @@ if (isset($_SESSION['total_student'])) {
     <div class="col-lg-12" align="center">
         <div class="card panel">
             <h2 align="center">Quick Links</h2>
-            <a href ="<?php echo DIR_FILES ?>/student/quickStudent.php" class="btn btn-primary">Create Student</a>
-            <a href ="<?php echo DIR_FILES ?>/student/studentDashboard.php" class="btn btn-primary">Student Dashboard</a>
-            <a href ="<?php echo DIR_FILES ?>/fees/feeCollection.php" class="btn btn-primary">Collect Fees</a>
-            <a href ="<?php echo DIR_FILES ?>/fees/chequemanagement.php" class="btn btn-primary">Cheque Management</a>
-            <a href ="<?php echo DIR_REPORTS ?>/collectedFeeIndex.php" class="btn btn-success">Collected Fee Report</a>
-            <a href ="<?php echo DIR_REPORTS ?>/feeDueIndex.php" class="btn btn-success">Fee Due Report</a>
-            <a href ="<?php echo DIR_REPORTS ?>/dailyReport.php" class="btn btn-success">Daily Report</a>
-            <a href ="../studentservices/issueTC.php" class="btn btn-success">TC</a>
+            <a href ="<?php echo DIR_FILES ?>/student/quickStudent.php" class="btn btn-primary btn-sm">Create Student</a>
+            <a href ="<?php echo DIR_FILES ?>/student/studentDashboard.php" class="btn btn-primary btn-sm">Student Dashboard</a>
+            <a href ="<?php echo DIR_FILES ?>/fees/feeCollection.php" class="btn btn-primary btn-sm">Collect Fees</a>
+            <a href ="<?php echo DIR_FILES ?>/fees/chequemanagement.php" class="btn btn-primary btn-sm">Cheque Management</a>
+            <a href ="<?php echo DIR_REPORTS ?>/collectedFeeIndex.php" class="btn btn-success btn-sm">Collected Fee Report</a>
+            <a href ="<?php echo DIR_REPORTS ?>/feeDueIndex.php" class="btn btn-success btn-sm">Fee Due Report</a>
+            <a href ="<?php echo DIR_REPORTS ?>/dailyReport.php" class="btn btn-success btn-sm">Daily Report</a>
+            <a href ="../studentservices/issueTC.php" class="btn btn-success btn-sm">TC</a>
             <span class="clearfix"><br></span>   
         </div>
     </div>

@@ -54,10 +54,7 @@
             });
         });
     }
-    function showHideDiv(divName) {
-        $('#' + divName).toggle();
-
-    }
+    
 </script>
 
 <div class="container" id="selectinst">
@@ -318,7 +315,7 @@
                       ?> ( click to enlarge)
 
                       <img src="../../asset/images/institute-logo/<?php echo $institutedetailsArray['institutelogo'] ?>" 
-                           width="20" onclick=" showHideDiv('enlarge_logo')" /> 
+                           width="20" onclick=" displayHideDiv('enlarge_logo',null)" /> 
 
                   <?php } if (!empty($institutedetailsArray['institutelogo'])){
                       $logo = $institutedetailsArray['institutelogo']; }

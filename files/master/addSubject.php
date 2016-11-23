@@ -28,40 +28,15 @@ if (isset($_GET['mode']) && $_GET['mode'] == 'edit') {
 }
 
 require_once VIEW_HEADER;
-
-
 ?>
 
 <script type="text/javascript">
-
-    if (<?php if (isset($_GET['edid'])) {
-    echo $_GET['edid'];
-} else {
-    echo 0;
-}
-?>)
-    {
-        $(function () {
-            $("#searchsubject").hide();
-            $('#add,#show').click(function () {
-
-                $('#addsubject').toggle(500);
-                $('#searchsubject').toggle(500);
-            });
+    <?php if(isset($_GET['mode']) == 'edit') { ?>
+       $(function (){
+        displayHideDiv('addsubject','searchsubject');
         });
-    } else
-    {
-        $(function () {
-            $("#addsubject").hide();
-            $('#add,#show').click(function () {
-
-                $('#addsubject').toggle(200);
-                $('#searchsubject').toggle(200);
-            });
-        });
-
-    }
-
+    <?php } ?>
+        
     var rowNum = 0;
     function addRow() {
         rowNum++;
@@ -77,30 +52,14 @@ require_once VIEW_HEADER;
                 '&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-danger" id="remove" onclick="removeRow(' + rowNum + ');">',
                 '<span class="glyphicon glyphicon-minus"></span>  </button>  </div>');
 
-        jQuery('#itemRows').append(row);
+        $('#itemRows').append(row);
 
 
     }
 
     function removeRow(rnum) {
-        jQuery('#rowNum' + rnum).remove();
+        $('#rowNum' + rnum).remove();
     }
-
-    function displayErrorJS(err) {
-
-        var errMsg = [];
-        errMsg[0] = "You are about to delete this particular Subject for class <?php echo $response ?> ?  click Yes to confirm ...!";
-        errMsg[1] = "Do you want to delete this particular subject ?  click Yes to confirm ...!";
-        var strModal = '<div id="jsErrorAlert" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'.concat(
-                '<div class="modal-dialog"><div class="modal-content"><div class="modal-header"></strong>Attention..!</strong></div>',
-                '<div class="modal-body"><div class="alert alert-danger alert-dismissible fade in" role="alert">',
-                errMsg[err] + '</div></div>',
-                '<div class="modal-footer"><button type="button" class="btn btn-success" data-dismiss="modal" onClick="Javascript: confirmDelete();">Yes</button><button type="button" class="btn btn-danger" data-dismiss="modal">Close</button></div></div></div></div>');
-
-        $(strModal).appendTo('body');
-        $('#jsErrorAlert').modal('toggle');
-    }
-
 
     function getParameterByName(name) {
         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -131,6 +90,7 @@ require_once VIEW_HEADER;
             });
         });
     });
+    
     //To select country name
     function selectCountry(val) {
         $("#mastercollectiontype").val(val);
@@ -159,7 +119,7 @@ require_once VIEW_HEADER;
             <div class="row">
                 <div class="col-md-8">
                     <div class="controls" align="center">
-                        <button type="button" id="add"  name="search" class="btn btn-success">Add Subject</button>
+                        <button type="button" id="add"  name="search" class="btn btn-success" onclick="displayHideDiv('addsubject','searchsubject')">Add Subject</button>
                         <button value="reset" type="reset" class="btn">Cancel</button>
                         <button type="submit"  name="search" value="Search" class="btn btn-success">Search</button>
                     </div>
@@ -180,7 +140,7 @@ require_once VIEW_HEADER;
         } ?>">
 <input type="hidden" name="mode" value="<?php echo $mode ?>">
 
-<div class="container" id="addsubject">
+<div class="container" id="addsubject" style="display: none">
     <form action="<?php echo PROCESS_FORM; ?>" method="post"  >
         <div class="row">
             <div class="span10">
@@ -269,7 +229,7 @@ if (isset($subjectDetails['instsessassocid'])) {
                     <div class="row">
                         <div class="col-md-8">
                             <div class="controls" align="center">
-                                <button type="button" id="show" class="btn btn-success" >Search Subject</button>
+                                <button type="button" id="show" class="btn btn-success" onclick="displayHideDiv('searchsubject','addsubject')">Search Subject</button>
                                 <button value="reset" type="reset" class="btn">Cancel</button>
                                 <button type="submit" value="submit" class="btn btn-success">Save</button>
                             </div>
@@ -415,7 +375,3 @@ function actionDelete()
     }
 }
 ?>
-<!--<td><a href=\"addSubject.php?edid=$row[subjectid]&mode=edit\"><span class=\"glyphicon glyphicon-pencil\" ></span></a></td>
-                <td><a href=\"addSubject.php?delid=$row[subjectid]&page=$page\"><span class=\"glyphicon glyphicon-trash\"></span></a></td>
-                <td><a href=\"addSubject.php?status=$row[status]&sid=$row[subjectid]&page=$page\" > <span $statusStyle></span></a></a></td>
-           

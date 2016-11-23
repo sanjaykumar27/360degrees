@@ -1654,7 +1654,7 @@
 
               //clean the string of comma (,) and append to SQL array
               $sql[] = rtrim($strSql, ',');
-
+              
               $strSql = "INSERT INTO `tblclsexamassoc`(`instsessassocid`, `classid`,`examid`,  
                     `examstartdate`, `examenddate`,`status`) VALUES";
 
@@ -1946,7 +1946,6 @@
         $recieptid = GenerateRecieptNumber($dataArray['instituteabbrevation'],$dataArray['sessionname']);
         $PayingInstNo = count($dataArray['feeinstallment']);
         
-        
         // To be included only if fee amount is adjusted
        // echoThis($dataArray);
         if(is_numeric($dataArray['feeadjustedvalue']) && !empty($dataArray['feeeditremarks'])){
@@ -1957,12 +1956,10 @@
       
      $sql = array("INSERT INTO `tblfeecollection`(`studentid`,`instsessassocid`,`clsecassocid`,`receiptid`,
                 `remarks`,`datecreated` ) VALUES('$dataArray[studentid]','$instsessassocid',
-                '$dataArray[clsecassocid]','$recieptid', '$dataArray[remarks]', 'CURRENT_TIMESTAMP');",
+                '$dataArray[clsecassocid]','$recieptid', '$dataArray[remarks]', CURRENT_TIMESTAMP);",
           
          "SET @last_insert_id = LAST_INSERT_ID();");
 
-      
-      
     foreach ($dataArray['feeinstallment'] as $key => $value) {
         $installmentAmount = $dataArray['feeinstallmentamount'][$key];
          
@@ -2867,13 +2864,14 @@ function processImportstudentfee() {
        //  fclose($fileHandler); 
         
     }
-   // echoThis($InstSql); die;
+   //echoThis($InstSql); die;
     $result = dbInsert($InstSql);
+    
 }
 
 function processStudentStatus(){
 }
 
 function processClassStructure(){
-    
+    echoThis($_POST); die;
 }

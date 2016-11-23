@@ -2,6 +2,7 @@
 /*
  * 360 - School Empowerment System.
  * Developer: Ankur Mishra (amishra@ebizneeds.com.au) | www.ebizneeds.com.au
+ * Modified By; Sanjay Kumar Chaurasia
  * Page details here: Master for fees head and related processing
  * Updates here:
  */
@@ -11,221 +12,199 @@
 require_once "../../config/config.php";
 require_once DIR_FUNCTIONS;
 require_once VIEW_HEADER;
-?>
 
+?>
+<?php /* This CSS is used for checkboxes on feecollection page, dnt remove !important */ ?>
 <link href="<?php echo DIR_ASSET; ?>/css/feeform.css" rel="stylesheet">
+
 <script type="text/javascript">
-    function showHideDiv(divName) {
-        $('#' + divName).modal('show');
-    }
-   $(document).ready(function ($) {
-        $('#checkall').on('click', function(){ 
-            var childClass = $(this).attr('data-child');
-            $('.'+childClass+'').prop('checked', this.checked);
+    /* this portion check if the page comes tc module, then tc panel will be visible
+     * other tc panel wil be hidden
+     */
+    $(function () {
+<?php if (isset($_GET['tc']) && $_GET['tc'] == 'y') { ?>
+            $('#feedetails').toggle();
+            $('#feepenalties').toggle()
+<?php } else { ?>
+            $('#tcfeesdetails').toggle()
+<?php } ?>
+
+        // property of edited fees like required
+        $('#editfees').click(function () {
+            $('#feeeditremarks').attr("required", true);
+            $("#netinstallmentfees").prop("disabled", false);
         });
- }); 
- 
- function popUp(url, w, h) {
-        var left = (screen.width / 2) - (w / 2);
-        var top = (screen.height / 2) - (h / 2);
-        var sw = (screen.width * .60);
-        var sh = (screen.height * .60);
 
-        window.open(url, 'pop-up', 'width=' + sw + ', height=' + sh + ', top=' + top + ', left=' + left);
+        // check if the net installment fees is edit, then calculate new amount
+        $("#netinstallmentfees").change(function () {
+            var installmentField = $("#netinstallmentfees").val();
+            var otherFeesField = $("#netotherfees").val();
+            var newValue = parseInt(installmentField) + parseInt(otherFeesField);
+            $("#grandTotal").val(newValue);
+        });
 
-    }
-</script>
-<script type="text/javascript">
-
-//----this piece of code is for toggling of installments div----//
-
-    function showHideDiv(divName, divid) {
-    $('#' + divName).modal('show');
-    $('#' + divid).prop('disabled', false);
-    }
-//----div toggling code end here----//
-    $(document).ready(function () {
-<?php if (isset($_GET['tc']) && $_GET['tc'] == 'y') {
-    ?>
-        $('#feedetails').toggle();
-        $('#feepenalties').toggle()
-<?php 
-} else {
-    ?>
-        $('#tcfeesdetails').toggle()
-<?php 
-}
-
-?>
-    $("#feeinfo").hide();
-    $("#penaltyinfo").hide();
-    $("#tcinfo").hide();
-    $("#feeinfobtn").click(function() {
-    $("#feeinfo").toggle();
-    });
-    $("#penaltyinfobtn").click(function() {
-    $("#penaltyinfo").toggle();
-    });
-    $("#tcinfobtn").click(function() {
-    $("#tcinfo").toggle();
-    });
-    // for editing fees
-    $('#feeeditremarks').hide();
-    $('#editfees').click(function(){
-    $('#feeeditremarks').show();
-    $('#feeeditremarks').attr("required", true);
-    $("#netinstallmentfees").prop("disabled", false);
-    });
-    
-    
-    $("#netinstallmentfees").change(function(){
-    var installmentField = $("#netinstallmentfees").val();
-    var otherFeesField = $("#netotherfees").val();
-    var newValue = parseInt(installmentField) + parseInt(otherFeesField);
-    $("#grandTotal").val(newValue);
-    })
-
-            var originalFees = 0;
-    $('#PayNow').click(function(){
-
-    var originalValue = calculateFees();
-    if (parseInt(originalValue) !== parseInt($("#netinstallmentfees").val())){
-    $('#feeconfirmation').modal('show');
-    var adjustedAmount = parseInt($('#netinstallmentfees').val()) + parseInt($('#netotherfees').val());
-    $('#feeadjustedvalue').val(adjustedAmount);
-    $('#feeoriginalvalue').val(calculateFees(true));
-    $('#verifypassword').click(function(){
-    $.ajax({
-    type: "POST",
-            url: "verifypassword.php",
-            data: "password=" + $('#password').val(),
-            success: function (data) {
-            if ($.trim(data) === '1'){
-            $("#imform").submit();
-            }
-            else{
-            alert('Password not verified');
-            }
-
-
-            }
-    });
-    })
-
-    }
-    else{
-    $("#imform").submit();
-    }
-
-    });
-    $('#netinstallmentfees').bind('input', function () {
-    addotherpenalty('ChequeBounce', '200', 'ChequeBounce');
-    });
-    });
-    function calculateFees (other = false){
+    }); // $(function) end 
 
     var originalFees = 0;
-    for (i = 1; i < $('input[class="feeinstallment_boxes"]').length; i++) {
-    if (document.getElementById('feeinstallment[' + i + ']').checked) {
-    originalFees += parseInt(document.getElementById('feeinstallmentamount[' + i + ']').value);
-    if (other){
-    originalFees += parseInt(document.getElementById('totalOtherFees[' + i + ']').value);
+
+    // this function is called when pay now button is clicked 
+    function payNow() {
+        var originalValue = calculateFees();
+        var grandTotal = $("#grandTotal").val();
+
+        /* check if the fees is altered, if orginal fees doesnt match payable fees
+         * then confirmation dialog appears else process continues
+         */
+        if (parseInt(grandTotal) !== parseInt($("#netinstallmentfees").val())) {
+            // this function display confirmation popup
+            confirmationModal();
+        } else {
+            $("#imform").submit();
+        }
+    };
+
+    $('#netinstallmentfees').bind('input', function () {
+        addotherpenalty('ChequeBounce', '200', 'ChequeBounce');
+    });
+
+    // this function calculates the total fees
+    function calculateFees() {
+        other = false;
+        var originalFees = 0;
+        for (i = 1; i < $('input[class="feeinstallment_boxes"]').length; i++) {
+            if (document.getElementById('feeinstallment[' + i + ']').checked) {
+                originalFees += parseInt(document.getElementById('feeinstallmentamount[' + i + ']').value);
+                if (other) {
+                    originalFees += parseInt(document.getElementById('totalOtherFees[' + i + ']').value);
+                }
+                $("#grandTotal").val(originalFees);
+            }
+        }
+        return originalFees;
     }
 
+    // this function displays the confimation popup in case of fees is edited
+    function confirmationModal()
+    {
+        $('#feeconfirmation').modal('show');
+        var adjustedAmount = parseInt($('#netinstallmentfees').val()) + parseInt($('#netotherfees').val());
+        $('#feeadjustedvalue').val(adjustedAmount);
+        $('#feeoriginalvalue').val(calculateFees(true));
+        verifyPassword();
     }
 
+    // this function verifies password when original fees is altered
+    function verifyPassword() {
+        $('#verifypassword').click(function () {
+            $.ajax({
+                type: "POST",
+                url: "verifypassword.php",
+                data: "password=" + $('#password').val(),
+                success: function (data) {
+                    if ($.trim(data) === '1') {
+                        $("#imform").submit();
+                    } else {
+                        alert('Password not verified');
+                    }
+                }
+            });
+        });
     }
 
-    return originalFees;
-    }
-
+    // this function is called when fee mode cheque is selected
     function chequemode(val) {
-    if (document.getElementById(val).checked) {
-    $("#chequenumber,#bankname").prop("disabled", false);
-    }
-    else {
-    $("#chequenumber,#bankname").prop("disabled", true);
-    }
-
+        if (document.getElementById(val).checked) {
+            $("#chequenumber,#bankname").prop("disabled", false);
+        } else {
+            $("#chequenumber,#bankname").prop("disabled", true);
+        }
     }
 
+    // this function calculates the other amount like late fees or converyance
     function addOtherFeeAmount(num, chkboxlen, duedate) {
-    window.feeinstallements = chkboxlen;
-    var updatedFees = 0;
-    var updatedOtherFees = document.getElementById('netotherfees').value - document.getElementById('totalOtherFees[' + num + ']').value;
-    for (i = 0; i < chkboxlen; i++) {
-    if (document.getElementById('otherfeehead[' + num + '][' + i + ']').checked) {
-    updatedFees += parseInt(document.getElementById('otherFeecharged[' + num + '][' + i + ']').value);
-    }
+
+        window.feeinstallements = chkboxlen;
+        var updatedFees = 0;
+        var updatedOtherFees = document.getElementById('netotherfees').value - document.getElementById('totalOtherFees[' + num + ']').value;
+        for (i = 0; i < chkboxlen; i++) {
+            if (document.getElementById('otherfeehead[' + num + '][' + i + ']').checked) {
+                updatedFees += parseInt(document.getElementById('otherFeecharged[' + num + '][' + i + ']').value);
+            }
+        }
+        
+       
+        document.getElementById('totalOtherFees[' + num + ']').value = updatedFees;
+        document.getElementById('netotherfees').value = parseInt(updatedOtherFees) + parseInt(updatedFees);
+        document.getElementById('grandTotal').value = parseInt($('#netinstallmentfees').val()) + parseInt($('#netotherfees').val());
     }
 
-    document.getElementById('totalOtherFees[' + num + ']').value = updatedFees;
-    document.getElementById('netotherfees').value = parseInt(updatedOtherFees) + parseInt(updatedFees);
-    document.getElementById('grandTotal').value = parseInt(document.getElementById('netinstallmentfees').value) + parseInt(document.getElementById('netotherfees').value);
-    }
 
+    // this function updates the fees, when new installement is check or unchecked
     function updateTotalAmount(installmentToPay, Id) {
 
-    var feeActualValue = document.getElementById('netinstallmentfees').value;
-    var netotherfeeValue = document.getElementById('netotherfees').value;
-    var updatedinstallmentValue = 0;
-    var updatedotherValue = 0;
-    var checkBox = document.getElementById('feeinstallment[' + Id + ']');
-    if (checkBox.checked) {
-    updatedinstallmentValue = parseInt(feeActualValue) + parseInt(installmentToPay);
-    updatedotherValue = parseInt(netotherfeeValue) + parseInt(document.getElementById('totalOtherFees[' + Id + ']').value);
-    }
-    else {
-    updatedinstallmentValue = parseInt(feeActualValue) - parseInt(installmentToPay);
-    updatedotherValue = parseInt(netotherfeeValue) - parseInt(document.getElementById('totalOtherFees[' + Id + ']').value);
+        var feeActualValue = $('#netinstallmentfees').val();
+        var netotherfeeValue = $('#netotherfees').val();
+        var updatedinstallmentValue = 0;
+        var updatedotherValue = 0;
+        var checkBox = document.getElementById('feeinstallment[' + Id + ']');
+
+        // if new installment is click, then new amount is added to previous amount
+        if (checkBox.checked) {
+            // when main is added this will added amount to the previous amount
+            updatedinstallmentValue = parseInt(feeActualValue) + parseInt(installmentToPay);
+            // this will add other fees to the previos selected amount
+            updatedotherValue = parseInt(netotherfeeValue) + parseInt(document.getElementById('totalOtherFees[' + Id + ']').value);
+        } else {
+            // when checkbox is disselected then will deduct main fee amount from the total
+            updatedinstallmentValue = parseInt(feeActualValue) - parseInt(installmentToPay);
+            // when checkbox is disselected then will deduct other fee amount from the total
+            updatedotherValue = parseInt(netotherfeeValue) - parseInt(document.getElementById('totalOtherFees[' + Id + ']').value);
+
+        }
+
+        $("#netinstallmentfees").val(updatedinstallmentValue);
+        $("#netotherfees").val(updatedotherValue);
+        var gtotal = parseInt(updatedinstallmentValue) + parseInt(updatedotherValue);
+        $("#grandTotal").val(gtotal);
     }
 
-    document.getElementById("netinstallmentfees").value = updatedinstallmentValue;
-    document.getElementById('netotherfees').value = updatedotherValue;
-    document.getElementById('grandTotal').value = parseInt(updatedinstallmentValue) + parseInt(updatedotherValue);
-    }
 
+    // calculate other penalty
     function addotherpenalty(Id, otheramount, otherfeehead) {
 
-    var chkBox;
-    var totalFees;
-    totalFees = parseInt(document.getElementById('netinstallmentfees').value) + parseInt(document.getElementById('netotherfees').value)
-
-    chkBox = document.getElementById('otherpenalty[' + Id + ']');
-    if (chkBox.checked) {
-    totalFees = parseInt(totalFees) + parseInt(otheramount);
-    $('#' + otherfeehead).prop('disabled', false);
-    }
-    else {
-    totalFees = parseInt(totalFees) - parseInt(otheramount);
-    $('#' + otherfeehead).prop('disabled', true);
+        var totalFees = parseInt($('netinstallmentfees').val()) + parseInt($('#netotherfees').val())
+        var chkBox = document.getElementById('otherpenalty[' + Id + ']');
+        if (chkBox.checked) {
+            totalFees = parseInt(totalFees) + parseInt(otheramount);
+            $('#' + otherfeehead).prop('disabled', false);
+        } else {
+            totalFees = parseInt(totalFees) - parseInt(otheramount);
+            $('#' + otherfeehead).prop('disabled', true);
+        }
+        //document.getElementById('grandTotal').value = 'Rs ' + totalFees;
     }
 
-    document.getElementById('grandTotal').value = 'Rs ' + totalFees;
-    }
+    function updatefeeinstallment(Id, num) {
+        var updatedFees = 0;
+        var TotalFees = $("#feeinstallmentamount[" + Id + "]").val();
 
-    function updatefeeinstallment(Id, num){
+        var netFees = document.getElementById('netinstallmentfees').value;
+        if (document.getElementById('feeinstallment[' + Id + ']').checked) {
+            netFees = parseInt(netFees) - parseInt(TotalFees);
+        }
 
-    var updatedFees = 0;
-    var TotalFees = document.getElementById('feeinstallmentamount[' + Id + ']').value;
-    var netFees = document.getElementById('netinstallmentfees').value;
-    if (document.getElementById('feeinstallment[' + Id + ']').checked){
-    netFees = parseInt(netFees) - parseInt(TotalFees);
-    }
+        if (document.getElementById('feecomponent[' + Id + '][' + num + ']').checked) {
+            updatedFees = parseInt(document.getElementById('feeinstallmentamount[' + Id + ']').value) + parseInt(document.getElementById('feecomponent[' + Id + '][' + num + ']').value)
+        } else {
+            updatedFees = parseInt(document.getElementById('feeinstallmentamount[' + Id + ']').value) - parseInt(document.getElementById('feecomponent[' + Id + '][' + num + ']').value)
+        }
 
-    if (document.getElementById('feecomponent[' + Id + '][' + num + ']').checked) {
-    updatedFees = parseInt(document.getElementById('feeinstallmentamount[' + Id + ']').value) + parseInt(document.getElementById('feecomponent[' + Id + '][' + num + ']').value)
-    }
-    else{
-    updatedFees = parseInt(document.getElementById('feeinstallmentamount[' + Id + ']').value) - parseInt(document.getElementById('feecomponent[' + Id + '][' + num + ']').value)
-    }
+        document.getElementById('feeinstallmentamount[' + Id + ']').value = updatedFees;
+        if (document.getElementById('feeinstallment[' + Id + ']').checked) {
+            netFees = parseInt(netFees) + parseInt(updatedFees);
+        }
 
-    document.getElementById('feeinstallmentamount[' + Id + ']').value = updatedFees;
-    if (document.getElementById('feeinstallment[' + Id + ']').checked){
-    netFees = parseInt(netFees) + parseInt(updatedFees);
-    }
-    document.getElementById('netinstallmentfees').value = netFees;
-    document.getElementById('grandTotal').value = 'Rs. ' + (parseInt(netFees) + parseInt(document.getElementById('netotherfees').value));
+        $('#netinstallmentfees').val(netFees);
     }
 
 </script>
@@ -238,6 +217,7 @@ require_once VIEW_HEADER;
     <?php
     $HtmlArray = studentDetailsSql();
     $arr = feeRuleSql();
+    
     ?>
     <!-- hidden field-->
     <input type='hidden' name='studentid' value='<?php echo $HtmlArray[0]['studentid'] ?>' />    
@@ -254,32 +234,25 @@ require_once VIEW_HEADER;
                     <i class="fa fa-caret-square-o-down fa-lg" aria-hidden="true"></i>
                 </span>
             </div>
-            <div class="panel-body" id="studentinfo">
+            
 
-                <table class="table" >
+            <div class="panel-body" id="studentinfo">
+                <table class="table">
                     <tr>
-                        <td>
-                            <strong>SCHOLAR No.</strong> 
-                        </td>
-                        <td>
-                            <?php echo($HtmlArray[0]['scholarnumber']) ?>
-                        </td>
-                        <td>
-                            <strong>CLASS </strong>
-                        </td>
+                        <td><strong>SCHOLAR No.</strong></td>
+                        <td><?php echo($HtmlArray[0]['scholarnumber']) ?></td>
+                        <td><strong>CLASS </strong></td>
                         <td>
                             <?php
                             echo(strtoupper($HtmlArray[0]['classdisplayname'])
                             . "-" . strtoupper($HtmlArray[0]['sectionname'])
                             )
                             ?>
-
                         </td>
                     </tr>  
+
                     <tr>
-                        <td>
-                            <strong>STUDENT NAME</strong> 
-                        </td>
+                        <td><strong>STUDENT NAME</strong></td>
                         <td>
                             <?php
                             echo(strtoupper($HtmlArray[0]['firstname']) . " " .
@@ -288,9 +261,7 @@ require_once VIEW_HEADER;
                             );
                             ?>
                         </td>
-                        <td>
-                            <strong>FATHER'S NAME </strong> 
-                        </td>
+                        <td><strong>FATHER'S NAME </strong></td>
                         <td>
                             <?php
                             echo(strtoupper($HtmlArray[0]['parentfirstname']) . " " .
@@ -309,13 +280,13 @@ require_once VIEW_HEADER;
                                 foreach ($arr as $key => $value) {
                                     $feecomponent = strtoupper($value['feecomponent']);
                                     $feeruleamount = $value['feeruleamount'];
-                                    $feerule = $value['feerulename']; ?>
+                                    $feerule = $value['feerulename'];
+                                    ?>
                                     <a href="#" data-toggle="tooltip" data-placement="right" 
                                        data-original-title="Relaxation Of Rs <?php echo $feeruleamount ?> on <?php echo $feecomponent ?>">
                                            <?php echo($feerule) ?> 
                                     </a> 
                                     <?php
-
                                 }
                             } else {
                                 echo "N/A (<a href=\"../student/studentFees.php?sid=" . cleanVar($_GET['studentid']) . "&mode=edit&pop-up=y\">Apply here</a>)";
@@ -323,6 +294,7 @@ require_once VIEW_HEADER;
                             ?>
                         </td></tr>
                 </table>
+                
             </div>
         </div>
     </div>
@@ -331,12 +303,12 @@ require_once VIEW_HEADER;
     <!-- Fee Panel Start ----------------------------------------------- -->
     <div class="container" >
         <div class="panel panel-info">
-            <div class="panel-heading" id="feeinfobtn"><b>Fee Due </b>
+            <div class="panel-heading" id="feeinfobtn" onclick="displayHideDiv('feeinfo', null)"><b>Fee Due </b>
                 <span style="float:right">
                     <i class="fa fa-caret-square-o-down fa-lg" aria-hidden="true"></i>
                 </span>
             </div>
-            <div class="panel-body" id="feeinfo">
+            <div class="panel-body" id="feeinfo" style="display: none">
                 <div class="col-sm-12">
                     <small class="text-warning"> * shows cheque Bounced against paying installment</small>
                     <table class="table table-responsive" >
@@ -377,7 +349,7 @@ require_once VIEW_HEADER;
                             if (array_key_exists($key, $feecollected)) {
                                 $feeAmount = $feecollected[$key]['feeinstallmentamount'];
                                 $collectiondate = date('d/m/Y', strtotime($feecollected[$key]['datecreated']));
-                                
+
                                 $feereciept = $feecollected[$key]['receiptid'];
                                 echo "
                              <tr class=\"success\">
@@ -386,7 +358,6 @@ require_once VIEW_HEADER;
                                     <td>Date - $collectiondate </td>
                                     <td>Reciept -  $feereciept </td>
                             </tr>
-                                 
                                ";
                                 $instNo ++;
                                 continue;
@@ -427,7 +398,8 @@ require_once VIEW_HEADER;
                             }
 
                             // Check whether the installment is paid and due again for cheque bounce case
-                            $chequeBounceInst = getchequeBounceAmt(); ?> 
+                            $chequeBounceInst = getchequeBounceAmt();
+                            ?> 
 
                             <tr>
                                 <td>
@@ -440,25 +412,26 @@ require_once VIEW_HEADER;
                                                    value="<?php echo $duedate ?>" >
 
                                             <span class="cr"><i class="cr-icon fa fa-check"></i></span>
-                                        </label></div>
+                                        </label>
+                                    </div>
                                 </td>
 
                                 <td> 
-    <?php
-    $chqFlag = 0;
-                            if (is_array($chequeBounceInst) && (array_key_exists($key, $chequeBounceInst))) {
-                                $chqBounce = "<strong>*</strong>";
-                                $chqFlag = 1;
-                            } else {
-                                $chqBounce = '';
-                            } ?>
+                                    <?php
+                                    $chqFlag = 0;
+                                    if (is_array($chequeBounceInst) && (array_key_exists($key, $chequeBounceInst))) {
+                                        $chqBounce = "<strong>*</strong>";
+                                        $chqFlag = 1;
+                                    } else {
+                                        $chqBounce = '';
+                                    }
+                                    ?>
                                     <span class="<?php echo($status) ?>"> Inst <?php echo($instNo . "-" . $installmentMonth . $chqBounce) ?>  </span>
                                 </td>
 
-                                           <!--    DUe Date    <td> <?php echo $duedate ?> </td>   -->
+                                                           <!--    DUe Date    <td> <?php echo $duedate ?> </td>   -->
 
                                 <td class="col-lg-4">
-
                                     <div class="input-group">
                                         <input type="text" class='form-control'  name="feeinstallmentamount[]" 
                                                id="feeinstallmentamount[<?php echo $j ?>]" 
@@ -467,19 +440,16 @@ require_once VIEW_HEADER;
                                                value="<?php echo $value['totalamount'] ?>" >
                                         <span class="input-group-btn"> 
                                             <button class="btn btn-secondary" type="button"  name="search" id="search">
-                                                <a href="javascript:(void);" onClick="JavaScript: showHideDiv('displaycontent<?php echo $j ?>')" > 
+                                                <a href="javascript:(void);" onClick="JavaScript: showModal('displaycontent<?php echo $j ?>')" > 
                                                     <image src="<?php echo DIR_ASSET ?>/images/show_more.png" width="19" height="19" border="0" alt="Edit Field" />
                                                 </a>
                                             </button>
                                         </span>   
                                     </div><!-- /input-group -->
-
                                 </td>
 
                                 <td class="col-lg-4">
-
                                     <div class="input-group">
-
                                         <input type="text" name="totalOtherFees[<?php echo $j ?>]" class="form-control"
                                                id ="totalOtherFees[<?php echo $j ?>]" disabled="true"
                                                value="<?php echo $otherFeeAmount ?>"   >
@@ -487,7 +457,7 @@ require_once VIEW_HEADER;
                                         <span class="input-group-btn">
                                             <button class="btn btn-default" type="button"  name="search" id="search" >
                                                 <a href="javascript:(void);" 
-                                                   onClick="JavaScript: showHideDiv('displayotherfees<?php echo $j ?>', 'totalOtherFees[<?php echo $j ?>]')" > 
+                                                   onClick="JavaScript: showModal('displayotherfees<?php echo $j ?>', 'totalOtherFees[<?php echo $j ?>]')" > 
                                                     <image src="<?php echo DIR_ASSET ?>/images/edit_icon.png"  width="20" height="20" border="0" alt="Edit Field" />
                                                 </a>
                                             </button>
@@ -496,13 +466,13 @@ require_once VIEW_HEADER;
                                 </td>
                             </tr>
 
-    <?php
-    $j++;
+                            <?php
+                            $j++;
                             $instNo++;
                         }
 
-$grandTotal = $totalinstallmentFee + $totalOtherFees;
-?>   
+                        $grandTotal = $totalinstallmentFee + $totalOtherFees;
+                        ?>   
                         <tr>
                             <td colspan="2" class="danger" align="right"> <strong> Total</strong></td>
                             <td class="danger" >
@@ -511,12 +481,12 @@ $grandTotal = $totalinstallmentFee + $totalOtherFees;
                                            value="<?php echo $totalinstallmentFee ?>" />
                                     <input type="hidden" name="totalinstallmentValue" id="totalinstallmentValue" value="<?php echo $totalinstallmentFee ?>">
                                     <span class="input-group-btn">
-                                        <button type="button" class="btn btn-success" name="editfees" id="editfees">
+                                        <button type="button" class="btn btn-success" name="editfees" id="editfees" onclick="displayHideDiv('feeeditremarks', null)">
                                             Edit
                                         </button>
                                     </span>
                                 </div>
-                                <label id="feeeditremarks"> Remarks
+                                <label id="feeeditremarks" style="display: none"> Remarks
                                     <textarea class="form-control" name="feeeditremarks" id="feeeditremarks" ></textarea>
                                 </label>
                             </td>
@@ -532,42 +502,43 @@ $grandTotal = $totalinstallmentFee + $totalOtherFees;
         </div>
     </div>
     <!--  -Fee form ending--------------------------  -->
-<?php
-$chequeBounceInst = getchequeBounceAmt();
-$dispalystatus = "Penalties ";
-if ($chequeBounceInst != 0) {
-    $dispalystatus = " Penalties (Applicable)";
-}
-?>
+    <?php
+    $chequeBounceInst = getchequeBounceAmt();
+    $dispalystatus = "Penalties ";
+    if ($chequeBounceInst != 0) {
+        $dispalystatus = " Penalties (Applicable)";
+    }
+    ?>
     <div class="container" id="feepenalties">
         <div class="panel panel-danger">
-            <div class="panel-heading" id="penaltyinfobtn"><b><?php echo $dispalystatus ?> </b>
+            <div class="panel-heading" id="penaltyinfobtn" onclick="displayHideDiv('penaltyinfo', null)"><b><?php echo $dispalystatus ?> </b>
                 <span style="float:right">
                     <i class="fa fa-caret-square-o-down fa-lg" aria-hidden="true"></i>
                 </span>
 
             </div>
-            <div class="panel-body" id="penaltyinfo">
+            <div class="panel-body" id="penaltyinfo" style="display: none">
 
                 <table class="table table-responsive" border="0">
                     <tr>
                         <td colspan="3"  align="right"> <strong>Other Penalties</strong></td>
-<?php
-$OtherFeeDetails = otherFeeSql(true);
-$disabled = 'disabled="true"';
+                        <?php
+                        $OtherFeeDetails = otherFeeSql(true);
+                        $disabled = 'disabled="true"';
 
-$chqAmt = 0;
-$checked = "";
-$i = 1;
+                        $chqAmt = 0;
+                        $checked = "";
+                        $i = 1;
 
-foreach ($OtherFeeDetails as $othkey => $othvalue) {
-    $OtherFeeHead = $othvalue['otherfeehead'];
-    if (!empty($chequeBounceInst)) {
-        $disabled = "";
-        $checked = "checked='checked'";
-        $chqAmt = implode('', array_unique(array_values($chequeBounceInst)));
-        $grandTotal += $chqAmt;
-    } ?>
+                        foreach ($OtherFeeDetails as $othkey => $othvalue) {
+                            $OtherFeeHead = $othvalue['otherfeehead'];
+                            if (!empty($chequeBounceInst)) {
+                                $disabled = "";
+                                $checked = "checked='checked'";
+                                $chqAmt = implode('', array_unique(array_values($chequeBounceInst)));
+                                $grandTotal += $chqAmt;
+                            }
+                            ?>
                             <td align="right">
                                 <div class="checkbox">
                                     <label>
@@ -575,7 +546,7 @@ foreach ($OtherFeeDetails as $othkey => $othvalue) {
                                                name="otherpenalty[<?php echo $OtherFeeHead ?>]" id="otherpenalty[]" 
                                                value="<?php echo $chqAmt ?>" 
                                                onclick="addotherpenalty('<?php echo $OtherFeeHead ?>', '<?php echo $chqAmt ?>', '<?php echo(str_replace(' ', '', $OtherFeeHead)) ?>')">  
-    <?php echo $OtherFeeHead ?>
+                                               <?php echo $OtherFeeHead ?>
                                         <span class="cr"><i class="cr-icon fa fa-check"></i></span>
                                     </label>
                                 </div>
@@ -587,8 +558,8 @@ foreach ($OtherFeeDetails as $othkey => $othvalue) {
                                        id="<?php echo(str_replace(' ', '', $OtherFeeHead)); ?>" 
                                        value="<?php echo $chqAmt ?>">
                             </td>
-<?php 
-} ?>   
+                        <?php }
+                        ?>   
 
                     </tr>
                 </table>
@@ -600,12 +571,12 @@ foreach ($OtherFeeDetails as $othkey => $othvalue) {
     <!-- TC ----------------------------------- -->
     <div class="container" id="tcfeesdetails">
         <div class="panel panel-warning">
-            <div class="panel-heading" id="tcinfobtn"><b>TC</b>
+            <div class="panel-heading" id="tcinfobtn" onclick="displayHideDiv('tcinfo', null)"><b>TC</b>
                 <span style="float:right">
                     <i class="fa fa-caret-square-o-down fa-lg" aria-hidden="true"></i>
                 </span>
             </div>
-            <div class="panel-body" id="tcinfo">
+            <div class="panel-body" id="tcinfo" style="display: none">
                 <table class="table table-responsive">
                     <tr>
                         <td align="right"><label>TC Amount:</label></td>
@@ -664,7 +635,7 @@ foreach ($OtherFeeDetails as $othkey => $othvalue) {
 
                     <tr>
                         <td colspan="6" align="right" >
-                            <input type="button" id="PayNow" name="PayNow" value="Pay Now" class="btn btn-success">
+                            <input type="button" id="PayNow" name="PayNow" onclick="payNow();" value="Pay Now" class="btn btn-success">
                         </td>
                     </tr>
 
@@ -676,38 +647,39 @@ foreach ($OtherFeeDetails as $othkey => $othvalue) {
 
 
     <!-- --------------------------                 -->
-<?php
-$j = 1;
-foreach ($getInstallmentArray as $key => $value) {
-    $installmentMonth = date('F', strtotime($key));
-    $recieptno = "";
-    $collectionDate = "";
-    $duedate = date('d/m/Y', strtotime($key));
-    if (array_key_exists($key, $feecollected)) {
-        $recieptno = $feecollected[$key]['receiptid'];
-        $collectionDate = date("d/m/Y", strtotime($feecollected[$key]['datecreated']));
-    }
-
-    $otherFeesDetails = otherFeeSql(null);
-    $installmentMonth = date('M', strtotime($key));
-    $lateFeeAmount = implode('', LateFees($key, $value['totalamount']));
-
-    $totalinstallmentFees = 0;
-    $lateFees = 0;
-    if ($key <= date("Y-m-d")) {
+    <?php
+    $j = 1;
+    foreach ($getInstallmentArray as $key => $value) {
+        $installmentMonth = date('F', strtotime($key));
+        $recieptno = "";
+        $collectionDate = "";
+        $duedate = date('d/m/Y', strtotime($key));
         if (array_key_exists($key, $feecollected)) {
-            continue;
-        } else {
-            $status = "text-danger";
-            $checked = "checked";
-            $lateFees = $lateFeeAmount;
+            $recieptno = $feecollected[$key]['receiptid'];
+            $collectionDate = date("d/m/Y", strtotime($feecollected[$key]['datecreated']));
         }
-        $disabled = "";
-    } else {
-        $status = " ";
-        $checked = "";
-        $disabled = "disabled";
-    } ?>
+
+        $otherFeesDetails = otherFeeSql(null);
+        $installmentMonth = date('M', strtotime($key));
+        $lateFeeAmount = implode('', LateFees($key, $value['totalamount']));
+
+        $totalinstallmentFees = 0;
+        $lateFees = 0;
+        if ($key <= date("Y-m-d")) {
+            if (array_key_exists($key, $feecollected)) {
+                continue;
+            } else {
+                $status = "text-danger";
+                $checked = "checked";
+                $lateFees = $lateFeeAmount;
+            }
+            $disabled = "";
+        } else {
+            $status = " ";
+            $checked = "";
+            $disabled = "disabled";
+        }
+        ?>
         <div class="modal fade"  role="dialog" aria-labelledby="fee-details-label" aria-hidden="true"
              id="displaycontent<?php echo $j ?>" style="display:none">
             <div class="modal-dialog">
@@ -719,12 +691,12 @@ foreach ($getInstallmentArray as $key => $value) {
                     <div class="modal-body">
                         <table class="table table-bordered table-striped" >  
                             <tr>
-    <?php
-    $TotalAmount = $value['totalamount'];
-    unset($value['totalamount']);
-    $chk = 0;
-    foreach ($value as $k => $val) {
-        ?>
+                                <?php
+                                $TotalAmount = $value['totalamount'];
+                                unset($value['totalamount']);
+                                $chk = 0;
+                                foreach ($value as $k => $val) {
+                                    ?>
                                     <td>
                                         <input type="checkbox" checked="checked" 
                                                id="feecomponent[<?php echo $j ?>][<?php echo $chk ?>]"
@@ -743,9 +715,10 @@ foreach ($getInstallmentArray as $key => $value) {
                                     </td>
 
                                 </tr>
-        <?php
-        $chk++;
-    } ?>    
+                                <?php
+                                $chk++;
+                            }
+                            ?>    
                         </table> 
 
                     </div>
@@ -767,35 +740,36 @@ foreach ($getInstallmentArray as $key => $value) {
 
                         <table class="table table-bordered table-striped" >  
                             <tr> 
-    <?php
-    $count = 0;
+                                <?php
+                                $count = 0;
 
-    foreach ($otherFeesDetails as $key => $val) {
-        $checked = "checked";
-        $disabled = "";
-        $otherFeeHead = $val['otherfeehead'];
-        $otherFeeAmount = $lateFees;
-        if ($otherFeeHead != "Late Fees") {
-            $otherFeeAmount = $val['amount'];
-            $checked = "";
-            $disabled = "";
-        }
-        if ($otherFeeHead == "Conveyance Fees") {
-            if (getTransportFees() != 0) {
-                $otherFeeAmount = getTransportFees();
-                $checked = "checked";
-                $disabled = "";
-            } else {
-                $otherFeeAmount = 0;
-                $checked = "";
-                $disabled = "disabled";
-            }
-        } ?>  
+                                foreach ($otherFeesDetails as $key => $val) {
+                                    $checked = "checked";
+                                    $disabled = "";
+                                    $otherFeeHead = $val['otherfeehead'];
+                                    $otherFeeAmount = $lateFees;
+                                    if ($otherFeeHead != "Late Fees") {
+                                        $otherFeeAmount = $val['amount'];
+                                        $checked = "";
+                                        $disabled = "";
+                                    }
+                                    if ($otherFeeHead == "Conveyance Fees") {
+                                        if (getTransportFees() != 0) {
+                                            $otherFeeAmount = getTransportFees();
+                                            $checked = "checked";
+                                            $disabled = "";
+                                        } else {
+                                            $otherFeeAmount = 0;
+                                            $checked = "";
+                                            $disabled = "disabled";
+                                        }
+                                    }
+                                    ?>  
 
                                     <td><input type="checkbox" <?php echo $checked ?> name='otherfeehead[<?php echo $j ?>][<?php echo $count ?>]' 
                                                id='otherfeehead[<?php echo $j ?>][<?php echo $count ?>]' 
                                                value='<?php echo $val['feeotherchargesid'] ?>'
-        <?php echo $disabled ?>  />
+                                               <?php echo $disabled ?>  />
                                     </td>
 
                                     <td colspan='2' > <?php echo $val['otherfeehead'] ?></td>
@@ -812,9 +786,10 @@ foreach ($getInstallmentArray as $key => $value) {
                                 <input type="hidden" name="otherfees[<?php echo $j ?>][<?php echo $count ?>]"        
                                        id="otherfees[<?php echo $duedate ?>][<?php echo $j ?>]"
                                        value="<?php echo $otherFeeHead ?>" <?php echo $disabled ?>>
-        <?php
-        $count++;
-    } ?>
+                                       <?php
+                                       $count++;
+                                   }
+                                   ?>
                         </table>        
 
                     </div>
@@ -827,10 +802,10 @@ foreach ($getInstallmentArray as $key => $value) {
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
-    <?php
-    $j++;
-}
-?>
+        <?php
+        $j++;
+    }
+    ?>
     <!------Fee edit modal---->
     <div class="modal fade bs-example-modal-lg"  role="dialog" aria-labelledby="myLargeModalLabel" id="feeconfirmation" style="display:none">
         <div class="modal-dialog modal-lg">
@@ -838,17 +813,17 @@ foreach ($getInstallmentArray as $key => $value) {
 
                 <div class="modal-body">
                     You have made changes in the calculation. Please confirm the following
-<?php $studentDetails = studentDetailsSql(); ?>
+                    <?php $studentDetails = studentDetailsSql(); ?>
                     <table class="table table-bordered table-striped" >  
                         <tr> 
                             <td colspan='1'><label> Student Name : </label>
-<?php echo($studentDetails[0]['firstname'] . " " . $studentDetails[0]['middlename'] . " " . $studentDetails[0]['lastname']) ?>
+                                <?php echo($studentDetails[0]['firstname'] . " " . $studentDetails[0]['middlename'] . " " . $studentDetails[0]['lastname']) ?>
                             </td>
                             <td> <label>Scholar Number : </label>
-<?php echo($studentDetails[0]['scholarnumber']) ?>
+                                <?php echo($studentDetails[0]['scholarnumber']) ?>
                             </td>
                             <td> <label>Class : </label>
-<?php echo($studentDetails[0]['classname'] . "-" . $studentDetails[0]['sectionname']) ?>
+                                <?php echo($studentDetails[0]['classname'] . "-" . $studentDetails[0]['sectionname']) ?>
                             </td>
                         </tr>
 
@@ -884,8 +859,7 @@ foreach ($getInstallmentArray as $key => $value) {
 <?php
 require VIEW_FOOTER;
 
-function createInstallmentArray()
-{
+function createInstallmentArray() {
     $HtmlArray = feeComponentsSql();
 
     $newOptions = array();
@@ -911,8 +885,7 @@ function createInstallmentArray()
     return $newOptions;
 }
 
-function studentDetailsSql()
-{
+function studentDetailsSql() {
     if (isset($_GET['studentid']) && is_numeric($_GET['studentid'])) {
         $studentID = cleanVar($_GET['studentid']);
 
@@ -960,15 +933,14 @@ function studentDetailsSql()
     }
 }
 
-function feeComponentsSql()
-{
+function feeComponentsSql() {
     $conveyance = "";
     $pickuppoint = "";
     $studentdetails = studentDetailsSql();
     $feeruledetails = getfeeRuleSql();
 
     $feeRuleInstallment = getInstFeeRuleAssoc();
-    
+
     $sessionstartdate = getSessionDetails();
     $dateofJoining = $studentdetails[0]['dateofjoining'];
 
@@ -1006,10 +978,10 @@ function feeComponentsSql()
     }
 
     if (!empty($feeruledetails)) {
-        
+
         foreach ($feeruledetails as $key => $value) {
             foreach ($feedetails as $k => $val) {
-               
+
                 if ($value['feecomponent'] == $val['feecomponent'] && in_array($val['duedate'], $feeRuleInstallment)) {
                     //echoThis($value['feecomponent']." == ". $val['feecomponent']);
                     $feedetails[$k]['originalamount'] = $val['amount'];
@@ -1031,8 +1003,7 @@ function feeComponentsSql()
     }
 }
 
-function getfeeRuleSql()
-{
+function getfeeRuleSql() {
     $studentid = cleanVar($_GET['studentid']);
 
     $sql = "SELECT *
@@ -1058,8 +1029,7 @@ function getfeeRuleSql()
     }
 }
 
-function feeRuleSql()
-{
+function feeRuleSql() {
     $studentid = cleanVar($_GET['studentid']);
 
     $sql = "SELECT *
@@ -1077,7 +1047,7 @@ function feeRuleSql()
         AND t1.deleted != 1
         GROUP BY t1.feeruleid
         ";
-    
+
     if (($result = dbSelect($sql)) && (($num_row = mysqli_num_rows($result)) != 0)) {
         while ($row = mysqli_fetch_assoc($result)) {
             $feeruledetails[] = $row;
@@ -1086,8 +1056,7 @@ function feeRuleSql()
     }
 }
 
-function getInstFeeRuleAssoc()
-{
+function getInstFeeRuleAssoc() {
     $installmentArray = array();
     $studentid = cleanVar($_GET['studentid']);
 
@@ -1099,7 +1068,7 @@ function getInstFeeRuleAssoc()
               WHERE t1.studentid = $studentid
               AND t1.studfeeruleassocid = t2.studfeeruleassocid
               AND t2.status = 1 ";
-   
+
     $result = dbSelect($sql);
     if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {
@@ -1111,8 +1080,7 @@ function getInstFeeRuleAssoc()
     }
 }
 
-function updateFees($type, $mode, $amount, $value)
-{
+function updateFees($type, $mode, $amount, $value) {
     if ($type == 261) {
         if ($mode == 263) {
             $amount = ($amount - ($amount * $value / 100));
@@ -1132,13 +1100,12 @@ function updateFees($type, $mode, $amount, $value)
     }
 }
 
-function otherFeeSql($frequency)
-{
+function otherFeeSql($frequency) {
     $sqlStr = "AND t4.collectionname = 'Per Transaction'";
     if (empty($frequency) || is_null($frequency)) {
         $sqlStr = "AND t4.collectionname != 'Per Transaction'";
     }
-    
+
     $instsessassocid = $_SESSION['instsessassocid'];
     $sql = "SELECT *
             FROM `tblfeeothercharges` AS t1, 
@@ -1155,21 +1122,20 @@ function otherFeeSql($frequency)
             AND t1.status = 1
             AND t1.deleted != 1
         ";
-   
+
     $result = dbSelect($sql);
     if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {
             $otherfeeDetails[] = $row;
         }
-        
+
         return($otherfeeDetails);
     } else {
         return 0;
     }
 }
 
-function totalFeeAmount($feeArray)
-{
+function totalFeeAmount($feeArray) {
     $arr = feeComponentsSql();
     $status = feeStatus();
     $totalamount = 0;
@@ -1186,8 +1152,7 @@ function totalFeeAmount($feeArray)
     return $totalamount;
 }
 
-function feeStatus()
-{
+function feeStatus() {
     $feeCollected = array();
     $studentid = cleanVar($_GET['studentid']);
 
@@ -1213,12 +1178,11 @@ function feeStatus()
     return $feeCollected;
 }
 
-function LateFees($duedate, $installmentamount)
-{
+function LateFees($duedate, $installmentamount) {
     $feeamount = 0;
     $totaldays = 0;
     $otherFeeDetails = otherFeeSql(null);
-   
+
     foreach ($otherFeeDetails as $key => $value) {
         foreach ($value as $k => $val) {
             if ($value['otherfeehead'] == 'Late Fees') {
@@ -1233,18 +1197,17 @@ function LateFees($duedate, $installmentamount)
         $datediff = date_diff(date_create($duedate), date_create(date('Y-m-d')));
         $totaldays += $datediff->format("%R%a days");
     }
-    
+
     foreach ($otherFeeDetails as $key => $value) {
         if ($value['status'] == 1 && $value['otherfeehead'] == 'Late Fees') {
             $calcAmount = OtherFeeCalculate($value['chargemode'], $value['otherfeetype'], $value['frequency'], $value['amount'], $installmentamount, $totaldays);
         }
     }
-    
+
     return ($calcAmount);
 }
 
-function otherFees($duedate, $installmentamount)
-{
+function otherFees($duedate, $installmentamount) {
     $feeamount = 0;
     $totaldays = 0;
     $otherFeeDetails = otherFeeSql(null);
@@ -1263,8 +1226,7 @@ function otherFees($duedate, $installmentamount)
     return ($calcAmount);
 }
 
-function OtherFeeCalculate($chargemode, $otherfeetype, $frequency, $amount, $feeamount, $totaldays)
-{
+function OtherFeeCalculate($chargemode, $otherfeetype, $frequency, $amount, $feeamount, $totaldays) {
     $updatedAmt = 0;
     //echoThis($totaldays); die;
     if (!empty($amount)) {
@@ -1291,8 +1253,7 @@ function OtherFeeCalculate($chargemode, $otherfeetype, $frequency, $amount, $fee
     }
 }
 
-function OtherFeesCalculateAmount($totaldays, $amount, $frequency)
-{
+function OtherFeesCalculateAmount($totaldays, $amount, $frequency) {
     switch (strtolower($frequency)) {
         // Calculate for Daily (303 = Daily)
         case '303':
@@ -1316,8 +1277,7 @@ function OtherFeesCalculateAmount($totaldays, $amount, $frequency)
     } //end of switch statement
 }
 
-function getTransportFees()
-{
+function getTransportFees() {
     $studentid = cleanVar($_GET['studentid']);
 
     $sql = "SELECT t1.conveyancerequired, t1.pickuppointid, t2.amount 
@@ -1336,8 +1296,7 @@ function getTransportFees()
     }
 }
 
-function getchequeBounceAmt()
-{
+function getchequeBounceAmt() {
     $studentid = cleanVar($_GET['studentid']);
     $sql = "SELECT t3.amount , t4.feeinstallment
             FROM `tblfeecollection` AS t1,
@@ -1367,8 +1326,7 @@ function getchequeBounceAmt()
     }
 }
 
-function getSessionDetails()
-{
+function getSessionDetails() {
     $sql = "SELECT t2.sessionstartdate, t2.sessionenddate 
             FROM `tblinstsessassoc` AS t1,
             `tblacademicsession` AS t2
@@ -1389,10 +1347,10 @@ function getSessionDetails()
  * During time of admission
  */
 
-function studentFixChargesStatus($studentid, $dateofJoining)
-{
+function studentFixChargesStatus($studentid, $dateofJoining) {
     $where = '';
     if (!empty($dateofJoining)) {
+        
     }
     $sql = "SELECT t1.feecomponentid, t2.duedate, t2.amount, t2.frequency,
             t3.datecreated as collectiondate,  t5.feecomponent

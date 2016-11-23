@@ -26,37 +26,18 @@
     
     if (isset($_GET['mode']) && $_GET['mode']=='edit') {
         $academicYear=  getAcademicYearDetail();
+        
     }
-   
+    
 ?>
-    <script type="text/javascript">  
-    if(<?php if (isset($_GET['edid'])) {
-    echo $_GET['edid'];
-} else {
-    echo 0;
-} ?>)
-    {
-        $(function(){
-            $( "#selectyear" ).hide();
-            $('#add,#show').click(function(){
-       
-            $('#addyear').toggle(500);
-            $('#selectyear').toggle(500);    
-            });
+<script>
+    $(function(){
+    <?php if(isset($_GET['mode']) == 'edit') { ?>
+        displayHideDiv('addyear','selectyear');
+    <?php } ?>  
         });
-    }
-    else
-    {
-        $(function(){
-            $( "#addyear" ).hide();
-            $('#add,#show').click(function(){
-       
-            $('#addyear').toggle(200);
-            $('#selectyear').toggle(200);    
-            });
-        });
-    }
-    </script>
+</script>  
+
 <?php if (!isset($_GET['mode'])) {
     ?>
  <div class="container" id="selectyear">
@@ -115,11 +96,11 @@
      <?php 
     } ?>
     
-    <div class="clearfix"></div><button type="button" id="add" class="btn btn-success" >Add Session</button></div>
+     <div class="clearfix"></div><button type="button" id="add" class="btn btn-success" onclick="displayHideDiv('addyear','selectyear')" >Add Session</button></div>
     <?php 
 }  ?>
    
-    <div class="container" id="addyear">
+<div class="container" id="addyear" style="display: none">
         <div class="row">
             <div class="span8">
             <?php renderMsg(); ?>
@@ -179,7 +160,7 @@
 
         <div class="row">
             <div class="controls" align="center">
-                <button type="button" id="show" class="btn btn-success" >Show Academic Year</button>
+                <button type="button" id="show" class="btn btn-success" onclick="displayHideDiv('selectyear','addyear')" >Show Academic Year</button>
                  <input id="clearDiv" type="reset" value="Cancel" class="btn">
                 <input type="submit" id="save" name="save" value="SAVE" class="btn btn-success">
             </div>

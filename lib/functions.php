@@ -9,21 +9,20 @@
  */
 
 /*    Error detecting funtion   */
-//set_error_handler('customErrorHandler');
-//register_shutdown_function('fatalErrorHandeler');
+set_error_handler('customErrorHandler');
+register_shutdown_function('fatalErrorHandeler');
 
 /* check before anything if session exists for login purpose */
 
 if ((session_status() == PHP_SESSION_NONE)) {
     @session_start();
 }
-
 // user defined error handling function
 function customErrorHandler($errno, $errmsg, $filename, $linenum, $vars) {
 
     // timestamp for the error entry
     $dt = date("d-m-Y g:i (A)");
-
+        
     // define an assoc array of error string
     // in reality the only entries we should
     // consider are E_WARNING, E_NOTICE, E_USER_ERROR,
@@ -65,20 +64,20 @@ function customErrorHandler($errno, $errmsg, $filename, $linenum, $vars) {
 
     //$error = array($dt, $errno, $errortype[$errno], $errmsg, $filename, $linenum);
 
-
+    if (!DEVELOPMENT_ENVIRONMENT) {
+        $error = "";
+    }
 
     $subject = "Critical User Error";
     $headers = "MIME-Version: 1.0\r\n";
     $headers .= "Content-type: text/html; charset=utf-8\r\n";
 
-    error_log($err, 3, DIR_ERROR);
+    error_log($err, 3, "/opt/logs/error/error.log");
     //mail("schourasia@ebizneeds.com", $subject, $err , $headers); 
-    if (!DEVELOPMENT_ENVIRONMENT) {
-        $err = "";
-    }
+
     echo <<< HTML
    <style>
-     html,body{height:100%; padding-top: 60px;}
+     html,body{height:100%;}
     .wrapper{min-height:100%; position:relative}
     .full{position:absolute; top:0; left:0; width:100%; height:100%;}
     </style>
@@ -113,36 +112,108 @@ function customErrorHandler($errno, $errmsg, $filename, $linenum, $vars) {
  </script>
 HTML;
 
-die;
+
 
     // $redirect = "/360degrees/error.php?".http_build_query($error);
     // header( "Location: $redirect" );
 }
+/*
+function customErrorHandler($errNo, $errString, $errFile, $errLine) {  // date_default_timezone_set('Asia');
+    $backTrace = debug_backtrace();
+    $functionName = $backTrace[0]['function'];
+    $currentDate = date('d/m/Y: H:i:s');
+    $customerrHandler = " ($currentDate) :- Error Happened ($errNo) : \t $errString\t$errFile\t at $errLine \tin function $functionName () \n";
+    $fileHandler = fopen(DIR_ERROR, 'a+');
+    fwrite($fileHandler, $customerrHandler);
 
+   // header('Location: /360degrees/error.php?error='.$customerrHandler);
+    $errorDisplay = '<div class="container">
+        <div class="alert alert-danger">
+            <h1> Oops...</h1>
+            <p> Sorry, an unexpected error has occured. </p> 
+            <p>  We are terribly sorry for this. However, the technical team has been notified and they will 
+                attend to it ASAP.  </p>
+            <p>
+                If you wish to restart please click here or go back. 
+            </p>
+        </div>
+        
+        <button data-toggle="collapse" data-target="#error" class="btn btn-danger">Show Error</button>
+
+         <div id="error" class="collapse"><br>
+                <li>Error Object:  $errString  <br></li> 
+                <li>Location:   $errFile<br></li>   
+                <li>Line No:  $errLine  <br></li>
+            </div>
+    </div>';
+ switch ($errNo) {
+        case E_WARNING:
+            echo $errorDisplay; 
+            break;
+            die;
+
+        case E_ERROR:
+            echo $errorDisplay; 
+            break;
+
+        case E_PARSE:
+            echo $errorDisplay; 
+            break; die; 
+
+        case E_USER_ERROR:
+           echo $errorDisplay; 
+            break; die;
+
+        case E_RECOVERABLE_ERROR:
+            echo $errorDisplay; 
+            break; die;
+
+        case E_CORE_ERROR:
+           echo $errorDisplay; 
+            break; die;
+
+        case E_CORE_WARNING:
+           echo $errorDisplay; 
+            break; die;
+
+        case E_COMPILE_ERROR:
+           echo $errorDisplay; 
+            break; die;
+
+        case E_COMPILE_WARNING:
+           echo $errorDisplay; 
+            break; die;
+
+        default:
+         echo $errorDisplay; 
+            break; die;
+    }
+}
+*/
 function fatalErrorHandeler() {
     $last_error = error_get_last();
     $type = $last_error['type'];
     switch ($type) {
         case 1: /*  E_ERROR / FATAL ERROR   */
-            customErrorHandler(E_ERROR, $last_error['message'], $last_error['file'], $last_error['line'], '');
+            customErrorHandler(E_ERROR, $last_error['message'], $last_error['file'], $last_error['line']);
             break;
         case 4: /*  E_PARSE / PARSE ERROR / SYNTAX ERROR  */
-            customErrorHandler(E_PARSE, $last_error['message'], $last_error['file'], $last_error['line'], '');
+            customErrorHandler(E_PARSE, $last_error['message'], $last_error['file'], $last_error['line']);
             break;
         case 16: /*  NOT FATAL ERROR PHP STARTUP   */
-            customErrorHandler(E_NOTICE, $last_error['message'], $last_error['file'], $last_error['line'], '');
+            customErrorHandler(E_NOTICE, $last_error['message'], $last_error['file'], $last_error['line']);
             break;
         case 32: /*   FATAL COMPILE TIME ERROR   */
-            customErrorHandler(E_STRICT, $last_error['message'], $last_error['file'], $last_error['line'], '');
+            customErrorHandler(E_STRICT, $last_error['message'], $last_error['file'], $last_error['line']);
             break;
         case 64: /*  E COMPLILE ERROR   */
-            customErrorHandler(E_CORE_ERROR, $last_error['message'], $last_error['file'], $last_error['line'], '');
+            customErrorHandler(E_CORE_ERROR, $last_error['message'], $last_error['file'], $last_error['line']);
             break;
         case 128: /*  E COMPILE WARNING   */
-            customErrorHandler(E_COMPILE_WARNING, $last_error['message'], $last_error['file'], $last_error['line'], '');
+            customErrorHandler(E_COMPILE_WARNING, $last_error['message'], $last_error['file'], $last_error['line']);
             break;
         case 8: /*  E COMPILE WARNING   */
-            customErrorHandler(E_NOTICE, $last_error['message'], $last_error['file'], $last_error['line'], '');
+            customErrorHandler(E_USER_DEPRECATED, $last_error['message'], $last_error['file'], $last_error['line']);
             break;
     }
 }
@@ -214,11 +285,11 @@ function dbConnect() {
     $user = DB_USER;
     $pass = DB_PASSWORD;
     $port = DB_PORT;
-    $socket = DB_SOCKET;
+    //$socket = DB_SOCKET;
 
 
     // connect to the server
-    $mysqli = new mysqli($host, $user, $pass, $db, $port, $socket);
+    $mysqli = new mysqli($host, $user, $pass, $db, $port);
 
     /* check the following option, not to be included during prod server */
     $mysqli->options(MYSQLI_OPT_CONNECT_TIMEOUT, 500);
@@ -233,7 +304,7 @@ function dbConnect() {
 /* to execute update queries */
 
 function dbUpdate($sql) {
-
+    
     if (is_array($sql) == 0) {
         $sqlarray[] = $sql;
     } else {
@@ -292,21 +363,24 @@ function dbInsert($sql) {
         /* commit transaction */
 
         foreach ($sqlarray as $key => $value) {
-
+            
             if ($con->query($value)) {
                 $insertID[] = $con->insert_id;
+                
             } else {
                 trigger_error(mysqli_error($con));
+                $con->rollback();
+                $con->close();
+                
             }
         }
+       
         // if no error, commit.
         if ((!mysqli_error($con)) || (!mysqli_commit($con)) && ($sqlCount === count($insertID))) {
             $con->commit(); //mysqli_commit($con);
-        } else {
-            $con->rollback();
-            trigger_error('Error in dbInsert: ' . mysqli_error_list($con));
-            $con->close();
-        }
+            
+        } 
+        
     } catch (Exception $e) {
         // if any error, catch the exception and rollback
         $con->rollback();
@@ -607,8 +681,8 @@ function validateString($input) {
 }
 
 function validateTime($input) {
-    $is24Hours = true;
-    $seconds = false;
+    //$is24Hours = true;
+   // $seconds = false;
     $pattern = '/(2[0-4]|[01][1-9]|10):([0-5][0-9])/';
     if (preg_match($pattern, $input)) {
         return true;
@@ -1181,19 +1255,19 @@ function logOut() {
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
-
+   
     // update the logged list for log out of that session/userid
-    $status = logUser('Update');
-
+   $status = logUser('Update');
+ 
     if (isset($_COOKIE[COOKIE_NAME])) {
         setcookie(COOKIE_NAME, null, time() - 3600, '/');
     }
-
-    if ($status) {
-        session_destroy();
-        session_write_close();
-        header('Location:' . DIR_BASE . 'index.php?s=45');
-        exit();
+    
+    if ($status){
+    session_destroy();
+    session_write_close();
+    header('Location:' . DIR_BASE . 'index.php?s=45');
+    exit();
     }
 }
 
@@ -1300,6 +1374,12 @@ function populateSectionCheckbox($value = null) {
     }
 }
 
+function testSql(){
+   
+    $sql = "SELECT 1 FROM `tbluser` WHERE `username` = '$username' LIMIT 1"; 
+    
+    return $sql; 
+}
 function returnSql($name) {
     /* if form was submitted, include the process functions file */
     //if (wasFormSubmit()) {
@@ -1322,13 +1402,13 @@ function returnSql($name) {
         'sessionname',
         'SELECT t1.sessionname,t1.academicsessionid,t1.sessionstartdate,t1.sessionenddate, t1.status '
         . 'FROM tblacademicsession as t1 LEFT JOIN tblinstsessassoc as t2 ON t1.academicsessionid=t2.academicsessionid '
-        . "WHERE t1.deleted!=1 AND t2.instituteid='$_SESSION[instsessassocid]' AND t1.status= 1 AND deleted!=1",
+        . "WHERE t1.deleted!=1 AND t2.instituteid='$instsessassocid' AND t1.status= 1 AND deleted!=1",
     );
 
     $sql['instituteid'] = array(
         'instituteid',
         'institutename',
-        'SELECT `instituteid`, `institutename` FROM `tblinstitute` WHERE `status` = 1;',
+        "SELECT `instituteid`, `institutename` FROM `tblinstitute` WHERE `status` = '1';",
     );
 
     $sql['classname'] = array(
@@ -1372,7 +1452,7 @@ function returnSql($name) {
         'drivername',
         "SELECT driverid,CONCAT(driverfirstname , ' ',drivermiddlename, ' ' ,driverlastname) as drivername 
                                                  FROM tbldrivers WHERE status=1 AND deleted=0 
-                                                 AND instsessassocid=$_SESSION[instsessassocid]  ORDER BY drivername , driverid",
+                                                 AND instsessassocid = $instsessassocid  ORDER BY drivername , driverid",
     );
 
     $sql['gender'] = array(
@@ -1432,8 +1512,8 @@ function returnSql($name) {
         'mastercollectionid',
         'collectionname',
         "SELECT `mastercollectionid`, `mastercollectiontypeid`, `collectionname`, 
-                                            `status` FROM `tblmastercollection` WHERE `mastercollectiontypeid` = (SELECT `mastercollectiontypeid` FROM `tblmastercollectiontype` 
-                                            WHERE `mastercollectiontype` = 'occupation');",
+        `status` FROM `tblmastercollection` WHERE `mastercollectiontypeid` = (SELECT `mastercollectiontypeid` FROM `tblmastercollectiontype` 
+        WHERE `mastercollectiontype` = 'occupation');",
     );
 
     $sql['income'] = array(
@@ -1480,7 +1560,7 @@ function returnSql($name) {
         'collectionname',
         "SELECT `mastercollectionid`, `mastercollectiontypeid`, `collectionname`, 
                                             `status` FROM `tblmastercollection` WHERE `mastercollectiontypeid` =(SELECT `mastercollectiontypeid` FROM `tblmastercollectiontype` 
-                                            WHERE `mastercollectiontype` = 'suburbs');",
+                                            WHERE `mastercollectiontype` = 'suburbs' AND `deleted` != 1);",
     );
 
     $sql['studentdocs'] = array(
@@ -1616,8 +1696,23 @@ function returnSql($name) {
         "SELECT mastercollectionid,collectionname FROM tblmastercollection as 
                                             T1 LEFT JOIN tblmastercollectiontype  as T2 ON 
                                             T1.mastercollectiontypeid=T2.mastercollectiontypeid 
-                                            WHERE T2.mastercollectiontype='Documents'",
-    );
+                                            WHERE T2.mastercollectiontype='Documents'" );
+    
+    $sql['exammaster'] = array(
+        'mastercollectionid',
+        'collectionname',
+        "SELECT mastercollectionid,collectionname FROM tblmastercollection as 
+                                            T1 LEFT JOIN tblmastercollectiontype  as T2 ON 
+                                            T1.mastercollectiontypeid=T2.mastercollectiontypeid 
+                                            WHERE T2.mastercollectiontype='Exam Master'" );
+    
+    $sql['examcomponent'] = array(
+        'mastercollectionid',
+        'collectionname',
+        "SELECT mastercollectionid,collectionname FROM tblmastercollection as 
+                                            T1 LEFT JOIN tblmastercollectiontype  as T2 ON 
+                                            T1.mastercollectiontypeid=T2.mastercollectiontypeid 
+                                            WHERE T2.mastercollectiontype='Exam Components'" );
 
     if (isset($sql[$name])) {
         return $sql[$name];
@@ -1912,6 +2007,16 @@ function getSelectizeData($dataDetails) {
         'selectizeFieldName' => '#classname',
         'addInputize' => '#classname,#sectionname,#subjectid,#examstartdate,#examenddate',
     );
+    
+     $data['classStructure'] = array(
+        'dataName' => 'selectizeClassName',
+        'valueField' => 'classid',
+        'labelField' => 'classname',
+        'searchField' => 'classdisplayname',
+        'selectizeFieldName' => '#classname',
+        'addInputize' => '#classname,#sectionname,#subjectid,#examdate,#marks,#examname',
+    );
+
     $data['addRoute'] = array(
         'dataName' => 'pickuppointname',
         'valueField' => 'pickuppointid',
@@ -2257,10 +2362,9 @@ function writeToFile($file, $data) {
 }
 
 function sqlRowCount($dbObj) {
-
+    
     $rowCount = mysqli_num_rows($dbObj);
-    echoThis($rowCount);
-    die;
+    echoThis($rowCount);die;
     return $rowCount;
 }
 
@@ -2300,35 +2404,37 @@ function loadCookie() {
     }
 }
 
+
 /* this function maintain the log of user logged in or logged out */
 
 function logUser($action) {
-
+     
     /* get user id from the session */
-    $userid = $_SESSION['userid'];
+    $userid = $_SESSION['userid'];   
     /* get ip address of logged in system */
     $ip = $_SERVER['REMOTE_ADDR'];
-
+  
     /* insert query , executed when user is logged in */
-    $Insert = "INSERT INTO tbluserlogged SET userid = '$userid', phpsessid = '" . session_id() . "', 
-                ip_address = '$ip', logged_in = CURRENT_TIMESTAMP";
-
+    $Insert = "INSERT INTO tbluserlogged SET userid = '$userid', phpsessid = '".session_id()."', 
+                ip_address = '$ip', logged_in = CURRENT_TIMESTAMP"; 
+    
     /* update query executed when used logged out form the system */
-    $Update = "UPDATE tbluserlogged SET logged_out = NOW() WHERE userid = '$userid' AND phpsessid = '" . session_id() . "'";
-
+    $Update = "UPDATE tbluserlogged SET logged_out = NOW() WHERE userid = '$userid' AND phpsessid = '". session_id()."'";
+    
     /* assigning function name dynamically to the variable 
      * like dbUpdate / dbInsert 
      */
-    $doAction = "db$action";
-
+    $doAction = "db$action"; 
+    
     /* passing values to the function dynamically */
-    $doSql = "${$action}";
-
+    $doSql = "${$action}";  
+ 
     /* call_user_func call the function dynamically 
      * first parameter function name and second parameter is the function values 
      */
     return call_user_func($doAction, $doSql);
 }
+
 
 /* * ******************************************************************************************
  *  Function to extract the maximum id or last inserted record id from the specified table.
@@ -2462,10 +2568,10 @@ function checkUserGroup() {
     }
 }
 
-/* * ****************************************************************************************** 
+/* * *******************************************************************************************
  * Function for updating record status in database. User can make active or inactive of any records they want.
  * Written by : Abhishek K. Sharma
- * ****************************************************************************************** */
+ * ******************************************************************************************* */
 
 function statusUpdate($tblName, $currentState, $condition) {
     if ($currentState == 0) {
@@ -2689,7 +2795,6 @@ function renderHeaderLinks($roleType) {
             'Adjusted Fee Report' => 'adjustedFeeReport.php',
         ),
         'Student Services' => array('TC' => 'issueTC.php'),);
-
     $navbarIcons = array(
         'Master' => 'admin-icon.jpg',
         'Student' => 'student-icon.jpg',
@@ -2698,7 +2803,6 @@ function renderHeaderLinks($roleType) {
         'Fees' => 'feecollection-icon.jpg',
         'Reports' => 'report-icon.jpg',
         'Student Services' => 'student-services-icon.jpg',);
-
     $role = array(
         'Admin' => array('Master' => 'Add User,Institute,Academic Year,Class Master,Class Structure,Subject,Collection,Fees,Fee Rule,Other Fee',
             'Student' => 'Student,Create Student,Quick Registration',
@@ -2714,7 +2818,6 @@ function renderHeaderLinks($roleType) {
             'Student Services' => 'TC',),
         'Student' => array('Student' => 'Student'),
     );
-
     switch ($roleType) {
         case 3:
             $type = 'Admin';
@@ -2729,7 +2832,6 @@ function renderHeaderLinks($roleType) {
             $type = 'Student';
             break;
     }
-
     $topLinks = array_keys($role[$type]);
     $navBar = ' <ul class="nav navbar-nav">
                     
@@ -2740,14 +2842,12 @@ function renderHeaderLinks($roleType) {
                     <li style="text-align: center" >
                         <a href="#contact"><img src="' . DIR_ASSET . '/images/contact-icon.jpg" alt="Contact Us" width="50"></a>
                    </li>';
-
     foreach ($topLinks as $key => $value) {
         if ($value != 'Reports' && $value != 'Student Services') {
             $filePath = DIR_BASE . 'files/';
         } else {
             $filePath = DIR_BASE . '';
         }
-
         $innerLinks = explode(',', $role[$type][$value]);
         $iconPath = DIR_ASSET . '/images/' . $navbarIcons[$value];
         $navBar .= ' <li>
@@ -2756,10 +2856,8 @@ function renderHeaderLinks($roleType) {
                     </br><center><span class="caret"></span></center></a>
                     <ul class="dropdown-menu" role="menu"></li>
                     ';
-
         foreach ($innerLinks as $innerKey => $innerValue) {
             $linkPath = $filePath . str_replace(' ', '', strtolower($value)) . '/' . $menu[$value][$innerValue];
-
             $navBar .= '<li><a href="' . $linkPath . '">' . $innerValue . ' </a></li>';
         }
         $navBar .= '</ul></li>';
@@ -2767,7 +2865,6 @@ function renderHeaderLinks($roleType) {
     $navBar .= '<li><a href="' . DIR_FILES . '/logout.php">
                 <img src="' . DIR_ASSET . '/images/logout-icon.jpg" alt="Logout" width="50"></a></li>
               </ul>';
-
     return $navBar;
 }
 
@@ -3031,6 +3128,8 @@ function checkRole($bcpage) {
             'Institute' => 'addInstitute.php',
             'Academic Year' => 'addAcademicYear.php',
             'Subject' => 'addSubject.php',
+            'Class Master' => 'classMaster.php',
+            'Class Structure' => 'classStructure.php',
             'Collection' => 'collectionType.php',
             'User' => 'User.php',
             'Fees' => 'feeMaster.php',
@@ -3193,7 +3292,7 @@ function hoverList($sid, $status, $id) {
         }
         $iconpath = $icons[$key];
         $html .= "<a $href>
-            <button class=\"btn btn-sm\">            
+            <button class=\"btn btn-sm\" style=\"background-color: #fff\">            
                     <span class=\"$iconpath\" aria-hidden=\"true\" $style
                     data-toggle=\"tooltip\" title=\"$key\"></span></button></a>
     ";
@@ -3251,9 +3350,6 @@ function bcPage() {
         'studentDocument' => 'Student Documents',
         'studentFeeDetails' => 'Student Fee Details',
         'feeCollectionProcessing' => 'Fee Collection Processing',
-        'classMaster' => 'Class Master',
-        'classStructure' => 'Class Structure',
-        'addUser' => 'Add New User',
         'loadScholarData' => 0,
     );
 

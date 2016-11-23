@@ -24,10 +24,6 @@ require_once VIEW_HEADER;
 ?>
 
 <script type="text/javascript">
-    function showHideDiv(divName) {
-        $('#' + divName).modal('show');
-    }
-
     $(document).ready(function ($) {
         $('#checkall').on('click', function () {
             var childClass = $(this).attr('data-child');
@@ -35,18 +31,6 @@ require_once VIEW_HEADER;
         });
 
     });
-
-    function popUp(url, w, h) {
-        var left = (screen.width / 2) - (w / 2);
-        var top = (screen.height / 2) - (h / 2);
-        var sw = (screen.width * .60);
-        var sh = (screen.height * .60);
-        window.open(url, 'pop-up', 'width=' + sw + ', height=' + sh + ', top=' + top + ', left=' + left);
-    }
-    /*
-     function editamount(Id) {
-     $('#refundamount' + Id).prop("disabled", false);
-     }*/
 
 </script>
 
@@ -85,7 +69,7 @@ require_once VIEW_HEADER;
                     $otherfee = 0;
                     $InstallmentMonthname = date('F', strtotime($key));
                     $InstallmentMonth = "<span class=\"text-danger\">$InstallmentMonthname</span> ";
-                    $modalShow = "onclick=\"showHideDiv('displayduefeecontent$j')\" ";
+                    $modalShow = "onclick=\"showModal('displayduefeecontent$j')\" ";
                     $status = " <button  class=\"btn btn-danger\"  
                        onClick=\"popUp('../fees/feeCollectionProcessing.php?studentid=" . $_GET['sid'] . "&pop-up=y',1100,500)\">
                                         Pay Now
@@ -101,7 +85,7 @@ require_once VIEW_HEADER;
 
                     if (!empty($collectedfee) && array_key_exists($key, $collectedfee)) {
                         $InstallmentMonth = "<span class=\"text-success\">$InstallmentMonthname</span> ";
-                        $modalShow = "onclick=\"showHideDiv('displaycollectedfeecontent$i')\" ";
+                        $modalShow = "onclick=\"showModal('displaycollectedfeecontent$i')\" ";
                         $status = "<h5 class=\"text-success\">
                                        Paid
                                     </h5>";

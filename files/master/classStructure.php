@@ -22,7 +22,7 @@ require_once VIEW_HEADER;
 <script type="text/javascript">
     $(function ()
     {
-        $('#exams, #subjectid, #classid, #sectionid, #examname').selectize({hideSelected: 'true'});
+        $('#examname, #subjectid, #classid, #sectionid, #examcomponent').selectize({hideSelected: 'true'});
        
         $('#checkBoxTips').click(function (e) {
             setPopover(this);
@@ -76,43 +76,40 @@ require_once VIEW_HEADER;
     function addExamRow() {
         rowNum++;
         exam = '<td><div class="col-lg-12">\
-                        <label>Exam Name<div id="forExamsTour"></div></label>\
-                        <select multiple="multiple" id="examname' + rowNum + '" name="exams[]" required="true">\
-                            <option value="1">Formative Assessment I</option>\
-                            <option value="2">Formative Assessment II</option>\
-                            <option value="3">Formative Assessment III</option>\
-                            <option value="4">Formative Assessment IV</option>\
-                            <option value="5">Annual</option>\
-                        </select></div></td>';
+               <label>Exam Name<div id="forExamsTour"></div></label>\
+                <select multiple="multiple" class="form-control" id="examname" name="examname[' + rowNum + ']"  required="true">\
+                <?php echo populateSelect("exammaster", submitFailFieldValue("examname")); ?>\n\
+                </select></div></td>';
         addSubjectRow();
+        
     }
 
 
     function addSubjectRow() {
         rowNum++;
         $("#examstructure").append('<tr>' + exam + '<td><div class="col-lg-12"><label>Subjects <div id="forSubTour"></div></label>\n\
-                        <select multiple="multiple" id="subjectid' + rowNum + '" name="subjectid[]" required="true" >\n\
+        <select multiple="multiple" id="subjectid' + rowNum + '" name="subjectid[]" required="true" >\n\
 <?php echo populateSelect("subjectname", submitFailFieldValue("subjectid")); ?>\n\
-                        </select><small> (Type subject name and select.)</small></div>\n\
-                                </td><td width="150" style="padding-top: 30px;">\n\
-                    <div class="checkbox" id="checkBoxTips' + rowNum + '"><label><input type="checkbox" value="">Is Optional</label>\n\
-                    </div></td><td width="200"><div class="col-lg-12">\n\
-                        <label>Exam Components <div id="forExamsTour"></div></label>\n\
-                        <select multiple="multiple" id="exams' + rowNum + '" name="examcomponent[]" required="true">\n\
-                            <option value="1">Written</option><option value="2">Verbal</option>\n\
-                            <option value="3">Projects</option><option value="4">Activities</option>\n\
-                        </select></div></td><td><div class=" col-lg-12"><label for="examdate">Exam Date</label>\n\
-                        <input type="text" id="examdate"  name="examdate[0]" required="true" class="form-control"\n\
-                               value="<?php echo submitFailFieldValue("examdate[0]"); ?>">\n\
-                        <small>Enter the date in  when the assigned amount is due.  </small>\n\
-                        <div class="hidden" id="divduedate"><code>Exam date is required.</code></div>\n\
-                    </div></td><td width="150"><div class="col-lg-12">\n\
-                        <label>Marks <div id="forSubTour"></div></label>\n\
-                        <input type="text" class="form-control" id="marks" name="marks">\n\
-                    </div></td></tr>');
+        </select><small> (Type subject name and select.)</small></div>\n\
+                </td><td width="150" style="padding-top: 30px;">\n\
+    <div class="checkbox" id="checkBoxTips' + rowNum + '"><label><input type="checkbox" value="">Is Optional</label>\n\
+    </div></td><td width="200"><div class="col-lg-12">\n\
+        <label>Exam Components <div id="forExamsTour"></div></label>\n\
+        <select multiple="multiple"  id="examcomponent'+rowNum+'" name="examcomponent[]" required="true">\n\
+             <?php echo populateSelect("examcomponent", submitFailFieldValue("examcomponent")); ?>\n\
+        </select></div></td><td><div class=" col-lg-12"><label for="examdate">Exam Date</label>\n\
+        <input type="text" id="examdate"  name="examdate[0]" required="true" class="form-control"\n\
+               value="<?php echo submitFailFieldValue("examdate[0]"); ?>">\n\
+        <small>Enter the date in  when the assigned amount is due.  </small>\n\
+        <div class="hidden" id="divduedate"><code>Exam date is required.</code></div>\n\
+    </div></td><td width="150"><div class="col-lg-12">\n\
+        <label>Marks <div id="forSubTour"></div></label>\n\
+        <input type="text" class="form-control" id="marks" name="marks">\n\
+    </div></td></tr>');
         $('#subjectid' + rowNum).selectize({hideSelected: 'true'});
-        $('#exams' + rowNum).selectize({hideSelected: 'true'});
-        $('#examname' + rowNum).selectize({hideSelected: 'true'});
+        $('#examname').selectize({hideSelected: 'true'});
+        $('#examcomponent'+rowNum).selectize({hideSelected: 'true'});
+        addInputize('#examdate, #marks');
 
 
         $('#checkBoxTips' + rowNum).click(function (e) {
@@ -203,12 +200,8 @@ require_once VIEW_HEADER;
                 <td>
                     <div class="col-lg-12">
                         <label>Exam Name<div id="forExamsTour"></div></label>
-                        <select multiple="multiple" id="examname" name="exams[]" required="true">
-                            <option value="1">Formative Assessment I</option>
-                            <option value="2">Formative Assessment II</option>
-                            <option value="3">Formative Assessment III</option>
-                            <option value="4">Formative Assessment IV</option>
-                            <option value="5">Annual</option>
+                        <select multiple="multiple" id="examname" name="examname[]" required="true">
+                             <?php echo populateSelect("exammaster", submitFailFieldValue("exams")); ?>
                         </select>
                         <small> (Type all exam type for this class & Sections.)</small>
                     </div>
@@ -232,11 +225,8 @@ require_once VIEW_HEADER;
                 <td width="200">
                     <div class="col-lg-12">
                         <label>Exam Components <div id="forExamsTour"></div></label>
-                        <select multiple="multiple" id="exams" name="examcomponent[]" required="true">
-                            <option value="1">Written</option>
-                            <option value="2">Verbal</option>
-                            <option value="3">Projects</option>
-                            <option value="4">Activities</option>
+                        <select multiple="multiple" id="examcomponent" name="examcomponent[]" required="true">
+                             <?php echo populateSelect("examcomponent", submitFailFieldValue("examcomponent")); ?>
                         </select>
                     </div>
                 </td>
@@ -254,7 +244,7 @@ require_once VIEW_HEADER;
                 <td width="150">
                     <div class="col-lg-12">
                         <label>Marks <div id="forSubTour"></div></label>
-                        <input type="text" class="form-control" id="marks" name="marks">
+                        <input type="text" class="form-control" id="marks" name="marks[]">
                     </div> 
                 </td>
             </tr>

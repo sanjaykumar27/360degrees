@@ -166,12 +166,6 @@
 
     }
 
-    function showHideDiv(divName) {
-        $('#' + divName).toggle();
-
-    }
-
-
 </script>
 
 <?php
@@ -203,9 +197,9 @@
                                     onClick=\"JavaScript: showHideDiv('displaystructure$i')\"> <span class=\"caret\"></span> </a>";
                       ?>
                       <tr>
-                          <td><a href="#" onClick="JavaScript: showHideDiv('displaystructure<?php echo $i; ?>')"><?php echo $i ?></a> </td>
-                          <td><a href="#" onClick="JavaScript: showHideDiv('displaystructure<?php echo $i; ?>')"><?php echo $key ?></a></td>
-                          <td><a href="#" onClick="JavaScript: showHideDiv('displaystructure<?php echo $i; ?>')"><?php echo(formatCurrency($totalAmount)) ?></a> <?php echo $toggleButton ?></td>
+                          <td><a href="#" onClick="JavaScript: displayHideDiv('displaystructure<?php echo $i; ?>',null)"><?php echo $i ?></a> </td>
+                          <td><a href="#" onClick="JavaScript: displayHideDiv('displaystructure<?php echo $i; ?>',null)"><?php echo $key ?></a></td>
+                          <td><a href="#" onClick="JavaScript: displayHideDiv('displaystructure<?php echo $i; ?>',null)"><?php echo(formatCurrency($totalAmount)) ?></a> <?php echo $toggleButton ?></td>
                       </tr>
                       <tr style="display:none;" id="displaystructure<?php echo $i ?>">
                           <td colspan="3">
@@ -320,7 +314,6 @@
                           <input type="text" name="classid[0]" id="classid" required value ="<?php echo submitFailFieldValue("classname[0]"); ?>">
                           <small>Select all the classes with same structure.</small>
                       </div>
-
 
                       <div class=" col-lg-3">
                           <label for="Amount">Amount:</label>

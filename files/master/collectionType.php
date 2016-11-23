@@ -43,7 +43,7 @@ $page=(int)(isset($_GET['page']) && !empty($_GET['page']) ? $_GET['page'] : 1);
     var rowNum = 0;
     function addRow(frm) {
         rowNum++;
-var row = '<div id="rowNum' + rowNum + '"><span class="clearfix">&nbsp;</span><div class="col-md-6">'.concat(
+var row = '<br><br><div id="rowNum' + rowNum + '"><span class="clearfix">&nbsp;</span><div class="col-md-6">'.concat(
 '<input type="text" name="collectionname[]" id="collectionname[]" class="form-control" required="true">',
 '</div><div class="col-md-1"> <button type="button" class="btn btn-danger" id="remove" onclick="removeRow(' + rowNum + ');">',
 '<span class="glyphicon glyphicon-minus"></span></button></div></div>');
