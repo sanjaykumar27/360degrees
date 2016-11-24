@@ -136,7 +136,7 @@
                   <div class="col-lg-6" style="text-align: left; padding-left: 0px;">
                       <a href="studentStatusReportPDF.php?action=pdf&type=detail"> 
                           <input type="button" id="pdfreport"  name="pdfreport" class="btn btn-success"  value=" View PDF"></a>
-                      <a href="studentStatusReportPDF.php?action=xls&type=detail<?php echo $qryString; ?>"> 
+                      <a href="studentStatusReportPDF.php?action=xls&type=detail"> 
                           <input type="button" id="excelreport"  name="excelreport" class="btn btn-info"  value=" View EXCEL"></a>
                   </div>
               </div>
@@ -304,7 +304,7 @@
                   <div class="col-lg-6" style="text-align: left; padding-left: 0px;">
                       <a href="studentStatusReportPDF.php?action=pdf&type=quick"> 
                           <input type="button" id="pdfreport"  name="pdfreport" class="btn btn-success"  value=" View PDF"></a>
-                      <a href="studentStatusReportPDF.php?action=xls&type=quick<?php echo $qryString; ?>"> 
+                      <a href="studentStatusReportPDF.php?action=xls&type=quick"> 
                           <input type="button" id="excelreport"  name="excelreport" class="btn btn-info"  value=" View EXCEL"></a>
                   </div>
               </div>

@@ -41,14 +41,14 @@ else
     define('DB_SOCKET', '/cloudsql/probable-axon-144107:db360school');
     define('DEVELOPMENT_ENVIRONMENT', false);
 
-   /* define('DEVELOPMENT_ENVIRONMENT', true);
+    /*define('DEVELOPMENT_ENVIRONMENT', true);
     define('DB_NAME', '360_test');
     define('DB_USER', 'root');
     define('DB_PASSWORD', '123456');
     define('DB_HOST', 'localhost');
     define('DB_PORT', '3306');
-    define('DB_SOCKET', ''); */
-        
+    define('DB_SOCKET', ''); 
+        */
     
     define('REDIRECT_USER', 'index.php');
     define('DS', DIRECTORY_SEPARATOR);

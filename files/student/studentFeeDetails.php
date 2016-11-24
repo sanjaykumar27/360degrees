@@ -550,7 +550,7 @@ function Collectedfee() {
 
 
     $sql = "  SELECT t1.studentid, t1.receiptid ,t2.feecollectionid, t2.feecollectiondetailid, 
-               t2.feeinstallmentamount,  t2.collectiontype, t2.datecreated , t3.feeinstallment,
+               t2.feeinstallmentamount,  t2.collectiontype, t1.datecreated , t3.feeinstallment,
                t5.instituteabbrevation, t6.sessionname
                
               FROM `tblfeecollection` AS t1, 

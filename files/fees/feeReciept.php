@@ -106,12 +106,12 @@ $totalFeesPaid = 0;
 
     <?php
     $installementsname = '';
+    
     if (!isset($_GET['tcfees']) && empty($_GET['tcfees'])) {
         $installmentsArray = generateInstallments();
         $installmentAmount = array_sum($installmentsArray);
         $totalFeesPaid += $installmentAmount;
         $otherFeeHeads = generateOtherFee('otherFeeName');
-
         foreach ($installmentsArray as $key => $value) {
             $installementsname .= strtoupper($key) . " - ";
         }
@@ -147,7 +147,7 @@ $totalFeesPaid = 0;
     <?php
     if (!empty($otherFeeHeads)) {
         $totalFeesPaid += generateOtherFee(''); ?>
-
+        
         <tr class=" tdd-i" > 
             <td align="center"><b>Other Fees</b></td>
             <td colspan="2" class="size-3" align="center"><?php echo $otherFeeHeads ?></td>
@@ -251,13 +251,12 @@ function generateInstallments()
 }
 
 function generateOtherFee($returnType)
-{
+{    
     if (!empty($_GET['ofd'])) {
-        $otherFeeDetails = cleanVar($_GET['ofd']);
+        $otherFeeDetails = $_GET['ofd'];
         //$otherFees = substr($otherFeeDetails, strpos($otherFeeDetails, "=") + 1);
         $otherFeeHeads = strbefore($otherFeeDetails, '=');
         $otherFees = strafter($otherFeeDetails, "=");
-        
         if ($returnType == 'otherFeeName') {
             return $otherFeeHeads;
         } else {

@@ -1405,7 +1405,7 @@
           $otherfees = rtrim($otherfees, "|");
       }
       $sql = rtrim($sql, ",");
-     
+      
       if ($result = dbInsert($sql)) {
           $result = dbUpdate($updateSql);
           header("Location: " . DIR_FILES . "/fees/refundFeeReciept.php?pop-up=y&studentid=$studentid&totalFee=$totalFeeRefunded&" . http_build_query($renderArray) . "&recieptid=$recieptid&ofd=" . $otherfees);
@@ -2037,7 +2037,6 @@
                     }
                     
                 }
-                
            
              }
             
@@ -2096,7 +2095,7 @@
     
     $otherFeedetails = rtrim($otherFeedetails, "+");
     $otherFeedetails .=  "=" . $totalOtherFees;
-    
+    //echoThis($sql);die;
     $result = dbInsert($sql);
      
             

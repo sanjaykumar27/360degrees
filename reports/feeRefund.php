@@ -246,19 +246,36 @@ function showSelectStudent()
 function Collectedfee($studentid)
 {
     $feedetails = array();
-    $sql = " SELECT t1.feecollectionid, t1.studentid, t1.receiptid,
-            t2.feecollectiondetailid, SUM(t2.feeinstallmentamount) as refundAmount,
-            t3.feerefundrecieptno, t3.datecreated
-
-            FROM `tblfeecollection` AS t1,
-            `tblfeecollectiondetail` AS t2,
-            `tblfeerefund` AS t3
-
-            WHERE t1.studentid = '$studentid'
-            AND t1.feecollectionid = t2.feecollectionid
-            AND t2.feecollectiondetailid = t3.feecollectiondetailid
+    $sql = "SELECT t1.feecollectionid , t1.studentid, t1.receiptid,
+	   t2.feecollectiondetailid, t3.feecomponentid, t3.feerefundrecieptno, t3.datecreated,
+	   t3.feerefundid, SUM(t6.amount) as refundAmount, t8.classid, t9.feeinstallment
+           
+       from tblfeecollection as t1,
+       tblfeecollectiondetail as t2,
+       tblfeerefund as t3,
+       tblfeecomponent as t4,
+       tblfeestructure as t5,
+       tblfeestructuredetails as t6,
+       tblstudentacademichistory as t7,
+       tblclsecassoc as t8,
+       tblfeeinstallmentdates as t9
+       
+       WHERE
+       
+       t1.feecollectionid = t2.feecollectionid AND
+       t9.feecollectiondetailid = t2.feecollectiondetailid AND
+       t2.feecollectiondetailid = t3.feecollectiondetailid AND
+       t3.feecomponentid = t4.feecomponentid AND
+       t5.feecomponentid = t4.feecomponentid AND
+       t6.feestructureid = t5.feestructureid AND
+       t7.studentid = t1.studentid AND
+       t8.clsecassocid = t7.clsecassocid AND
+       t5.classid = t8.classid AND
+       t6.duedate = t9.feeinstallment AND
+       t1.studentid = '$studentid'
             ";
-   
+    
+    
     $result = dbSelect($sql);
     if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {

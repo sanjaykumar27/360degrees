@@ -73,16 +73,14 @@ function StudentDetails()
     $sqlVar = "AND";
   
     $sql = "    SELECT t1.studentid, t1.scholarnumber, t1.firstname, t1.middlename, t1.lastname, t1.datecreated,
-                t3.classdisplayname, t4.sectionname,t7.dateofissue,  t7.recieptno, t9.feeinstallmentamount
+                t3.classdisplayname, t4.sectionname,t7.dateofissue,  t7.recieptno, t7.amount
                 FROM `tblstudent` AS t1,
                     `tblstudentdetails` AS t2,
                     `tblclassmaster` AS t3, 
                     `tblsection` AS t4,
                     `tblclsecassoc`AS t5, 
                     `tblstudentacademichistory` AS t6,
-                    `tblstudtc` AS t7,
-                    `tblfeecollection` AS t8,
-                    `tblfeecollectiondetails` AS t9
+                    `tblstudtc` AS t7
              
                     WHERE t1.studentid = t2.studentid 
                     AND t1.studentid = t6.studentid 
@@ -90,12 +88,9 @@ function StudentDetails()
                     AND t5.classid = t3.classid
                     AND t5.sectionid = t4.sectionid 
                     AND t1.studentid = t7.studentid
-                    AND t7.studentid = t8.studentid
-                    AND t8.feecollectionid = t9.feecollectionid
-                    AND t9.feecollectiondetailid = t7.feecollectiondetailid
                     AND t1.tcissued = 1 
                     AND t1.status = 0
-                    AND t9.collectiontype  = 4
+                   
           ";
     if (!empty($details['scholarnumber'])){$sql .= "$sqlVar t1.scholarnumber  LIKE '$details[scholarnumber]%'";}
     if (!empty($details['studentname'])){$sql .= "$sqlVar t1.firstname  LIKE '$details[studentname]%'"; }

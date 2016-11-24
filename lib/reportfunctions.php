@@ -106,16 +106,21 @@
       if (mysqli_num_rows($result) > 0) {
           while ($row = mysqli_fetch_assoc($result)) {
               $feedetails = getDueFeeAmount($row['studentid'], $row['classid']);
-              $feedetails = explode('|', $feedetails);
-              $row['feedetails'] = $feedetails[0];
-              $totalDueFee += $row['feedetails'];
-              $row['dueinstallments'] = $feedetails[1];
-              $studentdetails['records'][] = $row;
-          }
-          $studentdetails['totaldue'] = $totalDueFee;
-          $studentdetails['totalrows'] = mysqli_num_rows(dbSelect($sql . ' GROUP BY t1.studentid'));
+              if($feedetails != 0 ){
+                    $feedetails = explode('|', $feedetails);
+                    $row['feedetails'] = $feedetails[0];
+                    $totalDueFee += $row['feedetails'];
+                    $row['dueinstallments'] = $feedetails[1];
+                    $studentdetails['records'][] = $row;
+                    $studentdetails['totaldue'] = $totalDueFee;
+                    $studentdetails['totalrows'] = mysqli_num_rows(dbSelect($sql . ' GROUP BY t1.studentid'));
          // echoThis($studentdetails);die;
-          return $studentdetails;
+                return $studentdetails;
+              }
+              else{
+                  return 0;
+              }
+          }
       } else {
           return 0;
       }
@@ -130,9 +135,9 @@
      // global $totalDueFee;
       $totalDueFee = 0;
       $duedates = '';
-
-     
-          foreach ($feeStructureArray as $key => $value) {
+        
+        if(!empty($feeStructureArray)){
+            foreach ($feeStructureArray as $key => $value) {
               $feeInstStatus = chkInstStatus($studentId, $key, $classId);
 
               if ($feeInstStatus != 1) {
@@ -170,11 +175,12 @@
                   $totalDueFee += $otherFees;
               }
           }
-     
-
-      $duedates = rtrim($duedates, ',');
-
-      return $totalDueFee . '|' . $duedates;
+        $duedates = rtrim($duedates, ',');
+        return $totalDueFee . '|' . $duedates;
+        }
+        else{
+            return 0;
+        }
   }
 
   /* Function to get the complete fee strcuture of a class for the current session */

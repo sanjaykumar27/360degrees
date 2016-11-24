@@ -126,8 +126,8 @@
         <!-- Last name --------------- -->
 
         <div class="col-lg-3">
-            <label for="lastname" class="small">Last Name*</label>
-            <input type="text" id="lastname" class="form-control  " required="true"
+            <label for="lastname" class="small">Last Name</label>
+            <input type="text" id="lastname" class="form-control  " 
                    value ="<?php
                    if (!empty($studentdetailsArray['lastname'])) {
                        echo $studentdetailsArray['lastname'];
@@ -539,11 +539,23 @@
            ?>" id="dateofjoining" name="dateofjoining" placeholder="YYYY/MM/DD">
 </div>
 
+
 <div class="col-lg-3">
     <label for="conveyancerequired" class="small">Conveyance Required</label>
+    <?php 
+      $options = "
+               <option value=\"0\" selected=\"selected\">Not Required</option>
+               <option value=\"1\">Required</option>
+               ";
+        if(isset($studentdetailsArray['conveyancerequired']) && $studentdetailsArray['conveyancerequired'] == 1){
+           $options = "
+               <option value=\"0\">Not Required</option>
+               <option value=\"1\" selected=\"selected\">Required</option>
+               ";
+        }
+    ?>
     <select name="conveyancerequired" id="conveyancerequired"   class="form-control  ">
-        <option value="0">Not Required</option>
-        <option value="1">Required</option>
+        <?php echo $options ?> 
     </select>
 </div>
 <span class="clearfix">&nbsp;</span>
