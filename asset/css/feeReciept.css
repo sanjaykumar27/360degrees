@@ -11,15 +11,8 @@
     padding-right: 50px;
     padding-bottom: 15px;
 }
-.tr-head
-{
-    height:25px;
-    text-align: center;
-    background-color: #e57e37;
-    color: #e4d9d1;
-    padding-top: 0px;
-}
-.subtitle{ height:0px  }
+
+.subtitle{ height:190px  }
 .tr-td
 {
     width:25px;
@@ -35,14 +28,14 @@
     height: 19px;
     font-size: 15px;
 }
-.reciept{width:82px;
+.reciept{width:100px;
          font-size: 15px;
 }
 .date{width:50px}
 .reciept-h{font-size: 15px}
-.footer{height: 105px}
-.tdd{height:150px;}
-.tdd-i{ height: 70px}
+.footer{height: 50px}
+.tdd{height:70px;}
+.tdd-i{ height: 60px}
 
 .size-2{width: 302px}
 .size-3{width:285px}
