@@ -1,4 +1,22 @@
+.autocomplete
+    {
+        position:absolute;
+        overflow:scroll; 
+        height:300px;
+        top: 10px;
+        left: 10px;
+        width: 100%;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+     
+    .list-cust .list-group-item:hover{
+        background-color: #ffffff;
+    }
 
+    .list-group .list-group-item {
+        background-color: #f5f6f3;
+    }
+    
 .animate {
     -webkit-transition: all 0.3s ease-in-out;
 	-moz-transition: all 0.3s ease-in-out;

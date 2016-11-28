@@ -430,6 +430,7 @@
   }
 
   function processCollectionType() {
+     
       $Fields = getFormFields("processCollectionType");
       if (processFormData($Fields)) {
           foreach ($Fields as $key => $value) {
@@ -439,6 +440,7 @@
               ${$key} = cleanVar($_POST[$key]);
           }
           if (isset($_REQUEST['edid']) && !empty($_GET['edid'])) {
+              
               $i = 1;
               $sql = array("UPDATE `tblmastercollectiontype` SET `mastercollectiontype`='$mastercollectiontype',`status`= '$status' WHERE `mastercollectiontypeid` = $_REQUEST[edid]");
               foreach ($_POST['collectionname'] as $key => $value) {
@@ -465,10 +467,41 @@
                   $strSql.= "('$maxCollectionTypeId', '$value', '$description', '$status', CURRENT_TIMESTAMP),";
               }
               $finalSql = rtrim($strSql, ',');
+              
               $result = dbInsert($finalSql);
               if (isset($_POST["save"]) && $result) {
                   header("Location: collectionType.php?s=5&id={$result[0]}");
               }
+          }
+      }
+      
+  }
+  
+  function processCollectiontypeNew(){
+      $Fields = getFormFields("processCollectionType");
+      if (processFormData($Fields)) {
+          foreach ($Fields as $key => $value) {
+              if (!isset($_POST[$key])) {
+                  $_POST[$key] = null;
+              }
+              ${$key} = cleanVar($_POST[$key]);
+          }
+          if (isset($_REQUEST['edid']) && !empty($_GET['edid'])) {
+              
+              $strSql = "INSERT INTO tblmastercollection  (mastercollectiontypeid,collectionname,description, status, datecreated)
+                            VALUES";
+              $status = $_POST['status'];
+
+              foreach ($collectionname as $value) {
+                  $strSql.= "('$_REQUEST[edid]', '$value', '$description', '$status', CURRENT_TIMESTAMP),";
+              }
+              $finalSql = rtrim($strSql, ',');
+              $result = dbInsert($finalSql);
+              if (isset($_POST["save"]) && $result) {
+                  header("Location: collectionType.php?s=5&id={$result[0]}");
+              }
+          } else {
+              return false;
           }
       }
   }
@@ -2097,8 +2130,8 @@
     $otherFeedetails .=  "=" . $totalOtherFees;
     //echoThis($sql);die;
     $result = dbInsert($sql);
-     
-            
+    
+           
       if ($dataArray['feemodeid'] == 304) {
           header("Location: feeReciept.php?pop-up=y&studentid=$dataArray[studentid]&totalFee=$totalFeePaid&ofd=$otherFeedetails&recieptid=$recieptid&" . http_build_query($renderArray) . "&chequenumber=" . $_POST['chequenumber'] . "&bankname=" . $_POST['bankname']);
           exit;
@@ -2874,3 +2907,5 @@ function processStudentStatus(){
 function processClassStructure(){
     echoThis($_POST); die;
 }
+
+function processQuickfeeprocessing(){}

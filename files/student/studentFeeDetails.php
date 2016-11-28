@@ -64,7 +64,7 @@ require_once VIEW_HEADER;
             $j = $i = 1;
             if (isset($installemntArray)) {
                 foreach ($installemntArray as $key => $value) {
-
+                    
                     $totalAmount = 0;
                     $otherfee = 0;
                     $InstallmentMonthname = date('F', strtotime($key));
@@ -364,8 +364,8 @@ function studentDetailsSql() {
 
 function createInstallmentArray() {
     $studentDetails = studentDetailsSql();
+    
     $HtmlArray = feeComponentsSql();
-    //echoThis($HtmlArray);die;
     $newOptions = array();
     $i = 0;
     $totalamount = array();
@@ -572,7 +572,7 @@ function Collectedfee() {
               ORDER BY t3.feeinstallment ASC 
               
              ";
-
+    
     $result = dbSelect($sql);
     while ($row = mysqli_fetch_assoc($result)) {
         $feedetails[$row['feeinstallment']] = $row;

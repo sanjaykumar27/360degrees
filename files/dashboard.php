@@ -12,7 +12,6 @@ require_once '../lib/functions.php';
 require_once VIEW_HEADER;
 require_once '../lib/reportfunctions.php';
 
-
 ?>
 <!-- ----------------------- Style section for this page --------------------- -->
 <style>
@@ -25,7 +24,7 @@ require_once '../lib/reportfunctions.php';
     }
 </style>
 
- 
+
 <script type="text/javascript">
     $(function () {
         $('#showloaderfeedue').hide();
@@ -39,8 +38,9 @@ require_once '../lib/reportfunctions.php';
         $("#refreshcollectionamt").click(function () {
             makeAjaxcall('collection');
         });
-    });
-
+        
+    
+});
     function makeAjaxcall(type) {
         if (type == 'due') {
             $('#showloaderfeedue').show();
@@ -220,6 +220,7 @@ if (isset($_SESSION['total_student'])) {
 
 <?php
 require VIEW_FOOTER;
+
 
 /* memcache connection details do not delete
    *  

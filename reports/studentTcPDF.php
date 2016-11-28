@@ -1,20 +1,20 @@
-<?php 
- 
-/*
-* 360 - School Empowerment System.
-* Developer: Ankur Mishra (amishra@ebizneeds.com.au) | www.ebizneeds.com.au
-* Page details here:
-* Updates here:
-*/
+<?php
 
+/*
+ * 360 - School Empowerment System.
+ * Developer: Ankur Mishra (amishra@ebizneeds.com.au) | www.ebizneeds.com.au
+ * Page details here:
+ * Updates here:
+ */
 require_once "../config/config.php";
 require_once DIR_FUNCTIONS;
- 
- if (isset($_REQUEST['action']) && $_REQUEST['action']=='xls') {
+
+if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'xls') {
      $content = ob_get_clean();
      require_once'../PHPExcel-1.8/Classes/PHPExcel.php';
          
      $details = StudentDetails();
+ 
      $branchDetails = getInstdetails();
      $filename = $branchDetails['instituteabbrevation']."-student-tc-report". date('d/m/Y H:i:s').".xls";
      $studentCount = count($details);
@@ -34,8 +34,8 @@ require_once DIR_FUNCTIONS;
          $i++;
          $totalfee += $val['amount'] ;
      }
-         
-     $content=  $contentArray;
+
+    $content=  $contentArray;
      $objPHPExcel = new PHPExcel();
      $objPHPExcel->getProperties()->setCreator("Central Academy")
                     ->setTitle("Student TC Report");
@@ -53,7 +53,7 @@ require_once DIR_FUNCTIONS;
      $sno=1;
      $totalFeeAmount=0;
      $otherFeeAmount=0;
-         
+
      foreach ($content as $key=>$value) {
          $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('A'.$cellNo, $sno)
@@ -90,76 +90,74 @@ require_once DIR_FUNCTIONS;
      $objWriter->save('php://output');
      exit;
  }
- 
 if (isset($_REQUEST['action']) && $_REQUEST['action']=='pdf') {
     require_once('../html2pdf/html2pdf.class.php');
-        
+    
     $content = ob_get_clean();
     $content=  showSelectStudent();
     $html2pdf = new HTML2PDF('P', 'A4', 'en');
     $html2pdf->WriteHTML($content); // in $content you put your content to have in pdf
-        $html2pdf->Output('tc_report.pdf');
+    $html2pdf->Output('tc_report.pdf');
+       
 }
-  
- 
-function StudentDetails()
-{
+
+function StudentDetails() 
+{ 
     $details = cleanVar($_GET);
     $startPage = (int) (!isset($_REQUEST['page']) ? 0 :($_REQUEST['page']-1)*ROW_PER_PAGE);
+ 
     $sqlVar = "AND";
-    $sql = "  SELECT t1.studentid, t1.scholarnumber, t1.firstname, t1.middlename, t1.lastname, t1.datecreated,
-                t3.classdisplayname, t4.sectionname,t8.datecreated, t8.feeinstallmentamount, t7.receiptid
+  
+    $sql = "    SELECT t1.studentid, t1.scholarnumber, t1.firstname, t1.middlename, t1.lastname, t1.datecreated,
+                t3.classdisplayname, t4.sectionname,t7.dateofissue,  t7.recieptno, t7.amount
                 FROM `tblstudent` AS t1,
                     `tblstudentdetails` AS t2,
                     `tblclassmaster` AS t3, 
                     `tblsection` AS t4,
                     `tblclsecassoc`AS t5, 
                     `tblstudentacademichistory` AS t6,
-                    `tblfeecollection` AS t7,
-                    `tblfeecollectiondetail` AS t8
+                    `tblstudtc` AS t7
              
-                WHERE t1.studentid = t2.studentid 
-                AND t1.instsessassocid = $_SESSION[instsessassocid]
-                AND t1.studentid = t6.studentid 
-                AND t6.clsecassocid = t5.clsecassocid 
-                AND t5.classid = t3.classid
-                AND t5.sectionid = t4.sectionid 
-                AND t7.studentid = t1.studentid
-                AND t7.feecollectionid = t8.feecollectionid
-                AND t8.collectiontype = 4
-                AND t1.status = 0
+                    WHERE t1.studentid = t2.studentid 
+                    AND t1.studentid = t6.studentid 
+                    AND t6.clsecassocid = t5.clsecassocid 
+                    AND t5.classid = t3.classid
+                    AND t5.sectionid = t4.sectionid 
+                    AND t1.studentid = t7.studentid
+                    AND t1.tcissued = 1 
+                    AND t1.status = 0
+                   
           ";
-    if (!empty($details['scholarnumber'])) {
-        $sql .= "$sqlVar t1.scholarnumber  LIKE '$details[scholarnumber]%'";
-    }
-    if (!empty($details['studentname'])) {
-        $sql .= "$sqlVar t1.firstname  LIKE '$details[studentname]%'";
-    }
-    if (!empty($details['classid'])) {
-        $sql .= " $sqlVar t3.classid = '$details[classid]'";
-    }
-    if (!empty($details['sectionid'])) {
-        $sql .= " $sqlVar t4.sectionid = '$details[sectionid]' ";
-    }
+    if (!empty($details['scholarnumber'])){$sql .= "$sqlVar t1.scholarnumber  LIKE '$details[scholarnumber]%'";}
+    if (!empty($details['studentname'])){$sql .= "$sqlVar t1.firstname  LIKE '$details[studentname]%'"; }
+    if (!empty($details['classid'])){$sql .= " $sqlVar t3.classid = '$details[classid]'"; }
+    if (!empty($details['sectionid'])){$sql .= " $sqlVar t4.sectionid = '$details[sectionid]' ";}
+    if (!empty($details['monthstart'])){$sql .= " $sqlVar t1.datecreated <= '$details[monthstart]' ";}
+    if (!empty($details['monthend'])){$sql .= " $sqlVar t1.datecreated >= '$details[monthstart]' ";}
              
     $limit = "  LIMIT $startPage,".ROW_PER_PAGE;
+    
     $finalSql = $sql."  ORDER BY t3.classid, t4.sectionid ASC  ".$limit;
-    if ($result = dbSelect($finalSql)) {
-        while ($row = mysqli_fetch_assoc($result)) {
-            $studentdetails[] = $row;
+    
+    if($result = dbSelect($finalSql))
+    {
+        while($row = mysqli_fetch_assoc($result))
+        {
+            $studentdetails[] = $row; 
             $studentdetails['totalrows']= mysqli_num_rows(dbSelect($sql));
         }
-        if (!empty($studentdetails)) {
+        if(!empty($studentdetails))
+        {
             return $studentdetails;
-        } else {
-            return 0;
         }
+        else{ return 0;} 
     }
 }
- 
+
 function showSelectStudent()
 {
     $studentdetails = StudentDetails();
+    
     $branchDetails = getInstdetails();
     $totalFeeRefund = 0;
     $htmlContent="<page>
@@ -247,24 +245,24 @@ function showSelectStudent()
                     <td class=\"col-md-2\">$value[classdisplayname] - $value[sectionname]</td>
                     <td class=\"col-md-2\">$admissionDate</td>
                     <td class=\"col-md-2\">$dateofissue</td>
-                    <td class=\"col-md-2\">".formatCurrencypdf($value['feeinstallmentamount'])."</td>
+                    <td class=\"col-md-2\">".formatCurrencypdf($value['amount'])."</td>
                 </tr>
                  ";
         $j++;
-        $totalFee += $value['feeinstallmentamount'];
+        $totalFee += $value['amount'];
     }
          
     $htmlContent.=" <tr>
                         <td>&nbsp;</td>
-                        <td colspan=\"6\" style=text-align:center><strong>TOTAL AMOUNT ".formatCurrencypdf($totalFee)."</strong></td></tr>
+                        <td colspan=\"6\" style=text-align:center><strong>TOTAL AMOUNT ".  formatCurrencypdf($totalFee)."</strong></td></tr>
                 </table></body></html></page>";
+   
     return $htmlContent;
 }
- 
+
 function getInstdetails()
 {
     $instsessassocid = $_SESSION['instsessassocid'];
-        
     $sqlBranchDetail = " SELECT UPPER(institutename) as institutename,institutelogo, 
                             TRIM(instituteaddress1) as instituteaddress1 ,TRIM(instituteaddress2) as instituteaddress2,
                             institutephone1,instituteemail1 , instituteabbrevation
@@ -273,7 +271,7 @@ function getInstdetails()
                             tblinstsessassoc as t2 
                             
                             WHERE t1.instituteid=t2.instituteid 
-                            AND t2.instsessassocid=$instsessassocid ";
+                            AND t2.instsessassocid = $instsessassocid ";
         
     $resBranch=  dbSelect($sqlBranchDetail);
     $branchDetails = mysqli_fetch_assoc($resBranch);

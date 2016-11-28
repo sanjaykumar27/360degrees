@@ -106,7 +106,9 @@
       if (mysqli_num_rows($result) > 0) {
           while ($row = mysqli_fetch_assoc($result)) {
               $feedetails = getDueFeeAmount($row['studentid'], $row['classid']);
-              if($feedetails != 0 ){
+              if($feedetails == 0 ){
+                  continue;
+              }
                     $feedetails = explode('|', $feedetails);
                     $row['feedetails'] = $feedetails[0];
                     $totalDueFee += $row['feedetails'];
@@ -115,23 +117,24 @@
                     $studentdetails['totaldue'] = $totalDueFee;
                     $studentdetails['totalrows'] = mysqli_num_rows(dbSelect($sql . ' GROUP BY t1.studentid'));
          // echoThis($studentdetails);die;
-                return $studentdetails;
-              }
-              else{
-                  return 0;
-              }
-          }
+                  
+             }
+               return $studentdetails;
+          
       } else {
           return 0;
       }
   }
+
 
   /* Function to get the Total Fee Due Amount for a student */
 
   function getDueFeeAmount($studentId, $classId, $month = null) {
       $instsessassocid = $_SESSION['instsessassocid'];
       $feeStructureArray =  getFeeStructure($instsessassocid, $classId, $studentId, $month);
+      
       $feeRuleArray = getFeeRule($studentId);
+     
      // global $totalDueFee;
       $totalDueFee = 0;
       $duedates = '';
@@ -139,7 +142,7 @@
         if(!empty($feeStructureArray)){
             foreach ($feeStructureArray as $key => $value) {
               $feeInstStatus = chkInstStatus($studentId, $key, $classId);
-
+             
               if ($feeInstStatus != 1) {
                   foreach ($value as $compKey => $compValue) {
                       if ($feeRuleArray != 0) {
@@ -178,7 +181,7 @@
         $duedates = rtrim($duedates, ',');
         return $totalDueFee . '|' . $duedates;
         }
-        else{
+        else {
             return 0;
         }
   }
@@ -215,7 +218,8 @@
           while ($row = mysqli_fetch_assoc($resInst)) {
               /* getting all fee components associated with particular due date */
 
-              $sqlFeeInstDetails = "  SELECT  t3.feecomponentid, t2.amount, t3.feecomponent
+              $sqlFeeInstDetails = "SELECT  t3.feecomponentid, t2.amount, t3.feecomponent
+                                    
                                     FROM tblfeestructure as t1, 
                                     tblfeestructuredetails as t2 ,
                                     tblfeecomponent as t3 

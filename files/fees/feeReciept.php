@@ -30,9 +30,10 @@ $totalFeesPaid = 0;
 <script type="text/javascript">
     window.onload = function () {
         self.print();
+        document.location.href = "quickfeeprocessing.php?pop-up=y"; 
     }
-    window.opener.location.reload();
-    setTimeout(window.close, 0);
+   // window.opener.location.reload();
+   // setTimeout(window.close, 0);
 </script> 
 
 <table border="0"  class=" backgroundtb" >

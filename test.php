@@ -28,7 +28,7 @@
 //	$inputFileType = 'Excel2003XML';
 //	$inputFileType = 'OOCalc';
 //	$inputFileType = 'Gnumeric';
-          $inputFileName = '/home/sanjay/Videos/import/CHB/Fee-Collection/CHB_NOV/FeeCollection_NR.xls';
+ /*         $inputFileName = '/home/sanjay/Videos/import/CHB/Fee-Collection/CHB_NOV/FeeCollection_NR.xls';
           echo 'Loading file ', pathinfo($inputFileName, PATHINFO_BASENAME), ' using IOFactory with a defined reader type of ', $inputFileType, '<br />';
           $objReader = PHPExcel_IOFactory::createReader($inputFileType);
           echo 'Turning Formatting off for Load<br />';
@@ -115,4 +115,4 @@
           return 0;
       }
   }
-?>
+?>*/

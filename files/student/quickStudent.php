@@ -16,17 +16,7 @@ require_once "../../config/config.php";
 require_once DIR_FUNCTIONS;
 require_once VIEW_HEADER;
 ?>
-<style>
-    .autocomplete
-    {
-        position:absolute;
-        overflow:scroll; 
-        height:350px;
-        left: -80px;
-        width: 300px;
-        background-color: #ebe9e9;
-    }
-</style>
+
 
 <script type="text/javascript">
     function checkAvailability() {
@@ -146,8 +136,8 @@ require_once VIEW_HEADER;
                                    <!--<input type="submit" name="submit" value="Attach" class="btn btn-success" 
                                            id="siblngsubmit" disabled="disabled">-->
                 </div><!-- /.col-lg-4 -->
-                <div class="col-lg-4" style="align: right;">    
-                    <div class="autocomplete" id="suggesstion-box" style="overflow-y:scroll;position: absolute;z-index: 100;display: none" ></div>
+                <div class="col-lg-12 col-md-12 col-sm-12" style="align: right;">    
+                    <div class="autocomplete" id="suggesstion-box" style="z-index: 100;display: none" ></div>
                 </div>
 
             </form>    

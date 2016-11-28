@@ -5,10 +5,9 @@
      * Page details here: Master for fees head and related processing 
      * Updates here: 
      */
-     ob_start(); session_start();
+  
     /* Assign the breadcrumb page name for current page */
-    $bcPage = "Student TC Report";
-    /* bread crumb page variables ends */
+   
 
     //call the main config file, functions file and header
     require_once "../config/config.php";
@@ -190,7 +189,7 @@ function showSelectStudent()
          
                 <div class=\"col-lg-6\" style=\"text-align:right;padding: 0px; \">". getPagination($totalStudents, ROW_PER_PAGE)."</div> 
                 </div>";
-         
+        
     }  
      
 }

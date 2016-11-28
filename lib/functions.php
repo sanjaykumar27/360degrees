@@ -1151,8 +1151,13 @@ HTML;
 
 function validUser() {
     //get the current page, to be used to check where to redirected user.
-
+    
+    
     $pageName = strtolower(basename($_SERVER['PHP_SELF']));
+    if($pageName == 'download.php'){
+       return false;
+    }
+    
     if (session_status() == PHP_SESSION_NONE) {
         @session_start();
     }
@@ -1163,7 +1168,7 @@ function validUser() {
         //if a valid cookies exists, creat a new session. 
         $status = createSession();
     }
-
+    
     if ((array_key_exists('login', $_SESSION)) && isset($_SESSION['userGroup']) && $_SESSION['userGroup'] != '') {
         //if the user is logged in and returns to login  page, redirect the user to dashboard.
 
@@ -1179,7 +1184,7 @@ function validUser() {
         //if the request is not coming from login (index) page, returns true is the user is logged in.
         return true;
     } else {
-
+ 
         // return false as use is not logged in, for other functions
         // return false;
         // if the user is  not logged in, redirect to login page.
@@ -1188,9 +1193,10 @@ function validUser() {
             //header('Location: /360/index.php?e=4');
             // exit();
         }
-
+ 
         return false;
     }
+   
 }
 
 /* * ********************************
@@ -3246,6 +3252,7 @@ function hoverList($sid, $status, $id) {
             'Status' => "addSubject.php?status=$status&sid=$sid",
         ),
         'collectionType' => array(
+            'Add New Element' => "collectiontypeNew.php?edid=$sid&mode=add&type=head",
             'Update' => "collectionType.php?edid=$sid&mode=edit&type=head",
             'Delete' => "collectionType.php?delid=$sid&type=head&type=head&page=$id>",
             'Status' => "collectionType.php?status=$status&sid=$sid&type=head",
@@ -3276,6 +3283,7 @@ function hoverList($sid, $status, $id) {
         'Delete' => 'fa fa-trash-o fa-2x',
         'Status' => 'fa fa-check-square-o fa-2x',
         'Pay Fees' => 'fa fa-inr fa-2x',
+        'Add New Element' => 'fa fa-plus fa-2x'
     );
 
     $html = '<div class="hovereffect">
@@ -3292,7 +3300,7 @@ function hoverList($sid, $status, $id) {
         }
         $iconpath = $icons[$key];
         $html .= "<a $href>
-            <button class=\"btn btn-sm\" style=\"background-color: #fff\">            
+            <button class=\"btn btn-sm btn-round\" style=\"background-color: #fff;\">            
                     <span class=\"$iconpath\" aria-hidden=\"true\" $style
                     data-toggle=\"tooltip\" title=\"$key\"></span></button></a>
     ";
@@ -3467,5 +3475,25 @@ function getSessionName() {
             $sessionname = $rows;
         }
         return $sessionname['sessionname'];
+    }
+}
+
+/* *************************************************************************
+ * This function is used to round off the number to next five or previous 5
+ * for ex: if number is 13 => 10, if number is 18 => 20
+ * Made By; Sanjay Kumar Chaurasia
+ * 
+ * *************************************************************************/
+function roundOff($number){
+    /* find the reminder of the number, in case of 0, it will return 0 */
+    $round = fmod($number, 5);
+    
+    // if reminder is 2.5 or > 2.5 then it round off to next 5
+    if($round == 2.5 || $round > 2.5 ){
+        return ceil($number / 5.0 ) * 5.0;
+    }
+    // if reminder is < 2.5 then it round off to previos 5
+    else{
+        return floor($number / 5.0 ) * 5.0;
     }
 }

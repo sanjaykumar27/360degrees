@@ -43,7 +43,7 @@ $page=(int)(isset($_GET['page']) && !empty($_GET['page']) ? $_GET['page'] : 1);
     var rowNum = 0;
     function addRow(frm) {
         rowNum++;
-var row = '<br><br><div id="rowNum' + rowNum + '"><span class="clearfix">&nbsp;</span><div class="col-md-6">'.concat(
+var row = '<span class="clearfix"><br></span><br><div id="rowNum' + rowNum + '"><span class="clearfix">&nbsp;</span><div class="col-md-6">'.concat(
 '<input type="text" name="collectionname[]" id="collectionname[]" class="form-control" required="true">',
 '</div><div class="col-md-1"> <button type="button" class="btn btn-danger" id="remove" onclick="removeRow(' + rowNum + ');">',
 '<span class="glyphicon glyphicon-minus"></span></button></div></div>');
@@ -56,7 +56,7 @@ var row = '<br><br><div id="rowNum' + rowNum + '"><span class="clearfix">&nbsp;<
         jQuery('#rowNum' + rnum).remove();
     }
     
-    if(<?php if (isset($_GET['edid'])) {
+    if(<?php if (isset($_GET['edid']) && isset($_GET['mode']) == 'edit') {
     echo $_GET['edid'];
 } else {
     echo 0;
@@ -123,10 +123,10 @@ var row = '<br><br><div id="rowNum' + rowNum + '"><span class="clearfix">&nbsp;<
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
-                <th width="70">SNo.</th>
-                <th width="250">Collection Type Head</th>
+                <th width="40">SNo.</th>
+                <th width="220">Collection Type Head</th>
                 <th>Collection Items</th>
-                <th style="text-align: center">More Options</th>
+                <th style="text-align: center" width="250">More Options</th>
             </tr>
         </thead>
         <tbody>
@@ -281,11 +281,13 @@ if (isset($_GET['edid'])) {
     } ?>" >
                     </div>
                     
+                    
                 <div class="col-md-2">
                         <label for=""> Add</label><br>
                         <button type="button" class="btn btn-success" id="add" onclick="addRow(this.form);">
                         <span class="glyphicon glyphicon-plus"></span></button> 
-                </div>
+                </div><span class="clearfix"></span>
+                    
                     
                     <?php 
 }?>		
@@ -356,6 +358,7 @@ function getAllCollectionTypeDetails()
         return 0;
     }
 }
+
 function getAllCollectionItemDetails($collectionTypeHeadId)
 {
     $sqlItem="SELECT * FROM tblmastercollection WHERE mastercollectiontypeid=".$collectionTypeHeadId." AND deleted!=1";
@@ -369,7 +372,3 @@ function getAllCollectionItemDetails($collectionTypeHeadId)
     return 0;
 }
 ?>
-<!--     <td> <a href="collectionType.php?edid=<?php //echo $key['mastercollectiontypeid'];?>&type=head"><span class="glyphicon glyphicon-pencil" ></span></a></td>
-                <td> <a href="collectionType.php?delid=<?php// echo $key['mastercollectiontypeid'];?>&type=head&page=<?=$page?>"><span class="glyphicon glyphicon-trash"></span></a></td>
-                <td> <a href="collectionType.php?status=<?php //echo $key['status']?>&sid=<?php// echo $key['mastercollectiontypeid']?>&page=<?=$page?>&type=head" <?php echo $statusStyle;?> ></a></td>
-           -->

@@ -12,6 +12,7 @@
 require_once "../../config/config.php";
 require_once DIR_FUNCTIONS;
 require_once VIEW_HEADER;
+
 ?>
 <?php /* This CSS is used for checkboxes on feecollection page, dnt remove !important */ ?>
 <link href="<?php echo DIR_ASSET; ?>/css/feeform.css" rel="stylesheet">
@@ -23,15 +24,20 @@ require_once VIEW_HEADER;
     $(function () {
 <?php if (isset($_GET['tc']) && $_GET['tc'] == 'y') { ?>
             $('#feedetails').toggle();
-            $('#feepenalties').toggle()
+            $('#feepenalties').toggle();
+    function updateTcAmt(){
+        var price = $("#tcfeesamount").val();
+        $("#grandTotal").val(price);
+    }
+    $(document).on("change, keyup", "#tcfeesamount", updateTcAmt);
+    
 <?php } else { ?>
             $('#tcfeesdetails').toggle()
 <?php } ?>
-
+        displayHideDiv('feeeditremarks',null); 
         // property of edited fees like required
         $('#editfees').click(function () {
-            $('#feeeditremarks').attr("required", true);
-            $("#netinstallmentfees").prop("disabled", false);
+          $("#netinstallmentfees").prop("disabled", false);
         });
 
         // check if the net installment fees is edit, then calculate new amount
@@ -56,12 +62,17 @@ require_once VIEW_HEADER;
          */
         if (parseInt(grandTotal) !== parseInt($("#netinstallmentfees").val())) {
             // this function display confirmation popup
-            confirmationModal();
+            if (jQuery("textarea#feeeditremarks").val() != "") {
+                confirmationModal();
+            }
+            // show error if remark field is empty
+            else{
+              displayHideDiv('alerterror',null); 
+            }
         } else {
             $("#imform").submit();
         }
-    }
-    ;
+    };
 
     $('#netinstallmentfees').bind('input', function () {
         addotherpenalty('ChequeBounce', '200', 'ChequeBounce');
@@ -131,8 +142,8 @@ require_once VIEW_HEADER;
                 updatedFees += parseInt(document.getElementById('otherFeecharged[' + num + '][' + i + ']').value);
             }
         }
-
-
+        
+       
         document.getElementById('totalOtherFees[' + num + ']').value = updatedFees;
         document.getElementById('netotherfees').value = parseInt(updatedOtherFees) + parseInt(updatedFees);
         document.getElementById('grandTotal').value = parseInt($('#netinstallmentfees').val()) + parseInt($('#netotherfees').val());
@@ -217,6 +228,7 @@ require_once VIEW_HEADER;
     <?php
     $HtmlArray = studentDetailsSql();
     $arr = feeRuleSql();
+    
     ?>
     <!-- hidden field-->
     <input type='hidden' name='studentid' value='<?php echo $HtmlArray[0]['studentid'] ?>' />    
@@ -233,7 +245,7 @@ require_once VIEW_HEADER;
                     <i class="fa fa-caret-square-o-down fa-lg" aria-hidden="true"></i>
                 </span>
             </div>
-
+            
 
             <div class="panel-body" id="studentinfo">
                 <table class="table">
@@ -293,7 +305,7 @@ require_once VIEW_HEADER;
                             ?>
                         </td></tr>
                 </table>
-
+                
             </div>
         </div>
     </div>
@@ -428,7 +440,7 @@ require_once VIEW_HEADER;
                                     <span class="<?php echo($status) ?>"> Inst <?php echo($instNo . "-" . $installmentMonth . $chqBounce) ?>  </span>
                                 </td>
 
-                                                               <!--    DUe Date    <td> <?php echo $duedate ?> </td>   -->
+                                                           <!--    DUe Date    <td> <?php echo $duedate ?> </td>   -->
 
                                 <td class="col-lg-4">
                                     <div class="input-group">
@@ -451,7 +463,7 @@ require_once VIEW_HEADER;
                                     <div class="input-group">
                                         <input type="text" name="totalOtherFees[<?php echo $j ?>]" class="form-control"
                                                id ="totalOtherFees[<?php echo $j ?>]" disabled="true"
-                                               value="<?php echo $otherFeeAmount ?>"/>
+                                               value="<?php echo $otherFeeAmount ?>"   >
 
                                         <span class="input-group-btn">
                                             <button class="btn btn-default" type="button"  name="search" id="search" >
@@ -466,24 +478,28 @@ require_once VIEW_HEADER;
                             </tr>
 
                             <?php
-                            $j++; $instNo++;  }
+                            $j++;
+                            $instNo++;
+                        }
 
-                        $grandTotal = $totalinstallmentFee + $totalOtherFees; ?>   
+                        $grandTotal = $totalinstallmentFee + $totalOtherFees;
+                        ?>   
                         <tr>
-                            <td colspan="2" class="danger" align="right"><strong>Total</td>
-                            <td class="danger">
+                            <td colspan="2" class="danger" align="right"> <strong> Total</strong></td>
+                            <td class="danger" >
                                 <div class="input-group">
                                     <input type="text" class='form-control' disabled id="netinstallmentfees" name="netinstallmentfees" 
-                                           value="<?php echo $totalinstallmentFee; ?>">
-                                    <input type="hidden" name="totalinstallmentValue" id="totalinstallmentValue" value="<?php echo $totalinstallmentFee; ?>">
+                                           value="<?php echo $totalinstallmentFee ?>" />
+                                    <input type="hidden" name="totalinstallmentValue" id="totalinstallmentValue" value="<?php echo $totalinstallmentFee ?>">
                                     <span class="input-group-btn">
-                                        <button type="button" class="btn btn-success" name="editfees" id="editfees" onclick="displayHideDiv('feeeditremarks', null);">
+                                        <button type="button" class="btn btn-success" name="editfees" id="editfees" onclick="displayHideDiv('feeeditremarks', null)">
                                             Edit
                                         </button>
                                     </span>
                                 </div>
-                                <label id="feeeditremarks" style="display: none"> Remarks
-                                    <textarea class="form-control" name="feeeditremarks" id="feeeditremarks" required="true"></textarea>
+                                <span class="clearfix"><br></span>
+                                <label id="feeeditremarks" > Remarks
+                                    <textarea class="form-control" name="feeeditremarks"  id="feeeditremarks"></textarea>
                                 </label>
                             </td>
 
@@ -576,7 +592,7 @@ require_once VIEW_HEADER;
                 <table class="table table-responsive">
                     <tr>
                         <td align="right"><label>TC Amount:</label></td>
-                        <td width="25%"><input type="text" name="tcfeesamount" class="form-control"></td>
+                        <td width="25%"><input type="text" id = "tcfeesamount" name="tcfeesamount" class="form-control"></td>
                         <td width="25%"></td>
                     </tr>
                 </table>
@@ -634,7 +650,12 @@ require_once VIEW_HEADER;
                             <input type="button" id="PayNow" name="PayNow" onclick="payNow();" value="Pay Now" class="btn btn-success">
                         </td>
                     </tr>
-
+                    
+                    <tr>
+                        <td id="alerterror" colspan="6" align="right" style="display: none">
+                            <div class="alert alert-danger" role="alert"> Please fill the remarks for adjusting fee amount</div>
+                        </td>
+                    </tr>
                 </table>
             </div>
         </div>

@@ -44,7 +44,7 @@
       include_once "searchstudentreportHTML.php";
       
     if (isset($_REQUEST['search']) || !empty($_REQUEST['monthstart'])) {
-        $reportArray = studentFeeDetails('report');?>
+        $reportArray = studentFeeDetails('report');  ?>
         
     <span class="clearfix">&nbsp;</span>
     <div id="showreport" name="showreport">
