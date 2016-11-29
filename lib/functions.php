@@ -2840,9 +2840,8 @@ function renderHeaderLinks($roleType) {
     }
     $topLinks = array_keys($role[$type]);
     $navBar = ' <ul class="nav navbar-nav">
-                    
                     <li style="text-align: center"> 
-                        <a href="#about"><img src="' . DIR_ASSET . '/images/about-icon.jpg" alt="About Us" width="50"></a>
+                        <a href="#about"><img  src="' . DIR_ASSET . '/images/about-icon.jpg" alt="About Us" width="50"></a>
                     </li>
                     
                     <li style="text-align: center" >
@@ -2856,11 +2855,11 @@ function renderHeaderLinks($roleType) {
         }
         $innerLinks = explode(',', $role[$type][$value]);
         $iconPath = DIR_ASSET . '/images/' . $navbarIcons[$value];
-        $navBar .= ' <li>
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        $navBar .= ' <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                         <img src="' . $iconPath . '" alt="Notification" width="50">
-                    </br><center><span class="caret"></span></center></a>
-                    <ul class="dropdown-menu" role="menu"></li>
+                    </br><center><span id = "caretmenu" class="caret"></span></center></a>
+                    <ul class="dropdown-menu" role="menu">
                     ';
         foreach ($innerLinks as $innerKey => $innerValue) {
             $linkPath = $filePath . str_replace(' ', '', strtolower($value)) . '/' . $menu[$value][$innerValue];

@@ -158,14 +158,13 @@
                   <tr >
                       <th>No</th>
                       <th>Fee Rule Name</th>
-                      <th width="500">Fees Component</th>
                       <th style="text-align: center" width="200">More Options</th>
                   </tr>
               </thead>
               <?php
               $sno = (int) (isset($_GET['page']) ? (($_GET['page'] - 1) * ROW_PER_PAGE) + 1 : 1);
               $page = (int) (isset($_GET['page']) && !empty($_GET['page']) ? $_GET['page'] : 1);
-              
+
               foreach ($feeruleArray as $key => $value) {
 
                   if ($value['feerulestatus'] == 1) {
@@ -176,27 +175,24 @@
                   ?>
 
                   <tr>
-                      <td width="60"> <a href="feeRule.php?edid=<?php echo $value['feeruleid']; ?>"><?php echo $sno ?> </a></td>
-                      <td > <a href="feeRule.php?edid=<?php echo $value['feeruleid']; ?>"><?php echo ucwords($value['feerulename']) ?></a></td>
-                      <td ><a class="btn" data-toggle="collapse" data-target="#demo<?=$sno?>">
-                              <i class="fa fa-chevron-down fa-2x" aria-hidden="true"></i></a>
-                           <div id="demo<?=$sno?>" class="collapse">
-                               <span class="clearfix"><br></span>
-                              <table class="table table-hover" >
-                                  <?php foreach ($value['feecomponent'] as $k => $val) { ?>
-                                  <thead><tr><td><?php echo $val?></td></tr></thead>
-                                   <?php } ?>
-                              </table>  
-                          </div>
-                     
-                      </td>
+                      <td><a href="#" onclick="Javascript: displayHideDiv('displaystructure<?php echo $sno; ?>', null)"><?php echo $sno ?></a></td>
+                      <td><a href="#" onclick="Javascript: displayHideDiv('displaystructure<?php echo $sno; ?>', null)"><?php echo ucwords($value['feerulename']) ?> <span class="caret"></span></a></td>
                       <td width="130"><?php echo hoverList($value['feeruleid'], $value['feerulestatus'], $page) ?></td>
                   </tr> 
-
+                  <tr style="display:none;" id="displaystructure<?php echo $sno ?>">
+                      <td colspan="3" align="center">
+                          <table class="table table-bordered table-hover" style="width: 80%;">
+                              <thead>
+                                  <tr><th>Fee Component</th></tr>
+                              </thead>
+                              <?php foreach ($value['feecomponent'] as $k => $val) { ?>
+                                  <tr><td><?php echo $val ?></td></tr>
+                              <?php } ?>
+                          </table>
+                      </td>
+                  </tr>
                   <?php
-                  $sno++;
-              }
-              ?>
+                  $sno++; } ?>
           </table>
           <?php
       } else {

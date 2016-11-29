@@ -15,7 +15,7 @@ require_once VIEW_HEADER;
 
 ?>
 <script>
-    $(function(){
+   /* $(function(){
         
     navigator.sayswho = (function () {
             var ua = navigator.userAgent, tem,
@@ -57,7 +57,7 @@ require_once VIEW_HEADER;
               window.location.replace("<?php echo DIR_FILES ?>/download.php?browser="+browser)
           }
         }
-        });
+        });*/
 </script>
 <div class="container">
     <div class="col-lg-4">

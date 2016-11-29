@@ -18,11 +18,9 @@
       $userEmail = $userDetails['username'];
   }
 
-  if (isset($_SESSION['userGroup']) && is_numeric($_SESSION['userGroup'])){
+  if (isset($_SESSION['userGroup']) && is_numeric($_SESSION['userGroup'])) {
       $userGroup = $_SESSION['userGroup'];
-      
-  }
-  else{
+  } else {
       $userGroup = 1;
   }
 //-----
@@ -49,18 +47,18 @@
         <link rel="shortcut icon" href="<?php echo DIR_ASSET; ?>/ico/favicon.ico" type="text/css"/>
 
         <!-- Java script -->
-          
+
         <script src="<?php echo DIR_ASSET; ?>/js/jquery-3.1.1.js"></script>
         <script src="<?php echo DIR_ASSET; ?>/js/bootstrap.js"></script>
         <script src="<?php echo DIR_ASSET; ?>/js/bootstrap-multiselect.js" type="text/javascript"></script>
         <script src="<?php echo DIR_LIB; ?>/common.js" type="text/javascript"></script>
 
-           <?php if (isset($loadSelectize) && ($loadSelectize !== "")) : ?>
-            <script type="text/javascript" src="<?php echo DIR_ASSET; ?>/js/selectize.js"></script>
-            <link rel="stylesheet" href="<?php echo DIR_ASSET; ?>/css/selectize.bootstrap3.css" type="text/css"/>  
-            <?php 
-            initSelectize($loadSelectize);
-        endif;
+        <?php if (isset($loadSelectize) && ($loadSelectize !== "")) : ?>
+              <script type="text/javascript" src="<?php echo DIR_ASSET; ?>/js/selectize.js"></script>
+              <link rel="stylesheet" href="<?php echo DIR_ASSET; ?>/css/selectize.bootstrap3.css" type="text/css"/>  
+              <?php
+              initSelectize($loadSelectize);
+          endif;
         ?> 
     </head>
     <body>
@@ -88,37 +86,35 @@
 
               <nav class="navbar navbar-default  navbar-fixed-top navbar-form" role="navigation">
                   <div class="container-fluid">
-                      <div class="row-fluid">
-                          <div class="navbar-header" >
-                              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-expanded="false">
-                                  <span class="sr-only">Toggle navigation</span>
-                                  <span class="icon-bar"></span>
-                                  <span class="icon-bar"></span>
-                                  <span class="icon-bar"></span>
-                              </button>
-                              <a class="navbar-brand" href="<?php echo DIR_FILES; ?>/dashboard.php"><img class="img-responsive" src="<?php echo DIR_ASSET; ?>/images/view_logo_top.png" alt="360 | School Empowerment System" /></a>
+                      <div class="navbar-header" >
+                          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                              <span class="sr-only">Toggle navigation</span>
+                              <span class="icon-bar"></span>
+                              <span class="icon-bar"></span>
+                              <span class="icon-bar"></span>
+                          </button>
+                          <a class="navbar-brand" href="<?php echo DIR_FILES; ?>/dashboard.php"><img class="img-responsive" src="<?php echo DIR_ASSET; ?>/images/view_logo_top.png" alt="360 | School Empowerment System" /></a>
+                      </div>   
+                      <!--<table align="right"><tr><td>
 
-                              <table align="right"><tr><td>
-
-                                          <span class="clearfix"><br></span>
-                                          <?php if (validUser()) { ?>
-                                              <!--        <div class="dropdown">
-                                                          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                              Select Module &nbsp;<span class="caret"></span>
-                                                          </button><?php ?>
-                                                          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                              <li><a href="<?php //echo DIR_FILES  ?>/dashboard.php?mod=Student">Student</a></li>
-                                                              <li><a href="<?php //echo DIR_FILES  ?>/dashboard.php?mod=Employee">Employee</a></li>
-                                                          </ul>
-                                                      </div> --><?php } ?>
-                                      </td></tr>
-                              </table>
-                          </div>
-                          <div class="navbar-collapse collapse" id="bs-navbar" style="float:right;">
-                              <?php if (validUser()) echo renderHeaderLinks($userGroup)  ?>
-                          </div>
+                                  <span class="clearfix"><br></span>
+                      <?php if (validUser()) { ?>
+                          <!--        <div class="dropdown">
+                                      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                          Select Module &nbsp;<span class="caret"></span>
+                                      </button><?php ?>
+                                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                          <li><a href="<?php //echo DIR_FILES     ?>/dashboard.php?mod=Student">Student</a></li>
+                                          <li><a href="<?php //echo DIR_FILES     ?>/dashboard.php?mod=Employee">Employee</a></li>
+                                      </ul>
+                                  </div> --><?php } ?>
+                      <!--   </td></tr>
+                 </table>-->
+                      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="float: right">
+                          <?php if (validUser()) echo renderHeaderLinks($userGroup) ?>
                       </div>
                   </div>
+
               </nav>    
               <?php breadCrumb(); ?> 
               <script>

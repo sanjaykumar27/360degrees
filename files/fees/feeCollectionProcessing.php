@@ -335,7 +335,7 @@ require_once VIEW_HEADER;
                         $feecollected = feeStatus();
                         $feeDetails = array();
                         $getInstallmentArray = createInstallmentArray();
-
+                        //echoThis($getInstallmentArray);die;
                         $j = 1;
                         $instNo = 1;
                         $i = 0;
