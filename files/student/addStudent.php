@@ -81,7 +81,7 @@
         ?>">
         <!-- Scholar No ----------------- -->
 
-        <div class=" col-lg-3">
+        <div class=" col-lg-3 col-md-3">
             <label for="scholarnumber" class="small">Scholar No*</label>
             <input type="text" class="form-control  " id="scholarnumber" 
                    name="scholarnumber" placeholder="Scholar No" onBlur="checkAvailability()"
@@ -96,7 +96,7 @@
         </div>
         <!-- First Name --------------- -->
 
-        <div class="col-lg-3">
+        <div class="col-lg-3 col-md-3">
             <label for="firstname" class="small">First Name*</label>
             <input type="text" class="form-control  " id="firstname"  required="true"
                    name="firstname" placeholder="Firstname" 
@@ -111,7 +111,7 @@
 
         <!-- Middle Name --------------- -->
 
-        <div class="col-lg-3">
+        <div class="col-lg-3 col-md-3">
             <label for="middlename" class="small">Middle Name</label>
             <input type="text" id="middlename" class="form-control  "  name="middlename" 
                    value ="<?php
@@ -125,7 +125,7 @@
 
         <!-- Last name --------------- -->
 
-        <div class="col-lg-3">
+        <div class="col-lg-3 col-md-3">
             <label for="lastname" class="small">Last Name</label>
             <input type="text" id="lastname" class="form-control  " 
                    value ="<?php
@@ -140,7 +140,7 @@
 
         <!-- Student type --------------- -->
 
-        <div class="col-lg-3">
+        <div class="col-lg-3 col-md-3">
             <label for="studenttype" class="small">Student Type</label>
             <select class="form-control  " name="studenttype"  id="studenttype" >
                 <?php
@@ -154,7 +154,7 @@
         </div>
         <!-- Gender field --------------- -->
 
-        <div class="col-lg-3">
+        <div class="col-lg-3 col-md-3">
             <label for="gender" class="small">Gender*</label>
             <select class="form-control  "   name="gender" id="gender"  required="true"  >
                 <?php
@@ -169,7 +169,7 @@
         </div>
         <!-- Class Field --------------- -->
 
-        <div class="col-lg-3">
+        <div class="col-lg-3 col-md-3">
             <label for="classid" class="small">Class*</label>
             <select name="classid" id="classid"   class="form-control  "  required="true">
                 <?php
@@ -184,7 +184,7 @@
 
         <!-- Section Field --------------- -->
 
-        <div class="col-lg-3">
+        <div class="col-lg-3 col-md-3">
             <label for="sectionid" class="small">Section*</label>
             <select name="sectionid" id="sectionid"   class="  form-control" required="true" >
                 <?php
@@ -199,7 +199,7 @@
      <span class="clearfix">&nbsp;<br></span>
         <!-- D.O.B Field --------------- -->
 
-        <div class="col-lg-3">
+        <div class="col-lg-3 col-md-3">
             <label for="dob" class="small">D.O.B* </label>
             <input type="date" class="form-control  "  id="dob" name="dob"  placeholder="YYYY/MM/DD"
                    value ="<?php
@@ -213,7 +213,7 @@
         
         <!-- Email field --------------- -->
 
-        <div class="col-lg-3">
+        <div class="col-lg-3 col-md-3">
             <label for="category" class="small">Category*</label>
             <select name="category" id="category"    class="  form-control" required="true" >
                 <?php
@@ -226,7 +226,7 @@
             </select>
         </div>
 
-        <div class="col-lg-3">
+        <div class="col-lg-3 col-md-3">
             <label for="religion" class="small">Religion*</label>
             <select name="religion" id="religion"   class="  form-control" required="true" >
                 <?php
@@ -238,7 +238,7 @@
                 ?>
             </select>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-3 col-md-3">
             <label for="email" class="small">Email</label>
             <input type="text" class="form-control  " id="email" name="email" 
                    value ="<?php
@@ -255,7 +255,7 @@
 
         <!-- panel for contact information starts here ------_____------------- -->
         <!-- current address ---- -->
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6">
             <label for="currentaddress1" class="small">Current Address 1*</label>
             <input type="text" name="currentaddress1"  id="currentaddress1" 
                    value ="<?php
@@ -266,7 +266,7 @@
                    }
                    ?>"  class="form-control  ">
         </div>	
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6">
             <label for="currentaddress2" class="small">Current Address 2</label>
             <input type="text" name="currentaddress2"  id="currentaddress2" 
                    value ="<?php
@@ -282,7 +282,7 @@
 
         <!-- current suburb------------------------ -->
 
-        <div class="col-lg-4">
+        <div class="col-lg-4 col-md-4">
             <label for="currentsuburbid" class="small">Current Suburb*</label>
             <select  name="currentsuburbid" id="currentsuburbid"   class="  form-control" required="true">
                 <?php
@@ -296,7 +296,7 @@
         </div> 	
 
         <!-- current pincode----------------------- -->             
-        <div class="col-lg-2">
+        <div class="col-lg-2 col-md-2">
             <label for="currentzipcode" class="small">Current Pincode*</label>
             <input type="text" class="form-control  "  required="true"
                    value ="<?php
@@ -308,7 +308,7 @@
                    ?>"id="currentzipcode"   name="currentzipcode"  />
         </div>
         <!-- current city------------------------ -->         
-        <div class="col-lg-2">
+        <div class="col-lg-2 col-md-2">
             <label for="currentcityid" class="small">Current City*</label>
             <select name="currentcityid" id="currentcityid"  class="form-control  " required="true">
                 <?php
@@ -321,7 +321,7 @@
             </select>
         </div>	
         <!-- ------Current state ------------------ -->
-        <div class="col-lg-2">
+        <div class="col-lg-2 col-md-2">
             <label for="currentstateid" class="small">Current State*</label>
             <select name="currentstateid" id="currentstateid"  class="form-control  " required="true">
                 <?php
@@ -334,7 +334,7 @@
             </select>
         </div>
         <!-- ------Current Country ------------------ -->
-        <div class="col-lg-2">
+        <div class="col-lg-2 col-md-2">
             <label for="currentcountryid" class="small">Current Country*</label>
             <select name="currentcountryid" id="currentcountryid"  class="form-control  " required="true" >
                 <?php
@@ -349,16 +349,16 @@
 
 </div>
 
-<span class="clearfix">&nbsp;<br></span>
+<span class="clearfix ">&nbsp;<br></span>
 <button type="button" class="btn btn-success btn-mg" name="detailsmatch" id="detailsmatch"
         onclick="Javascript : copyDetails();">
     Copy Details
 </button>
-<span class="clearfix">&nbsp;</span>
+<span class="clearfix visible-lg">&nbsp;</span>
 <hr>
 
 <!-- permanent Address 1--------------------- -->
-<div class="col-lg-6">
+<div class="col-lg-6 col-md-6">
     <label for="permaaddress1" class="small">Permanent Address 1 </label>
     <input type="text" name="permaaddress1"  id="permaaddress1" 
            value ="<?php
@@ -369,7 +369,7 @@
            }
            ?>" class="form-control  ">
 </div>
-<div class="col-lg-6">
+<div class="col-lg-6 col-md-6">
     <label for="permaaddress2" class="small">Permanent Address 2</label>
     <input type="text" name="permaaddress2"  id="permaaddress2" 
            value ="<?php
@@ -382,7 +382,7 @@
 </div>
 <span class="clearfix">&nbsp;</span>
 
-<div class="col-lg-3">
+<div class="col-lg-3 col-md-3">
     <label for="permasuburbid" class="small">Permanent Suburb</label>
     <select name="permasuburbid" id="permasuburbid"  class="form-control  ">
         <?php
@@ -395,7 +395,7 @@
     </select>   
 </div>
 
-<div class="col-lg-2">
+<div class="col-lg-2 col-md-3">
     <label for="permazipcode" class="small">Permanent Pincode</label>
     <input type="text" class="form-control  "  id="permazipcode"  
            value ="<?php
@@ -407,7 +407,7 @@
            ?>"  name="permazipcode" />
 </div>
 
-<div class="col-lg-2">
+<div class="col-lg-2 col-md-2">
     <label for="permacityid" class="small">Permanent City</label>
     <select name="permacityid" id="permacityid"  class="form-control  ">
         <?php
@@ -420,7 +420,7 @@
     </select>
 </div>
 
-<div class="col-lg-2">
+<div class="col-lg-2 col-md-2">
     <label for="permastateid" class="small">Permanent State</label>
     <select name="permastateid" id="permastateid"  class="form-control  ">
         <?php
@@ -433,7 +433,7 @@
     </select>
 </div>
 
-<div class="col-lg-2">
+<div class="col-lg-2 col-md-2">
     <label class="small" for="permacountryid">Permanent Country</label>
     <select name="permacountryid" id="permacountryid"  class="form-control  "  >
         <?php
@@ -450,7 +450,7 @@
 <span class="clearfix">&nbsp;<br></span>
 <hr>
 
-<div class="col-lg-3">
+<div class="col-lg-3 col-md-3">
     <label for="phone1" class="small">Phone(LandLine)</label>
     <input type="text" class="form-control  "  
            value ="<?php
@@ -463,7 +463,7 @@
     <small> Enter landline number without area code </small>           	
 </div>
 
-<div class="col-lg-3">
+<div class="col-lg-3 col-md-3">
     <label for="phone2" class="small">Secondary Phone</label>
     <input type="text" class="form-control   " 
            value ="<?php
@@ -476,7 +476,7 @@
 </div>
 
 
-<div class="col-lg-3" >
+<div class="col-lg-3 col-md-3" >
     <label for="fax1" class="small">Fax1</label>
     <input type="text" class="form-control   "  
            value ="<?php
@@ -488,7 +488,7 @@
            ?>"  name="fax1"/>	
 </div>
 
-<div class="col-lg-3">
+<div class="col-lg-3 col-md-3">
     <label for="fax2" class="small">Fax2</label>
     <input type="text" class="form-control   "  
            value ="<?php
@@ -503,7 +503,7 @@
 <span class="clearfix">&nbsp;</span>
 <span class="clearfix">&nbsp;</span>
 
-<div class="col-lg-3" class="small">
+<div class="col-lg-3 col-md-3" class="small">
     <label for="mobile" class="small">Mobile*</label>
     <input type="text" class="form-control  "    required="true"  maxlength="10"
            value ="<?php
@@ -515,7 +515,7 @@
            ?>" id="mobile" name="mobile"/>	
 </div>		
 
-<div class="col-lg-3" class="small">
+<div class="col-lg-3 col-md-3" class="small">
     <label class="small" for="passportnum">Passport No</label>
     <input type="text" class="form-control  "  
            value ="<?php
@@ -527,7 +527,7 @@
            ?>" id="passportnum" name="passportnum"/>	
 </div>
 
-<div class="col-lg-3" class="small">
+<div class="col-lg-3 col-md-3" class="small">
     <label class="small" for="dateofjoining">Date of Joining*</label>
     <input type="date" class="form-control  "  required="true"
            value ="<?php
@@ -540,7 +540,7 @@
 </div>
 
 
-<div class="col-lg-3">
+<div class="col-lg-3 col-md-3">
     <label for="conveyancerequired" class="small">Conveyance Required</label>
     <?php 
       $options = "
@@ -560,7 +560,7 @@
 </div>
 <span class="clearfix">&nbsp;</span>
 
-<div class="col-lg-3" id="pickuppointid">
+<div class="col-lg-3 col-md-3" id="pickuppointid">
     <label for="pickuppointid" class="small">Pickup Point Name</label>
     <select name="pickuppointid" id="pickuppointid" style="background-color: #d9f2bd" class="form-control  ">
         <?php
@@ -573,7 +573,7 @@
     </select>
 </div>
 
-<div class="col-lg-3">
+<div class="col-lg-3 col-md-3">
     <label for="previousschool" class="small">Previous school Name</label>
     <input type="text" class="form-control  "   
            value ="<?php
@@ -584,7 +584,7 @@
            }
            ?>" id="previousschool" name="previousschool" />	
 </div>	
-<div class="col-lg-3">
+<div class="col-lg-3 col-md-3">
     <label for="previousclass" class="small">Previous Class Attended</label>
     <select name="previousclass"  id="previousclass" class="  form-control">
         <?php
@@ -597,7 +597,7 @@
     </select>
 </div>
 
-<div class="col-lg-2">
+<div class="col-lg-2 col-md-2">
     <label for="previousresult" class="small">Previous Result</label>
     <select name="previousresult"   id="previousresult" class="  form-control">
         <?php
@@ -609,7 +609,7 @@
         ?>
     </select>
 </div>
-<div class="col-lg-2">
+<div class="col-lg-2 col-md-2">
     <label for="percentgrade" class="small">Percentage/Grade</label>
     <input type="text" class="form-control  "  
            value ="<?php
@@ -621,7 +621,7 @@
            ?>" id="percentgrade" name="percentgrade">
 </div>	
 
-<div class="col-lg-2">
+<div class="col-lg-2 col-md-2">
     <label for="housename" class="small">House</label>
     <input type="text"  
            value ="<?php
@@ -635,7 +635,7 @@
 <span class="clearfix">&nbsp;</span>
 <span class="clearfix">&nbsp;</span>
 
-<div class="col-lg-6" class="small">
+<div class="col-lg-6 col-md-6" class="small">
     <label for="admissionreferencedby">Reference by</label>
     <textarea name="admissionreferencedby"  id="admissionreferencedby" 
               value ="<?php
@@ -648,7 +648,7 @@
     </textarea>
 </div>	
 
-<div class="col-lg-6">
+<div class="col-lg-6 col-md-6">
     <label for="otheradditionalinformation " class="small">Others Additional Information</label>
     <textarea name="otheradditionalinformation"   id="otheradditionalinformation" 
               value ="<?php
@@ -662,7 +662,7 @@
 </div>  
 
 <span class="clearfix">&nbsp;</span>
-<div class="col-lg-6">
+<div class="col-lg-6 col-md-6">
     <label for="profilepicture" class="small">Upload Image</label>
     <input type="file"   name="profilepicture" id="profilepicture"
            value ="<?php
@@ -676,10 +676,10 @@
 <span class="clearfix">&nbsp;</span>
 <span class="clearfix">&nbsp;</span>
 
-<div class="col-lg-12">
+<div class="col-lg-12 col-md-12">
     <h3 class="heading" style="color: Red;">Emergency Contact Details </h3>
     <hr>
-    <div class="col-lg-4">
+    <div class="col-lg-4 col-md-4">
         <label for="emeregencycontactname" class="small">Contact Name*</label>
         <input type="text" class="form-control" name="emeregencycontactname" required="true"
                value="<?php
@@ -690,7 +690,7 @@
                }
                ?>" >
     </div>
-    <div class="col-lg-4">
+    <div class="col-lg-4 col-md-4">
         <label class="small" for="emeregencyphoneno">Contact No(Mobile)*</label>
         <input type="text" class="form-control"  name="emeregencyphoneno" required="true" maxlength="10"
                value="<?php
@@ -701,7 +701,7 @@
                }
                ?>">
     </div>
-    <div class="col-lg-4">
+    <div class="col-lg-4 col-md-4">
         <label class="small" for="emeregencycontactaddress">Contact Address*</label>
         <input style="font-size: 15px;" type="text" class="form-control" name="emeregencycontactaddress" required="true" max="10"
                value="<?php
