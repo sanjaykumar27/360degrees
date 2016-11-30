@@ -12,7 +12,11 @@
   require_once DIR_FUNCTIONS;
   require_once VIEW_HEADER;
 ?>
-
+<script>
+$(document).ready(function(){
+    $('#myTable').DataTable();
+});
+</script>
 <div class="container">
     <!-- TO display any success of failur message on the screen -->
     <?php renderMsg(); ?> 
@@ -20,7 +24,7 @@
 
         <div class="row">
             <!--  select class using populateSelect() function  -->
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-3">
                 <div class="input-group">
                     <span class="input-group-addon">Class</span>
                     <select name="classid" id="classid"  class="form-control" tabindex="1" >
@@ -30,7 +34,7 @@
             </div> 
 
             <!--  select Section using populateSelect() function  -->
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-3">
                 <div class="input-group">
                     <span class="input-group-addon">Section</span>
                     <select name="sectionid" id="sectionid"  class="form-control" tabindex="2">
@@ -40,7 +44,7 @@
             </div> 
 
             <!--  select Session using populateSelect() function  -->
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-3">
                 <div class="input-group">
                     <span class="input-group-addon">Session</span>
                     <select name="session" id="session" value="session" class="form-control" tabindex="3">
@@ -50,7 +54,7 @@
             </div>
 
             <!--  select type of the search quick or detail -->
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-3">
                 <div class="input-group">
                     <span class="input-group-addon">Type</span>
                     <select name="type" id="type" value="type" class="form-control" tabindex="4">
@@ -65,7 +69,7 @@
         <span class='clearfix'>&nbsp;<br></span>
         <div class="row"> 
             <div class="controls" align="right">
-                <div class='col-lg-6'>
+                <div class='col-lg-6 col-md-6'>
                     <button name='reset' value="Reset" class="btn " tabindex="6">Cancel</button>
                     <button name='search' value="search" class="btn btn-success" tabindex="7">Search</button>
                 </div>
@@ -100,7 +104,7 @@
                       <h3><?php echo $val ?></h3> 
 
                       <!-- ------------ Table for detail students start here --------------->
-                      <table class="table table-striped table-hover table-bordered">
+                      <table class="table table-striped table-hover table-bordered" id="myTable">
                           <thead>
                               <tr>
                                   <th>Scholar No</th>

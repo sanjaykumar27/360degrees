@@ -83,7 +83,7 @@ $sno=1;
                             $driverArray=getDriverList();
                             if ($driverArray!=0) {
                                 foreach ($driverArray['records'] as $key=>$value) {
-                                    echo '<div class="col-lg-4"><input type="checkbox"/>'.$value['drivername'] . '</div>';
+                                    echo '<div class="col-lg-4 col-md-4"><input type="checkbox"/>'.$value['drivername'] . '</div>';
                                 }
                             } else {
                                 echo "<div class='alert alert-warning'> There is no driver details exists </div>";
@@ -103,7 +103,7 @@ $sno=1;
          
     <?php if (!empty($vehicleArray) && $vehicleArray!=0) {
                             ?>
-    <table class="table  table-bordered table-hover">
+    <table class="table table-bordered table-hover">
         <thead >
             <tr >
                 <th >SNo.</th>
@@ -178,7 +178,7 @@ $sno=1;
 }  ?>
             <h1 >Add Vehicle</h1>
                  <?php renderMsg(); ?>
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-4 col-md-4">
                 <label for="vechile_name">Vehicle Name*</label>
                 <input type="text" name="vechile_name" id="vehicle_name" tabindex="1" class="form-control" required="true"
                        value="<?php if (isset($vehicleDetail['vehicletitle'])) {
@@ -187,7 +187,7 @@ $sno=1;
     echo submitFailFieldValue("vechile_name");
 } ?>">
             </div>
-            <div class="col-lg-2">
+            <div class="col-lg-2 col-md-2">
                 <label for="type" >Vehicle Type*</label>
                 <select name="type" id="type" class="form-control"  tabindex="2" required="true">
                     <option value="1">Bus </option>
@@ -195,7 +195,7 @@ $sno=1;
                     <option value="3">Three Wheeler </optio>
                 </select>
             </div>     
-            <div class="col-lg-2">
+            <div class="col-lg-2 col-md-2">
                 <label for="Fuel Type">Fuel Type* </label>
                 <select name="fueltype" id="fueltype" class="form-control"  tabindex="3" required="true" >
                     <option value="1">Petrol</option>
@@ -204,7 +204,7 @@ $sno=1;
                 </select>
             </div>     
             
-            <div class="col-lg-2">
+            <div class="col-lg-2 col-md-2">
                 <label for="modelno"> Model No </label>
                 <input type="text" name="modelno" id="modelno" class="form-control"  tabindex="4" 
                        value="<?php if (isset($vehicleDetail['modelno'])) {
@@ -213,7 +213,7 @@ $sno=1;
     echo submitFailFieldValue("modelno");
 } ?>">
             </div>
-            <div class="col-lg-2"> 
+            <div class="col-lg-2 col-md-2"> 
                 <label for="makeyear" > Year of make* </label>
                 <input type="text" name="makeyear" id="makeyear" class="form-control" tabindex="5" required="rue"
                        value="<?php if (isset($vehicleDetail['makeyear'])) {
@@ -226,7 +226,7 @@ $sno=1;
     
             <span class="clearfix"><p>&nbsp;</p></span>
               
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-4">
                 <label for="vehicleno"> Vehicle Number* </label>
                 <input type="text" name="vehicleno"  id="vehicleno"  class="form-control" tabindex="6" required="true" 
                        value="<?php if (isset($vehicleDetail['platenumber'])) {
@@ -236,7 +236,7 @@ $sno=1;
 } ?>">
             </div>
             
-              <div class="col-lg-4"> 
+              <div class="col-lg-4 col-md-4"> 
                   <label for="chasisno"> Chasis No* </label>
                   <input type="text" name="chasisno" id="chasisno" class="form-control" tabindex="7"  required="true"
                          value="<?php  if (isset($vehicleDetail['chasisnumber'])) {
@@ -245,7 +245,7 @@ $sno=1;
     echo submitFailFieldValue("chasisno");
 } ?>">
               </div>
-              <div class="col-lg-4">
+              <div class="col-lg-4 col-md-4">
                   <label for="engineno">Engine No* </label>
                   <input type="text" name="engineno" id="engineno" class="form-control" tabindex="8" required="true"
                          value="<?php if (isset($vehicleDetail['enginenumber'])) {
@@ -257,7 +257,7 @@ $sno=1;
             
             <span class="clearfix"><p>&nbsp;</p></span>
             
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-4">
                 <label for="registrationno">Registration No*</label>
                 <input type="text" name="registrationno" id="registrationno" class="form-control" tabindex="9"  required="true"
                        value="<?php if (isset($vehicleDetail['registrationno'])) {
@@ -266,7 +266,7 @@ $sno=1;
     echo submitFailFieldValue("registrationno");
 } ?>">
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-4">
                 <label for="regvalidfrom">Registration Valid From*</label>
                 <div class="input-group">
                     <input type="date" name="regvalidfrom" class="form-control" tabindex="10" id="regvalidfrom" required="true"
@@ -278,7 +278,7 @@ $sno=1;
                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span>
                 </div>
             </div>
-             <div class="col-lg-4">
+             <div class="col-lg-4 col-md-4">
                 <label for="regvalidto">Registration Valid To*</label>
                 <div class="input-group">
                     <input type="date" name="regvalidto" class="form-control" tabindex="10" id="regvalidfrom" required="true"
@@ -293,7 +293,7 @@ $sno=1;
             
             <span class="clearfix"><p>&nbsp;</p></span>
              
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-4">
                 <label for="insurancepolicyno">Insurance Policy No*</label>
                 <div class="input-group">
                     <input type="text" name="insurancepolicyno"  class="form-control" tabindex="11" id="insurancepolicyno" required="true"
@@ -306,7 +306,7 @@ $sno=1;
 
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-4">
                 <label for="insurancefromdate">Insurance From Date*</label>
                 <div class="input-group">
                     <input type="date" name="insurancefromdate" id="insurancefromdate" class="form-control" tabindex="12"  required="true"
@@ -321,7 +321,7 @@ $sno=1;
             </div>
                 
             
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-4">
                 <label for="insurancetodate">Insurance To Date*</label>
                 <div class="input-group">
                     <input type="date" name="insurancetodate" id="insurancetodate" class="form-control" tabindex="13"  required="true"
@@ -337,7 +337,7 @@ $sno=1;
             
             <span class="clearfix"><p>&nbsp;</p></span>
             
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-4">
                 <label for="roadtaxdate">Road Tax Paid Upto*</label>
                 <div class="input-group">
                     <input type="date" name="roadtaxdate" id="roadtaxdate" class="form-control" tabindex="14" required="true"
@@ -350,7 +350,7 @@ $sno=1;
                 </div>
                                
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-4">
                 <label for="pcrvaliddate">P.C.R Valid Upto*</label>
                 <div class="input-group">
                     <input type="date" name="pcrvaliddate" class="form-control" tabindex="15" required="true"
@@ -365,7 +365,7 @@ $sno=1;
             </div>
             
             
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-4">
                 <label for="Status">Seating Capacity*</label>
                 <input type="text" name="seatingcapacity" id="seatingcapacity" tabindex="16" class="form-control" required="true"
                      value="<?php if (isset($vehicleDetail['seatcapacity'])) {
@@ -378,11 +378,11 @@ $sno=1;
             <span class="clearfix"><p>&nbsp;</p></span>
             
             
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-4">
                 <label for="Status">Vehicle Image</label>
                 <input type="file" name="vehicleimage" id="vehicleimage" tabindex="16" class="form-control">              
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-4">
                 <label for="Status">Status</label>
                 <select name="status" class="form-control" tabindex="16">
                     <option value="1"> Active </option>

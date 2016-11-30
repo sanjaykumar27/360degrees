@@ -163,18 +163,18 @@
                             
                         <div class="row" id="itemRows">
                             
-                            <div class="col-lg-3">
+                            <div class="col-lg-3 col-md-3">
                                 <label for="Select Document"> Document File </label>
                                 <input type="file"  value =""  name = "document[]" id = "document" class="form-control" required="true">
                             </div>
 
-                            <div class="col-lg-3">
+                            <div class="col-lg-3 col-md-3">
                                 <label for="Document Type"> Document Type:</label>
                                 <select class="form-control"   name="documenttype[]" id="doctype" tabindex="3"  required="true" >
                                 <?php   echo PopulateSelect("document", submitFailFieldValue("document"));?>
                                 </select> 
                             </div>
-                            <div class="col-md-1">
+                            <div class="col-lg-1 col-md-1">
                                 <label for=""> Add</label><br>
                                 <button type="button" class="btn btn-success" id="add" onclick="addRow(this.form);">
                                 <span class="glyphicon glyphicon-plus"></span></button> 

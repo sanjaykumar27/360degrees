@@ -142,7 +142,7 @@ $(document).ready(function()
             <h1> Add Pick-Up Point</h1>
             
              
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-4">
                 <label for="pickuppointname" >Pick-up Point Name</label>
                 <input type="text" name="pickuppointname" id="pickuppointname" 
                        value="<?php if (isset($PickupEditDetails['pickuppointname']) && !empty($PickupEditDetails['pickuppointname'])) {
@@ -151,7 +151,7 @@ $(document).ready(function()
     submitFailFieldValue("pickuppointname");
 }?>" class="form-control" required>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-4">
                 <label for="suburbid"> Suburb Name </label>
                 <select name="suburbid" id="suburbid"  class="form-control" required>
                     <?php 
@@ -164,7 +164,7 @@ $(document).ready(function()
                     
                 </select>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-4">
                 <label for="amount">Amount </label>
                 <input type="text" name="amount" id="amount" 
                        value="<?php if (isset($PickupEditDetails['amount']) && !empty($PickupEditDetails['amount'])) {
@@ -177,7 +177,7 @@ $(document).ready(function()
             </div>
             <div class="clearfix">&nbsp;</div>
             
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-4">
                 <label for="pickuptime">Pick Up Time</label>
                 <input type="text" name="pickuptime" id="pickuptime" class="form-control" placeholder="HH : MM"
                 value="<?php if (isset($PickupEditDetails['pickuptime']) && !empty($PickupEditDetails['pickuptime'])) {
@@ -188,7 +188,7 @@ $(document).ready(function()
                 >
                 
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-4">
                 <label for="droptime">Drop  Time</label>
                 <input type="text" name="droptime" id="droptime" class="form-control" placeholder="HH : MM" 
                  value="<?php if (isset($PickupEditDetails['droptime']) && !empty($PickupEditDetails['droptime'])) {
@@ -202,10 +202,9 @@ $(document).ready(function()
             
             <div class="clearfix">&nbsp;</div>
             <div class="clearfix">&nbsp;</div>
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-6">
                 <input type="button" name="showpickup" id="showpickup" value="Show Pickup Points" class="btn btn-success">
                 <input type="reset" name="cancel" id="cancel" value="Cancel" class="btn btn-default">
-                       
                 <input type="submit" name="save" id="save" value="Save" class="btn btn-success">
             </div>  
         </form>

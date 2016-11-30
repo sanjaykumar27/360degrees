@@ -11,10 +11,10 @@
 ==========================-->
     <div class="container-fluid " > 
         <hr>
-       <div class="h4 col-lg-6">Copyright &copy <?php echo (date('Y')); ?> eBizneeds Business Solutions | All Rights Reserved  <br>
+       <div class="h4 col-lg-6 col-md-6">Copyright &copy <?php echo (date('Y')); ?> eBizneeds Business Solutions | All Rights Reserved  <br>
             <small>Total School Empowerment Solutions.</small> | <a href="http://www.360degrees.in" target="_blank"> 360&deg; view </a> 
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6">
             <div class="social pull-right">
                 <a href="#"><img src="<?php echo DIR_ASSET; ?>/images/social/googleplus.png" alt="" ></a>
                 <a href="#"><img src="<?php echo DIR_ASSET; ?>/images/social/dribbble.png" alt="" ></a>

@@ -38,7 +38,7 @@ getSessionStartEndDate();
     <div class="span10">
         <form action="" method="GET" id="imform" name="myForm" onsubmit="return validateForm()"> 
             <div class="row">
-                <div class="col-lg-4">
+                <div class="col-lg-4 col-md-4">
                     <div class="input-group">
                         <span class="input-group-addon">Scholar No</span> 
                         <input type="text" class="form-control" name="scholarnumber" id="scholarnumber" tabindex="1"
@@ -48,31 +48,31 @@ getSessionStartEndDate();
                                 <span class="glyphicon glyphicon-search" name="search" value='Search' > </span></a> 
                         </span>   
                     </div><!-- /input-group -->
-                </div><!-- /.col-lg-4 -->
+                </div><!-- /.col-lg-4 col-md-4 -->
 
-                <div class="col-lg-4">
+                <div class="col-lg-4 col-md-4">
                     <div class="input-group">
                         <span class="input-group-addon">Student First Name</span> 
                         <input type="text" class="form-control" name="studentname" id="studentname" tabindex="2" 
                                value ="<?php echo submitFailFieldValue("studentname"); ?>">
                     </div><!-- /input-group -->
 
-                </div><!-- /.col-lg-4 -->
+                </div><!-- /.col-lg-4 col-md-4 -->
 
-                <div class="col-lg-4">
+                <div class="col-lg-4 col-md-4">
                     <div class="input-group">
                         <span class="input-group-addon">Parent First Name</span> 
                         <input type="text" class="form-control" name="parentname" id="parentname" tabindex="3"
                                value ="<?php echo submitFailFieldValue("parentname"); ?>">
 
                     </div><!-- /input-group -->
-                </div><!-- /.col-lg-4 -->
+                </div><!-- /.col-lg-4 col-md-4 -->
             </div>     
 
             <span class='clearfix'>&nbsp;<br></span>
 
             <div class="row">
-                <div class="col-lg-4">
+                <div class="col-lg-4 col-md-4">
                     <div class="input-group">
                         <span class="input-group-addon">Class</span>
                         <select name="classid" id="classid"  class="form-control" tabindex="4"  >
@@ -81,7 +81,7 @@ getSessionStartEndDate();
                     </div>
                 </div> 
 
-                <div class="col-lg-4">
+                <div class="col-lg-4 col-md-4">
                     <div class="input-group">
                         <span class="input-group-addon">Section</span>
                         <select name="sectionid" id="sectionid"  class="form-control" tabindex="5">
@@ -91,7 +91,7 @@ getSessionStartEndDate();
                 </div>
 
 
-                <div class="col-lg-4">
+                <div class="col-lg-4 col-md-4">
                     <div class="input-group">
                         <span class="input-group-addon">Payment Mode</span>
                         <select name="paymentmode" id="paymentmode"  class="form-control" tabindex="6">
@@ -103,14 +103,14 @@ getSessionStartEndDate();
             <span class="clearfix">&nbsp;</span>
 
             <div class="row">  
-                <div class="col-lg-6">
+                <div class="col-lg-6 col-md-6">
                     <div class="input-group">
                         <span class="input-group-addon">Date From</span>
                         <input type="date" name="monthstart" id="monthstart" class="form-control" tabindex="7" 
                                max="<?php echo $_SESSION['sessionenddate'] ?>" min="<?php echo $_SESSION['sessionstartdate'] ?>" >
                     </div>
                 </div>  
-                <div class="col-lg-6">
+                <div class="col-lg-6 col-md-6">
                     <div class="input-group">
                         <span class="input-group-addon">Date To</span>
                         <input type="date" name="monthend" id="monthend" class="form-control" tabindex="8" 
@@ -122,7 +122,7 @@ getSessionStartEndDate();
 
             <div class="row"> 
                 <div class="controls" align="right">
-                    <div class='col-lg-6'>
+                    <div class='col-lg-6 col-md-6'>
                         <button type='reset' value="Reset" class="btn " tabindex="6">Cancel</button>
                         <button name='search' value="search" class="btn btn-success" tabindex="7">Search</button>
                     </div>
@@ -319,8 +319,8 @@ function showSelectStudent()
                 <a href=\"adjustedfeeReportpdf.php?action=xls$qryString\"> 
                 <input type=\"button\" id=\"excelreport\"  name=\"excelreport\" class=\"btn btn-info\"  value=\" View EXCEL\"></a>
         </div> 
-         <div class=\"col-lg-4\"></div> 
-        <div class=\"col-lg-6\" style=\"text-align: right;padding: 0px; \">" . getPagination($totalStudents, ROW_PER_PAGE) . "</div> 
+         <div class=\"col-lg-4 col-md-4\"></div> 
+        <div class=\"col-lg-6 col-md-6\" style=\"text-align: right;padding: 0px; \">" . getPagination($totalStudents, ROW_PER_PAGE) . "</div> 
              
 </div>";
     }

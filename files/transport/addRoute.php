@@ -152,7 +152,7 @@ $mode = (isset($_GET['mode']) && !empty($_GET['mode'])) ? 'edit' : 'add';
                 <?php }
             ?>
             <input type="hidden" name="mode" id="mode" value="<?php echo $mode ?>">
-            <div class="col-lg-4" >
+            <div class="col-lg-4 col-md-4" >
                 <label for="routename">Route Name</label>
                 <input type="text" id="routename" class="form-control" name="routename" required="true"
                        value ="<?php
@@ -164,7 +164,7 @@ $mode = (isset($_GET['mode']) && !empty($_GET['mode'])) ? 'edit' : 'add';
                        ?>">
             </div>
 
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-4">
                 <label for="busid">Vehicle Name</label>
                 <select id="busid" class="form-control" name="busid">
                     <?php
@@ -176,7 +176,7 @@ $mode = (isset($_GET['mode']) && !empty($_GET['mode'])) ? 'edit' : 'add';
                     ?>
                 </select>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-4">
                 <label for="drivername">Driver Name</label>
                 <select id="drivername" class="form-control" name="drivername">
 <?php
@@ -189,7 +189,7 @@ if (isset($routeDetail['driverid'])) {
                 </select>
             </div>
             <div class="clearfix">&nbsp;</div>
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-4">
                 <label for="startpoint">Start Point </label>
                 <select id="startpoint" class="form-control" name="startpoint">
 <?php
@@ -202,7 +202,7 @@ if (isset($routeDetail['startpointid'])) {
                 </select>
             </div>
 
-            <div class="col-lg-4"> 
+            <div class="col-lg-4 col-md-4"> 
                 <label for="pickuppointname"> Pick-up Points</label><br>
                 <select id="pickuppointname" class="form-control"  name="pickuppointname[]"  multiple="multiple">
 <?php
@@ -215,7 +215,7 @@ if (isset($routeDetail['pickuppointid'])) {
 ?>
                 </select>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-4">
                 <label for="endpoint">Destination Point</label>
                 <select id="endpoint" class="form-control" name="endpoint">
 <?php

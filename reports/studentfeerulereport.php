@@ -23,7 +23,7 @@ if (isset($_GET) && !empty($_GET)) {
 
         <form action="" method="GET" id="imform" name="myForm" onsubmit="return validateForm()">
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-6 col-md-6">
                     <div class="input-group">
                         <span class="input-group-addon">Scholar No</span> 
                         <input type="text" class="form-control" name="scholarnumber" id="scholarnumber" tabindex="1"
@@ -35,7 +35,7 @@ if (isset($_GET) && !empty($_GET)) {
                     </div><!-- /input-group -->
                 </div><!-- /.col-lg-4 -->
 
-                <div class="col-lg-6">
+                <div class="col-lg-6 col-md-6">
                     <div class="input-group">
                         <span class="input-group-addon">Student First Name</span> 
                         <input type="text" class="form-control" name="studentname" id="studentname" tabindex="2"
@@ -47,7 +47,7 @@ if (isset($_GET) && !empty($_GET)) {
             <span class='clearfix'>&nbsp;<br></span>
 
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-6 col-md-6">
                     <div class="input-group">
                         <span class="input-group-addon">Class</span>
                         <select name="classid" id="classid"  class="form-control" tabindex="3" >
@@ -56,7 +56,7 @@ if (isset($_GET) && !empty($_GET)) {
                     </div>
                 </div> 
 
-                <div class="col-lg-6">
+                <div class="col-lg-6 col-md-6">
                     <div class="input-group">
                         <span class="input-group-addon">Section</span>
                         <select name="sectionid" id="sectionid"  class="form-control" tabindex="4">
@@ -69,7 +69,7 @@ if (isset($_GET) && !empty($_GET)) {
 
                 <div class="row"> 
                     <div class="controls" align="right">
-                        <div class='col-lg-6'>
+                        <div class='col-lg-6 col-md-6'>
                             <button name='reset' value="Reset" class="btn " tabindex="6">Cancel</button>
                             <button name='search' value="search" class="btn btn-success" tabindex="5">Search</button>
                         </div>
@@ -125,14 +125,14 @@ if (isset($_GET['search'])) {
                     </tbody>
 
                 </table>
-                <div class="col-lg-6" style="text-align: left; padding-left: 0px;">
+                <div class="col-lg-6 col-md-6" style="text-align: left; padding-left: 0px;">
                     <a href="studentfeerulePDF.php?action=pdf<?php echo $qryString; ?>"> 
                         <input type="button" id="pdfreport"  name="pdfreport" class="btn btn-success"  value=" View PDF"></a>
                     <a href="studentfeerulePDF.php?action=xls<?php echo $qryString; ?>"> 
                         <input type="button" id="excelreport"  name="excelreport" class="btn btn-info"  value=" View EXCEL"></a>
                 </div>
 
-                <div class="col-lg-6" style="text-align: right; padding-right: 0px;">
+                <div class="col-lg-6 col-md-6" style="text-align: right; padding-right: 0px;">
         <?php getPagination($totalrows, ROW_PER_PAGE); ?>
                 </div>
             </div>

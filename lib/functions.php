@@ -1151,8 +1151,6 @@ HTML;
 
 function validUser() {
     //get the current page, to be used to check where to redirected user.
-    
-    
     $pageName = strtolower(basename($_SERVER['PHP_SELF']));
     if($pageName == 'download.php'){
        return false;
@@ -1870,10 +1868,10 @@ function populateFeeRuleCheckBox($sqlName, $fieldName, $value = null, $returnAs 
             } else {
                 $options .= "<div class='panel panel-default'>
                                 <div class='panel-body'>
-                                    <div class=\"col-lg-4\">
+                                    <div class=\"col-lg-4 col-md-4\">
                                         <label  class=\"checkbox-inline\"><input type=\"checkbox\" name=\"$fieldName\" id=\"feerule-$id\" value=\"$id\"{$checked} onchange=\"showInstallments(this.id);\"> $name
                                     </div> 
-                                <div class=\"col-lg-8\" id=\"feeinst-$id\" style=\"$style\">";
+                                <div class=\"col-lg-8 col-md-4\" id=\"feeinst-$id\" style=\"$style\">";
 
 
                 foreach ($feeInstallments as $key1 => $value1) {

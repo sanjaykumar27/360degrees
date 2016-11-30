@@ -55,9 +55,7 @@ if (!isset($_REQUEST['sid']) || $_REQUEST['sid'] <= 0) {
     }
     $(document).ready(function ($)
     {
-
         // for displaying modal for confirming before updating  record...//
-
         $('#save').click(function ()
         {
             $('#step').val('save');
@@ -122,7 +120,6 @@ if (!isset($_REQUEST['sid']) || $_REQUEST['sid'] <= 0) {
     <?php
     renderMsg();
     $showAllParent = getAllParentDetails();
-    
     $parentContactDetails = getParentContactDetails();
     
     $sno = 1;
@@ -135,17 +132,14 @@ if (!isset($_REQUEST['sid']) || $_REQUEST['sid'] <= 0) {
             <form action="" enctype="multipart/form-data" method="GET" >
                 <span class="text-info">The parents details attached with your profile is as follows :<br/><br/>
                     <ul class="list-group">
-                        <?php foreach ($showAllParent['records'] as $parentKey) {
-            ?>
+                        <?php foreach ($showAllParent['records'] as $parentKey) { ?>
                             <li class="list-group-item"> 
                                 <span class="glyphicon glyphicon-chevron-right">  </span>&nbsp;&nbsp;
                                 <a href="studentParent.php?sid=<?php echo $_GET['sid'] ?>&mode=edit&parentid=<?php echo $parentKey['parentid'] ?>">
                                     <?php echo $parentKey['parentname']; ?> &nbsp;-&nbsp; ( <?php echo $parentKey['relation']; ?> ) 
                                 </a>
                             </li>
-                            <?php
-                            $sno++;
-        } ?>
+                            <?php $sno++; } ?>
                     </ul>
                 </span> 
                 <div align="center">
@@ -194,7 +188,7 @@ if (!isset($_REQUEST['sid']) || $_REQUEST['sid'] <= 0) {
         } ?>">
             <input type="hidden" name="step" value="" />
 
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-4 col-md-4">
                 <label for="parentfirstname" class="small">First Name*</label>
                 <input type="text" id="parentfirstname" class="form-control  "  name="parentfirstname"  
                        value ="<?php
@@ -204,7 +198,7 @@ if (!isset($_REQUEST['sid']) || $_REQUEST['sid'] <= 0) {
                            echo submitFailFieldValue("parentfirstname");
                        } ?>"  required="true">  
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-4">
                 <label for="parentmiddlename" class="small">Middle Name</label>
                 <input type="text" id="parentmiddlename"  class="form-control  " name="parentmiddlename"  
                        value ="<?php
@@ -214,7 +208,7 @@ if (!isset($_REQUEST['sid']) || $_REQUEST['sid'] <= 0) {
                            echo submitFailFieldValue("parentmiddlename");
                        } ?>"> 
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-4">
                 <label for="lastname" class="small">Last Name*</label>
                 <input type="text" id="parentlastname"  class="form-control  " name="parentlastname"  required="true"  
                        value ="<?php
@@ -225,7 +219,7 @@ if (!isset($_REQUEST['sid']) || $_REQUEST['sid'] <= 0) {
                        } ?>" > 
             </div>
             <span class="clearfix">&nbsp;<br></span>
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-4">
                 <label for="gender" class="small">Gender*</label><br />
                 <select name="gender"   class="form-control  " required="true">
                     <?php
@@ -238,7 +232,7 @@ if (!isset($_REQUEST['sid']) || $_REQUEST['sid'] <= 0) {
             </div>
 
 
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-4">
                 <label for="religion" class="small">Religion*</label>
                 <select name="religion" id="religion"   class="form-control  " required="true">
                     <?php
@@ -252,7 +246,7 @@ if (!isset($_REQUEST['sid']) || $_REQUEST['sid'] <= 0) {
                 </select>
             </div>
 
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-4">
                 <label for="category" class="small">Category*</label>
                 <select name="category" id="category"  class="form-control  " required="true">
                     <?php
@@ -267,14 +261,14 @@ if (!isset($_REQUEST['sid']) || $_REQUEST['sid'] <= 0) {
             </div>
             <span class="clearfix">&nbsp;<br></span>
 
-            <div class="col-lg-6">
+            <div class="col-lg-6 col-md-6">
                 <label for="email1" class="small">Email</label>
                 <input type="text" class="form-control  "  id="email1" name="email1" 
                        value ="" placeholder="eg: abc@example.com"   />
                 <p style="font-size: 12px;"> Your email address will be the user-name and password would be emailed automatically. </p>
             </div>  
 
-            <div class="col-lg-6">
+            <div class="col-lg-6 col-md-6">
                 <label for="email1" class="small">Secondary Email</label>
                 <input type="text" class="form-control  "  id="email2" name="email2" placeholder="eg: abc@example.com"
                        value ="<?php
@@ -287,7 +281,7 @@ if (!isset($_REQUEST['sid']) || $_REQUEST['sid'] <= 0) {
 
             <span class="clearfix">&nbsp;</span>
             <hr>
-            <div class="col-lg-2">
+            <div class="col-lg-2 col-md-2">
                 <label for="currentzipcode" class="small">Current Pincode*</label>
                 <input type="text" class="form-control  "  
                        value ="<?php
@@ -302,7 +296,7 @@ if (!isset($_REQUEST['sid']) || $_REQUEST['sid'] <= 0) {
 
             </div>
 
-            <div class="col-lg-5">
+            <div class="col-lg-5 col-md-5">
                 <label for="currentaddress1" class="small">Current Address 1*</label>
                 <input type="text" name="currentaddress1" id="currentaddress1" class="form-control  "  
                        value ="<?php
@@ -315,7 +309,7 @@ if (!isset($_REQUEST['sid']) || $_REQUEST['sid'] <= 0) {
                        } ?>"required="true">
             </div>
 
-            <div class="col-lg-5">
+            <div class="col-lg-5 col-md-5">
                 <label for="currentaddress2" class="small">Current Address 2</label>
                 <input type="text" name="currentaddress2" id="currentaddress2" 
                        value ="<?php
@@ -330,7 +324,7 @@ if (!isset($_REQUEST['sid']) || $_REQUEST['sid'] <= 0) {
 
             <span class="clearfix">&nbsp;<br></span>
 
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-3">
                 <label for="currentsuburbid" class="small">Current Suburb*</label>
                 <select name="currentsuburbid" id="currentsuburbid" class="form-control  " required="true">
                     <?php
@@ -344,7 +338,7 @@ if (!isset($_REQUEST['sid']) || $_REQUEST['sid'] <= 0) {
                 </select>
             </div>
 
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-3">
                 <label for="currentcityid" class="small">Current City*</label>
                 <select name="currentcityid"  id="currentcityid" class="form-control  "  required="true">
                     <?php
@@ -357,7 +351,7 @@ if (!isset($_REQUEST['sid']) || $_REQUEST['sid'] <= 0) {
                     } ?>
                 </select>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-3">
                 <label for="currentstateid" class="small">Current State*</label>
                 <select name="currentstateid"  id="currentstateid" class="form-control  "  required="true">
                     <?php
@@ -371,7 +365,7 @@ if (!isset($_REQUEST['sid']) || $_REQUEST['sid'] <= 0) {
                 </select>
             </div>
 
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-3">
                 <label for="currentcountryid" class="small">Current Country*</label>
                 <select name="currentcountryid"  id="currentcountryid" class="form-control  "  required="true" >
                     <?php
@@ -395,7 +389,7 @@ if (!isset($_REQUEST['sid']) || $_REQUEST['sid'] <= 0) {
 
             <hr>
 
-            <div class="col-lg-2">
+            <div class="col-lg-2 col-md-2">
                 <label for="permazipcode" class="small">Permanent Pincode</label>
                 <input type="text" class="form-control  " id="permazipcode"   
                        value ="<?php
@@ -408,7 +402,7 @@ if (!isset($_REQUEST['sid']) || $_REQUEST['sid'] <= 0) {
                        } ?>"
                        name="permazipcode"  />
             </div>
-            <div class="col-lg-5">
+            <div class="col-lg-5 col-md-5">
                 <label for="permaaddress1" class="small">Permanent Address 1*</label>
                 <input type="text" name="permaaddress1" id="permaaddress1"  class="form-control  "
                        value ="<?php
@@ -421,7 +415,7 @@ if (!isset($_REQUEST['sid']) || $_REQUEST['sid'] <= 0) {
                        } ?>"  >
             </div>
 
-            <div class="col-lg-5">
+            <div class="col-lg-5 col-md-5">
                 <label for="permaaddress2" class="small">Permanent Address 2</label>
                 <input type="text" name="permaaddress2" id="permaaddress2" 
                        value ="<?php
@@ -435,7 +429,7 @@ if (!isset($_REQUEST['sid']) || $_REQUEST['sid'] <= 0) {
             </div>
 
             <span class="clearfix">&nbsp;</span>
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-3">
                 <label for="permasuburbid" class="small">Permanent Suburb*</label>
                 <select name="permasuburbid" id="permasuburbid"   class="form-control  "  required>
                     <?php
@@ -451,7 +445,7 @@ if (!isset($_REQUEST['sid']) || $_REQUEST['sid'] <= 0) {
 
 
 
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-3">
                 <label for="permacityid" class="small">Permanent City*</label>
                 <select name="permacityid"   id="permacityid" class="form-control  "  >
                     <?php
@@ -466,7 +460,7 @@ if (!isset($_REQUEST['sid']) || $_REQUEST['sid'] <= 0) {
             </div>
 
 
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-3">
                 <label for="permastateid" class="small">Permanent State*</label>
                 <select name="permastateid"  id="permastateid" class="form-control  " required>
                     <?php
@@ -480,7 +474,7 @@ if (!isset($_REQUEST['sid']) || $_REQUEST['sid'] <= 0) {
                 </select>
             </div>
 
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-3">
                 <label for="permacountryid" class="small">Permanent Country*</label>
                 <select name="permacountryid"  id="permacountryid" class="form-control  " >
                     <?php
@@ -500,7 +494,7 @@ if (!isset($_REQUEST['sid']) || $_REQUEST['sid'] <= 0) {
             <!-- panel ends------ -->
             <hr>
 
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-3">
                 <label for="phone1" class="small">Primary Phone No. </label>
                 <input type="text" class="form-control  " id="phone1" name="phone1"  maxlength="7"
                        value ="<?php
@@ -514,7 +508,7 @@ if (!isset($_REQUEST['sid']) || $_REQUEST['sid'] <= 0) {
                 <small style="font-size: 12px;"> Please enter 7 digit landline number without area code(eg 27*****)</small>
             </div>
 
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-3">
                 <label for="officephone" class="small">Alternate Phone No</label>
                 <input type="text" class="form-control  " maxlength="7" minl="10"
                        value ="<?php
@@ -526,7 +520,7 @@ if (!isset($_REQUEST['sid']) || $_REQUEST['sid'] <= 0) {
             </div>
 
 
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-3">
                 <label for="mobile1" class="small">Primary Mobile No*</label>
                 <input type="text" class="form-control  " maxlength="10"  
                        value ="<?php
@@ -540,7 +534,7 @@ if (!isset($_REQUEST['sid']) || $_REQUEST['sid'] <= 0) {
             </div>	
 
 
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-3">
                 <label for="mobile2" class="small">Alternate Mobile No</label>
                 <input type="text" class="form-control  " maxlength="10" min="10"
                        value ="<?php
@@ -554,7 +548,7 @@ if (!isset($_REQUEST['sid']) || $_REQUEST['sid'] <= 0) {
 
             <span class="clearfix">&nbsp;</span>
 
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-3">
                 <label for="fax1" class="small">Primary Fax</label>
                 <input type="text" class="form-control  "  
                        value ="<?php
@@ -565,7 +559,7 @@ if (!isset($_REQUEST['sid']) || $_REQUEST['sid'] <= 0) {
                        } ?>" name="fax1" />	
             </div>
 
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-3">
                 <label for="fax2" class="small">Secondary Fax</label>
                 <input type="text" class="form-control  " 
                        value ="<?php
@@ -577,7 +571,7 @@ if (!isset($_REQUEST['sid']) || $_REQUEST['sid'] <= 0) {
             </div>
 
 
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-3">
                 <label for="qualificationid" class="small">Qualification*</label>
                 <select name="qualificationid" class="form-control  "  required>
                     <?php
@@ -589,7 +583,7 @@ if (!isset($_REQUEST['sid']) || $_REQUEST['sid'] <= 0) {
                 </select>
             </div>
 
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-3">
                 <label for="occupation" class="small">Occupation*</label>
                 <select name="occupation" class="form-control  "  required="true" id="occupation"> 
                     <?php
@@ -603,7 +597,7 @@ if (!isset($_REQUEST['sid']) || $_REQUEST['sid'] <= 0) {
 
             <span class="clearfix">&nbsp;<br></span>
 
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-3">
                 <label for="relationid" class="small">Relation*</label>
                 <select name="relationid" class="form-control  "   required="true">
                     <?php
@@ -615,7 +609,7 @@ if (!isset($_REQUEST['sid']) || $_REQUEST['sid'] <= 0) {
                 </select>
             </div>
 
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-3">
                 <label for="income" class="small">Annual Income</label>
                 <select name="income" class="form-control  "  >
                     <?php

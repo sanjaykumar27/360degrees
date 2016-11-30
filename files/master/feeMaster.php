@@ -106,14 +106,14 @@
     function addRow() {
         rowNum++;
         var row = '<div class="clearfix">&nbsp;</div><div id="rowNum' + rowNum + '" >'.concat(
-                '<div class="col-lg-3"> <label for="classid' + rowNum + '">Select Classes</label><br>',
+                '<div class="col-lg-3 col-md-3"> <label for="classid' + rowNum + '">Select Classes</label><br>',
                 '<input type="text" name="classid[]" id="classid' + rowNum + '" required="true"></div>',
-                '<div class="col-lg-3"> <label for="amount"> Amount </label> ',
+                '<div class="col-lg-3 col-md-3"> <label for="amount"> Amount </label> ',
                 '<input type="text" name="amount[' + rowNum + ']" id="amount' + rowNum + '" class="form-control" required="true"> <div class="hidden" id="divamount' + rowNum + '">',
-                '<code>Admission amount is required.</code></div> </div><div class="col-lg-3"> <label for="duedate' + rowNum + '"> Due Date(s) </label>',
+                '<code>Admission amount is required.</code></div> </div><div class="col-lg-3 col-md-3"> <label for="duedate' + rowNum + '"> Due Date(s) </label>',
                 '<input type="text" class="form-control" name="duedate[' + rowNum + ']" id="duedate' + rowNum + '">',
                 '<div class="hidden" id="divduedate' + rowNum + '"><code>Due date of payment is required.</code></div> </div>',
-                '<div class="col-lg-3"> <label>Remove</label><br><button type="button" class="btn btn-danger" id="remove" onclick="removeRow(' + rowNum + ');">',
+                '<div class="col-lg-3 col-md-3"> <label>Remove</label><br><button type="button" class="btn btn-danger" id="remove" onclick="removeRow(' + rowNum + ');">',
                 '<span class="glyphicon glyphicon-minus"></span> </button> </div> </div>');
 
         jQuery('#itemRows').append(row);
@@ -271,7 +271,7 @@
             </div> 
             <h3>Create Fee Structure </h3><span class="clearfix">&nbsp;</span>
             <div class="clearfix"></div>
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-3">
                 <label for="feecomponents">Component Name</label><div id="forFeeComponentTour"></div>
                 <select  class="form-control" id="feecomponents" name="feecomponents" required="true" >
                     <?php
@@ -285,7 +285,7 @@
                 <div class="hidden" id="divfeecomponents"><code>Component name, in text, is required.</code></div>
             </div>
 
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-4">
                 <label for="frequency"> Frequency</label><div id="forFeeFrequencyTour"></div>
                 <select name="frequency" id="frequency" class="form-control" required="true">
                     <option value="">- Select One-</option>
@@ -296,7 +296,7 @@
                 <small class="alert-danger">Payment Frequency is required.</small>
             </div>
 
-            <div class="col-lg-1">  
+            <div class="col-lg-1 col-md-1">  
                 <label for="isrefundable">Refundable</label><div id="forFeeRefundableTour"></div>
                 <input type="checkbox" name="isrefundable" id="isrefundable"  value="true">
             </div>
@@ -309,13 +309,13 @@
                   ?>  
                   <br><div id="itemRows" >
 
-                      <div class="col-lg-3">
+                      <div class="col-lg-3 col-md-3">
                           <label for="classid">Select Classes</label><div id="forClassesTour"></div>
                           <input type="text" name="classid[0]" id="classid" required value ="<?php echo submitFailFieldValue("classname[0]"); ?>">
                           <small>Select all the classes with same structure.</small>
                       </div>
 
-                      <div class=" col-lg-3">
+                      <div class=" col-lg-3 col-md-3">
                           <label for="Amount">Amount:</label>
                           <input type="text" id="amount" name="amount[0]"  required="true" class="form-control"
                                  value="<?php echo submitFailFieldValue("amount[0]"); ?>">
@@ -323,7 +323,7 @@
                        <div class="hidden" id="divamount"><code>Amount per date in Rupees is required.</code></div>
                       </div>
 
-                      <div class=" col-lg-3">
+                      <div class=" col-lg-3 col-md-3">
                           <label for="Due Date">Due Date(s)</label>
                           <input type="text" id="duedate"  name="duedate[0]" required="true" class="form-control"
                                  value="<?php echo submitFailFieldValue("duedate[0]"); ?>">
@@ -331,7 +331,7 @@
                           <div class="hidden" id="divduedate"><code>Due date of payment is required.</code></div>
                       </div>
 
-                      <div class="col-lg-2">
+                      <div class="col-lg-2 col-md-2">
                           <label>Add Row</label><br>
                           <button type="button" class="btn btn-success" id="add" onclick="addRow();" title="Click here to add more rows!">
                               <span class="glyphicon glyphicon-plus"></span>
@@ -453,7 +453,7 @@
             <input type=\"hidden\"  name=\"feestructureid\" id=\"feestructureid\"  value =\" $row[feestructureid]\">
                 
             <div class=\"row\">
-                <div class=\"col-lg-3\">
+                <div class=\"col-lg-3 col-md-3\">
                     <label for=\"classname\">Class</label>
                     <input type=\"text\" class=\"form-control\" name=\"classname[]\" id=\"classname[$i]\" required value =\" $row[classname]\">
                      <input type=\"hidden\"  name=\"classid[]\" id=\"classid[$i]\"  value =\" $row[classid]\">
@@ -461,12 +461,12 @@
                  
                  
                  
-                <div class=\"col-lg-3\">
+                <div class=\"col-lg-3 col-md-3\">
                     <label for=\"amount\"> Amount </label>
                     <input type=\"text\" class=\"form-control\" name=\"amount[]\" id=\"amount[$i]\" required value =\"$row[amount]\">
                 </div>
 
-                <div class=\"col-lg-3\">
+                <div class=\"col-lg-3 col-md-3\">
                     <label for=\"duedate\"> Due Date </label>
                     <input type=\"date\" class=\"form-control\" name=\"duedate[]\" id=\"duedate[$i]\" required=\"true\" value =\"$row[duedate]\">
                 </div>

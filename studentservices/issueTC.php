@@ -82,7 +82,7 @@ SelectAcademicSession();
             <span class='clearfix'>&nbsp;<br></span>
 
             <div class="row">
-                <div class="col-lg-2 col-md-6">
+                <div class="col-lg-2 col-md-4">
                     <div class="input-group">
                         <span class="input-group-addon">Class</span>
                         <select name="classid" id="classid"  class="form-control" tabindex="4" >
@@ -91,7 +91,7 @@ SelectAcademicSession();
                     </div>
                 </div> 
 
-                <div class="col-lg-2 col-md-6">
+                <div class="col-lg-2 col-md-4">
                     <div class="input-group">
                         <span class="input-group-addon">Section</span>
                         <select name="sectionid" id="sectionid"  class="form-control" tabindex="5">
@@ -101,14 +101,15 @@ SelectAcademicSession();
                 </div>
 
 
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-4 col-md-4">
                     <div class="input-group">
                         <span class="input-group-addon">Date From</span>
                         <input type="date" name="monthstart" id="monthstart" class="form-control" tabindex="7" 
                                max="<?php echo $_SESSION['sessionenddate'] ?>" min="<?php echo $_SESSION['sessionstartdate'] ?>" >
                     </div>
                 </div>  
-                <div class="col-lg-4 col-md-6">
+                <span class="clearfix visible-md"><br><br><br></span>
+                <div class="col-lg-4 col-md-4">
                     <div class="input-group">
                         <span class="input-group-addon">Date To</span>
                         <input type="date" name="monthend" id="monthend" class="form-control" tabindex="8" 
@@ -120,7 +121,7 @@ SelectAcademicSession();
             <span class='clearfix'>&nbsp;<br></span>
             <div class="row"> 
                 <div class="controls" align="right">
-                    <div class='col-lg-6'>
+                    <div class='col-lg-6 col-md-8'>
                         <button name='reset' value="Reset" class="btn " tabindex="6">Cancel</button>
                         <button name='search' value="search" class="btn btn-success" tabindex="7">Search</button>
                     </div>

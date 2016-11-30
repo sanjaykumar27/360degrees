@@ -100,7 +100,7 @@ require_once VIEW_HEADER;
                 <form action="<?php echo PROCESS_FORM; ?>" method="post" name="imform" id="imform">
                     
                     <!-- input scholar number -->
-                    <div class="col-lg-5 col-md-5 col-sm-5">
+                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
                         <label for="exampleInputEmail2">Scholar No</label>
                         <input type="text"  id="scholar_list" class="form-control"  name="scholarnum" 
                                palceholder="Is Any Sibling" 
@@ -119,7 +119,7 @@ require_once VIEW_HEADER;
                     ?>">
                    
                     <!-- input field for student name -->
-                    <div class="col-lg-7 col-md-7 col-sm-6">
+                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
                         <div class="form-group">
                             <label for="exampleInputEmail2">Student Name</label>
                             <input type="text" class="form-control" id="studentname" name="studentname"

@@ -47,7 +47,7 @@ if (isset($_GET['fcid']) && !empty($_GET['fcid']) && $_GET['cb'] == 1) {
         <?php renderMsg(); ?>
         <form action="" method="GET" id="imform">
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-6 col-md-6">
                     <div class="input-group">
                         <span class="input-group-addon">Scholar No</span> 
                         <input type="text" class="form-control" name="scholarnumber" id="scholarnumber" tabindex="1" 
@@ -59,7 +59,7 @@ if (isset($_GET['fcid']) && !empty($_GET['fcid']) && $_GET['cb'] == 1) {
                     </div><!-- /input-group -->
                 </div><!-- /.col-lg-4 -->
 
-                <div class="col-lg-6">
+                <div class="col-lg-6 col-md-6">
                     <div class="input-group">
                         <span class="input-group-addon">Student Name</span> 
                         <input type="text" class="form-control" name="studentname" id="studentname" tabindex="2" 
@@ -72,7 +72,7 @@ if (isset($_GET['fcid']) && !empty($_GET['fcid']) && $_GET['cb'] == 1) {
             <span class="clearfix"> &nbsp;<br></span>
 
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-6 col-md-6">
                     <div class="input-group">
                         <span class="input-group-addon">Class</span>
                         <select name="classid" id="classid" tabindex="2" class="form-control" tabindex="3" >
@@ -81,7 +81,7 @@ if (isset($_GET['fcid']) && !empty($_GET['fcid']) && $_GET['cb'] == 1) {
                     </div><!-- /input-group -->
                 </div><!-- /.col-lg-4 -->
 
-                <div class="col-lg-3">
+                <div class="col-lg-3 col-md-3">
                     <div class="input-group">
                         <span class="input-group-addon">Cheque Number</span> 
                         <input type="text" class="form-control" name="chequenumber" id="chequenumber" tabindex="4" 
@@ -90,7 +90,7 @@ if (isset($_GET['fcid']) && !empty($_GET['fcid']) && $_GET['cb'] == 1) {
                     </div><!-- /input-group -->
                 </div><!-- /.col-lg-4 -->
 
-                <div class="col-lg-3">
+                <div class="col-lg-3 col-md-3">
                     <div class="input-group">
                         <span class="input-group-addon">Bank</span> 
                         <input type="text" class="form-control" name="bankname" id="bankname" tabindex="7" 
@@ -105,7 +105,7 @@ if (isset($_GET['fcid']) && !empty($_GET['fcid']) && $_GET['cb'] == 1) {
 
             <div class="row">
 
-                <div class="col-lg-6">
+                <div class="col-lg-6 col-md-6">
                     <div class="input-group">
                         <span class="input-group-addon">Date From</span> 
                         <input type="date" class="form-control" name="startdate" id="startdate" tabindex="5" 
@@ -114,7 +114,7 @@ if (isset($_GET['fcid']) && !empty($_GET['fcid']) && $_GET['cb'] == 1) {
                     </div><!-- /input-group -->
                 </div><!-- /.col-lg-4 -->
 
-                <div class="col-lg-6">
+                <div class="col-lg-6 col-md-6">
                     <div class="input-group">
                         <span class="input-group-addon">Date To</span> 
                         <input type="date" class="form-control" name="enddate" id="enddate" tabindex="6" 
@@ -128,7 +128,7 @@ if (isset($_GET['fcid']) && !empty($_GET['fcid']) && $_GET['cb'] == 1) {
 
             <div class="row"> 
                 <div class="controls" align="right">
-                    <div class='col-lg-6'>
+                    <div class='col-lg-6 col-md-6'>
                         <button name='reset' value="Reset" class="btn " tabindex="9">Cancel</button>
                         <button name='search' value="search" class="btn btn-success" tabindex="8">Search</button>
                     </div>

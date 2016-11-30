@@ -81,7 +81,7 @@
         ?>
         <input type="hidden" name="sid" id="sid" value="<?php echo $_REQUEST['sid']; ?>">
         <input type="hidden" name="mode" id="mode" value="<?= $mode ?>"> 
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6">
             <label for="medicalhistory">Medical Information*</label>
             <input type="text" name="medicalhistory"
                    value ="<?php
@@ -94,7 +94,7 @@
 
         </div>
 
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6">
             <label for="allergyinfo">Allergy Information*</label>
             <input type="text" name="allergyinfo"
                    value ="<?php
@@ -109,7 +109,7 @@
         <span class="clearfix">&nbsp;</span>
 
 
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6">
             <label for="medicalhistory">Frequent IIlness</label>
             <input type="text" id="frequentillness"  class="form-control" name="frequentillness"
                    value ="<?php
@@ -121,7 +121,7 @@
                    ?>" >
         </div>
 
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6">
             <label for="regularhospname">Hospital Name*</label>
             <input type="text" id="regularhospname"  class="form-control" name="regularhospname" required="true"
                    value ="<?php
@@ -135,7 +135,7 @@
 
         <span class="clearfix">&nbsp;</span>
 
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6">
             <label for="regularhospphone">Hospital Phone*</label>
             <input type="text" id="regularhospphone"  class="form-control" name="regularhospphone" required="true" maxlength="7"
                    value ="<?php
@@ -147,7 +147,7 @@
                    ?>">
         </div>
 
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6">
             <label for="regularhospemail">Hospital Email*</label>
             <input type="text" id="regularhospemail"  class="form-control" name="regularhospemail" required="true"
                    value ="<?php
@@ -159,7 +159,7 @@
                    ?>">
         </div>
         <span class="clearfix">&nbsp;</span>
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6">
             <label for="regularhospaddress">Hospital Address*</label>
             <input type="text" id="regularhospaddress"  class="form-control" name="regularhospaddress" required="true"
                    value ="<?php
@@ -170,7 +170,7 @@
                      }
                    ?>" >
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6">
             <label for="regulardocname">Doctor Name*</label>
             <input type="text" id="regulardocname"  class="form-control" name="regulardocname" required="true"
                    value ="<?php
@@ -182,7 +182,7 @@
                    ?>">
         </div>
         <span class="clearfix">&nbsp;</span>
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6">
             <label for="regulardocemail">Doctor Email*</label>
             <input type="text" id="regulardocemail"  class="form-control" name="regulardocemail" required="true"
                    value ="<?php
@@ -193,7 +193,7 @@
                    }
                    ?>">
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6">
             <label for="regulardocphone">Doctor Phone*</label>
             <input type="text" id="regulardocphone"  class="form-control" name="regulardocphone" required="true" maxlength="7"
                    value ="<?php
@@ -205,7 +205,7 @@
                    ?>">
         </div>
         <span class="clearfix">&nbsp;</span>
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6">
             <label for="regulardocmobile">Doctor Mobile*</label>
             <input type="text" id="regulardocmobile"  class="form-control" name="regulardocmobile" required="true"  maxlength="10"
                    value ="<?php
@@ -216,7 +216,7 @@
                    }
                    ?>">
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6">
             <label for="regulardocaddress">Doctor Address*</label>
             <input type="text" id="regulardocaddress"  class="form-control" name="regulardocaddress" required="true"
                    value ="<?php
@@ -230,7 +230,7 @@
 
         <span class="clearfix">&nbsp;</span>
 
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6">
             <label for="height">Height*</label>
             <input type="text" id="height"  class="form-control" name="height"  required="true"
                    value ="<?php
@@ -242,7 +242,7 @@
                    ?>">
         </div>
 
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6">
             <label for="weight">Weight*</label>
             <input type="text" id="weight"  class="form-control" name="weight" required="true"
                    value ="<?php
@@ -256,7 +256,7 @@
 
         <span class="clearfix">&nbsp;</span>
 
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6">
             <label for="righteyesight">Right Eyesight</label>
             <input type="text" id="righteyesight" class="form-control" name="righteyesight" placeholder="right-sight"
                    value ="<?php
@@ -268,7 +268,7 @@
                    ?>">
         </div>
 
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6">
             <label for="lefteyesight">Left Eyesight</label>
             <input type="text" id="lefteyesight"  class="form-control" name="lefteyesight" placeholder="left-sight"
                    value ="<?php
@@ -281,7 +281,7 @@
         </div>
 
         <span class="clearfix">&nbsp;</span>
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6">
             <label for="bloodgroup">Blood Group*</label>
             <select class="form-control"  name="bloodgroup" id="bloodgroup" required="true">
                    <?php
@@ -294,7 +294,7 @@
             </select>
         </div>
 
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6">
             <label for="identificationmark1">Identification Mark A</label>
             <input type="text"  name="identificationmark1"
                    value ="<?php
@@ -307,7 +307,7 @@
         </div>
 
         <span class="clearfix">&nbsp;</span>
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6">
             <label for="identificationmark2">Identification Mark B</label>
             <input type="text"  name="identificationmark2"
                    value ="<?php
@@ -319,7 +319,7 @@
                    ?>" class="form-control"/>
         </div>
 
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6">
             <label for="doctorremark">Doctor Remark</label>
             <input type="text"  name="doctorremark"
                    value ="<?php

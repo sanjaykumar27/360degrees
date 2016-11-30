@@ -17,7 +17,7 @@
 
 <div class="container">
     <form action="<?php echo PROCESS_FORM; ?>" method="post" id="imform" >
-        <div class="col-lg-4">
+        <div class="col-lg-4 col-md-4">
             <div class="input-group">
                 <span class="input-group-addon">Vehicle Name</span>
                 <select id="busid" class="form-control" name="busid" required="true">
@@ -31,13 +31,13 @@
                 </select>
             </div>
         </div>
-        <div class="col-lg-4 ">
+        <div class="col-lg-4 col-md-4 ">
             <div class="input-group">
                 <span class="input-group-addon">Date From</span>
                 <input type="date" name="monthstart" id="monthstart" class="form-control">
             </div>
         </div>  
-        <div class="col-lg-4">
+        <div class="col-lg-4 col-md-4">
             <div class="input-group">
                 <span class="input-group-addon">Date To</span>
                 <input type="date" name="monthend" id="monthend" class="form-control"> 

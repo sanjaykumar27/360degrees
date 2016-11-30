@@ -60,14 +60,14 @@ require_once VIEW_HEADER;
         });*/
 </script>
 <div class="container">
-    <div class="col-lg-4">
+    <div class="col-lg-4 col-md-4">
         <h1>Welcome to 360&deg; </h1>
         <p>Complete School Management Solution...</p>
     </div>
-    <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12">
+    <div class="col-lg-4 col-md-6">
         <?php renderMsg(); ?>
-        <div class="panel panel-info">
-            
+        <div class="panel panel-primary">
+            <div class="panel-heading">Login Form</div>
             <div class="panel-body">
                  <form action="<?php echo PROCESS_FORM; ?>" method="post" enctype= "multipart/form-data"  name="imForm">
                     <label for="email">Email</label>
@@ -80,15 +80,17 @@ require_once VIEW_HEADER;
                     <div class="hidden" id="divpassword"><code>Valid password is required. </code></div>
                    
                     <button type="submit" value="submit" class="btn btn-info" style="width: 100%;margin-top: 10px;margin-bottom: 10px;">Login Here</button>
-                    </br> 
-                    <div class="col-lg-6" style="text-align: left">
-                    <input type="checkbox" name="rememberMe" value="yes" class="checkbox-inline" style> Remember Me
-                        
+                
+                    <div class="col-lg-6 col-md-6" style="text-align: left">
+                        <input type="checkbox" name="rememberMe" value="yes" class="checkbox-inline" style> Remember Me
                     </div>
-                    <div class="col-lg-6" style="text-align: right">
-                       <a href="#">Forgot Password ?</a>
+                    
+                    <div class="col-lg-6 col-md-6" style="text-align: right">
+                        <a href="#" class="h5">Forgot Password ?</a>
+                         <span class="clearfix"><br></span>
                     </div>
                    
+                    
                 </form>
             </div>
         </div>
