@@ -50,8 +50,10 @@
     <div id="showreport" name="showreport">
          
         <?php renderMsg();
+        
         if ($reportArray !=0 && $reportArray['totaldue'] != 0) {
-            $totalRows = $reportArray['totalrows']; ?>
+            
+        $totalRows = $reportArray['totalrows'];  ?>
         <table class="table table-hover table-bordered" id="displaytable">
             <thead> 
                 <tr >

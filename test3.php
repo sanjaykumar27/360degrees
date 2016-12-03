@@ -12,26 +12,15 @@
   require_once DIR_FUNCTIONS;
   require_once VIEW_HEADER;
 ?>
-<div class="col-md-4">
-    <input id="txt" class="form-control" value="sanjay" disabled="true"/>
-</div>
-<input id="txt[2]" value="btn2" />
-<input type="button" value="button" id="btn">
-<br>
-<script>
-    $(function () {
-        displayHideDiv('showcollection,addcollection',null);
-        $('#btn').dblclick(function () {
-            $("#txt").prop('disabled', false);
-        });
-        $("#txt").autocomplete({
-            source: 'test.php'
-        });
-    });
-</script>
-<br>
-<?php 
-  $num = 0;
-  echoThis(roundOff($num));
-    
-    
+
+<?php
+  $num = array(0,15,16,16.4,17.45,17.56,18,20);
+  
+  foreach ($num as $k => $value){
+      $num[$k] = $value." -- ".roundOff($value);
+  }
+ 
+  echoThis($num);
+  echoThis(formatCurrency('15000'));
+
+  

@@ -11,7 +11,7 @@ if ($current < 1) {
 // if there are pages to be shown
 if ($pages > 1 || $alwaysShowPagination === true) {
     ?>
-    <ul class="pagination pagination-lg">
+    <ul class="pagination">
         <?php
         /**
          * Previous Link

@@ -13,7 +13,7 @@ require_once '../lib/reportfunctions.php';
 
 if(isset($_REQUEST['type']) && $_REQUEST['type'] == 'due'){
     $feeDue        = getDueFees_dashboard("dashboard");
-    $returnArray = "<h4>".formatCurrency($feeDue)."</h4>";
+    $returnArray = formatCurrency($feeDue);
     echo json_encode($returnArray);
 }
 elseif(isset($_REQUEST['type']) && $_REQUEST['type'] == 'collection'){
@@ -21,8 +21,7 @@ elseif(isset($_REQUEST['type']) && $_REQUEST['type'] == 'collection'){
     $collectedFee  =  array_sum(array_column($collectedFeeDetails, "feeamount"));
     $collectedFee  += array_sum(array_column($collectedFeeDetails, "otherfeeamount"));
     $collectedFee  = number_format($collectedFee, 2, '.', '');
-    
-    $returnArray = "<h4>".formatCurrency($collectedFee)."</h4>";
+    $returnArray = formatCurrency($collectedFee);
     echo json_encode($returnArray);
 }
     

@@ -15,9 +15,7 @@ require_once DIR_FUNCTIONS;
 
 if (!isset($_GET['e'])) {
     $collectedfee = Collectedfee();
-    //echoThis($collectedfee); die;
     $installemntArray = createInstallmentArray();
-
     $conveyanceFees = getConveyanceAmount(cleanVar($_GET['sid']));
 }
 require_once VIEW_HEADER;
@@ -64,7 +62,6 @@ require_once VIEW_HEADER;
             $j = $i = 1;
             if (isset($installemntArray)) {
                 foreach ($installemntArray as $key => $value) {
-                    
                     $totalAmount = 0;
                     $otherfee = 0;
                     $InstallmentMonthname = date('F', strtotime($key));
@@ -146,8 +143,7 @@ require_once VIEW_HEADER;
                                         <th>Fee Heads</th>
                                         <th>Amount</th>
                                     </tr> 
-                                    <?php foreach ($value['feecomponents'] as $k => $val) {
-                                        ?>
+                                    <?php foreach ($value['feecomponents'] as $k => $val) { ?>
                                         <tr>
                                             <td><?php echo $k ?></td>
                                             <td><?php echo $val ?></td>
@@ -364,8 +360,9 @@ function studentDetailsSql() {
 
 function createInstallmentArray() {
     $studentDetails = studentDetailsSql();
-    
+   
     $HtmlArray = feeComponentsSql();
+    
     $newOptions = array();
     $i = 0;
     $totalamount = array();
@@ -401,10 +398,9 @@ function feeComponentsSql() {
     $conveyance = "";
     $pickuppoint = "";
     $studentdetails = studentDetailsSql();
-    //echoThis($studentdetails);die;
     $feeruledetails = feeRuleSql();
     $feeRuleInstallment = getInstFeeRuleAssoc();
-
+    
     if (!empty($feeruledetails)) {
         foreach ($feeruledetails as $key => $value) {
             $feeruleamount[] = $feeruledetails[$key]['feeruleamount'];
@@ -434,7 +430,7 @@ function feeComponentsSql() {
                    AND t1.status = 1
 		   ORDER BY t2.duedate ASC 
            ";
-    //echoThis($sql);die;
+    
     $result = dbSelect($sql);
     if (mysqli_num_rows($result) != 0) {
         while ($row = mysqli_fetch_assoc($result)) {
@@ -541,6 +537,7 @@ function feeRuleSql() {
 }
 
 function Collectedfee() {
+    
     $feedetails = array();
     if ((isset($_GET['edid']))) {
         $studentid = cleanVar($_GET['edid']);

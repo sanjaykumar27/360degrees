@@ -8,7 +8,6 @@
 require_once "../config/config.php";
 require_once DIR_FUNCTIONS;
 require_once VIEW_HEADER;
-
 SelectAcademicSession();
 ?>
 
@@ -19,10 +18,8 @@ SelectAcademicSession();
         var sw = (screen.width * .60);
         var sh = (screen.height * .60);
         window.open(url, 'pop-up', 'width=' + sw + ', height=' + sh + ', top=' + top + ', left=' + left);
-
     }
     function displayModalJS(studentid, sessionname, instituteabbrevation) {
-
         var strModal = '<div id="jsAmountAlert" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'.concat(
                 '<div class="modal-dialog"><div class="modal-content"><div class="modal-header"><strong>T.C FEES..!</strong></div>',
                 '<div class="modal-body"><form class="form-inline" method="post" action="<?php echo PROCESS_FORM; ?>">' +
@@ -37,11 +34,9 @@ SelectAcademicSession();
                 '</div></div>' +
                 '<button type="submit" class="btn btn-success">Pay Now</button>' +
                 '</form></div><div class="modal-footer"><button type="button" id="removejsmodal" class="btn btn-danger" data-dismiss="modal">Close</button></div></div></div></div>');
-
         $(strModal).appendTo('body');
         $('#jsAmountAlert').modal('toggle');
     }
-
 </script>
 <div class="container">
     <div class="span10">
@@ -82,7 +77,7 @@ SelectAcademicSession();
             <span class='clearfix'>&nbsp;<br></span>
 
             <div class="row">
-                <div class="col-lg-2 col-md-4">
+                <div class="col-lg-3 col-md-4">
                     <div class="input-group">
                         <span class="input-group-addon">Class</span>
                         <select name="classid" id="classid"  class="form-control" tabindex="4" >
@@ -91,7 +86,7 @@ SelectAcademicSession();
                     </div>
                 </div> 
 
-                <div class="col-lg-2 col-md-4">
+                <div class="col-lg-3 col-md-4">
                     <div class="input-group">
                         <span class="input-group-addon">Section</span>
                         <select name="sectionid" id="sectionid"  class="form-control" tabindex="5">
@@ -101,15 +96,16 @@ SelectAcademicSession();
                 </div>
 
 
-                <div class="col-lg-4 col-md-4">
+                <div class="col-lg-3 col-md-4">
                     <div class="input-group">
                         <span class="input-group-addon">Date From</span>
                         <input type="date" name="monthstart" id="monthstart" class="form-control" tabindex="7" 
                                max="<?php echo $_SESSION['sessionenddate'] ?>" min="<?php echo $_SESSION['sessionstartdate'] ?>" >
                     </div>
                 </div>  
+                
                 <span class="clearfix visible-md"><br><br><br></span>
-                <div class="col-lg-4 col-md-4">
+                <div class="col-lg-3 col-md-4">
                     <div class="input-group">
                         <span class="input-group-addon">Date To</span>
                         <input type="date" name="monthend" id="monthend" class="form-control" tabindex="8" 
@@ -135,15 +131,12 @@ SelectAcademicSession();
 if (isset($_GET['search'])) {
     showSelectStudent();
 }
-
 require VIEW_FOOTER;
-
 function studentDetails(){
     $details = cleanVar($_GET);
     $instsessassocid = $_SESSION['instsessassocid'];
     $sqlVar = "AND";
     $startPage = (int) (!isset($_REQUEST['page']) ? 0 : ($_REQUEST['page'] - 1) * ROW_PER_PAGE);
-
     $sql = "SELECT t1.studentid ,t1.scholarnumber, t1.firstname , t1.middlename ,t1.lastname, t1.datecreated,
         t3.classid, t3.classdisplayname,
         t4.sectionid, t4.sectionname, 
@@ -174,7 +167,6 @@ function studentDetails(){
         AND t9.academicsessionid = t11.academicsessionid 
 	AND t1.deleted !=1
         ";
-
     if (!empty($details['studentid'])) {
         $sql .= "$sqlVar t1.studentid  = '$details[studentid]'";
         $sqlVar = "AND";
@@ -198,7 +190,6 @@ function studentDetails(){
         $sql .= "AND t1.tcissued != 1";
     }
     $sql .= " GROUP BY t1.studentid ORDER BY t3.classid, t4.sectionid, t1.firstname ASC ";
-
     $finalSql = $sql . "   LIMIT " . $startPage . ',' . ROW_PER_PAGE;
     $result = dbSelect($finalSql);
     if (mysqli_num_rows($result) > 0) {
@@ -212,7 +203,6 @@ function studentDetails(){
         return 0;
     }
 }
-
 function showSelectStudent(){
     $studentdetails = studentDetails();
     
@@ -249,7 +239,6 @@ function showSelectStudent(){
             $installmentArray = createInstallmentArray($feeComponentdetails);
             $collectedfee = collectedfeeSql($detailsvalue['studentid']);
             $newinstallmentArray = array_diff_key($installmentArray, $collectedfee);
-
             
             if (empty($newinstallmentArray)) {
                 $flag = "paid";
@@ -327,20 +316,17 @@ function showSelectStudent(){
 ?>
 
 <?php
-
 function createInstallmentArray($HtmlArray)
 {
     $newOptions = array();
     $i = 0;
     $totalamount = array();
-
     foreach ($HtmlArray as $option) {
         $duedate = $option['duedate'];
         $feecomponents = $option['feecomponent'];
         $amount = $option['amount'];
         $newOptions[$duedate][$feecomponents] = $amount;
     }
-
     foreach ($newOptions as $key => $value) {
         $total = 0;
         $total = array_sum($value);
@@ -348,18 +334,15 @@ function createInstallmentArray($HtmlArray)
     }
     return $newOptions;
 }
-
 function collectedfeeSql($id)
 {    
     
     $collectedfeedetails = array();
     $today = date('Y-m-d');
-
     $sql = " SELECT *
        FROM `tblfeecollection` AS t1,
       `tblfeecollectiondetail` AS t2,
       `tblfeeinstallmentdates` AS t3
-
        WHERE t1.studentid = $id
        AND t1.instsessassocid = $_SESSION[instsessassocid]
        AND t1.feecollectionid = t2.feecollectionid
@@ -374,7 +357,6 @@ function collectedfeeSql($id)
     
     return $collectedfeedetails;
 }
-
 function collectedTCFeeSql($studentid)
 {
     $status = false;
@@ -387,7 +369,6 @@ function collectedTCFeeSql($studentid)
     }
     return $status;
 }
-
 function feeComponentsSql($studentid, $classid)
 {  
     $currentDate = date('Y-m-d');
@@ -405,18 +386,15 @@ function feeComponentsSql($studentid, $classid)
                AND t2.duedate < '$currentDate'
                
            ";
-
     if (isset($_REQUEST['monthstart']) && !empty($_REQUEST['monthstart'])) {
         $rangeStartDate = $_REQUEST['monthstart'];
         $sql .= " HAVING t2.duedate >= ' $rangeStartDate '";
     }
-
     if (isset($_REQUEST['monthend']) && !empty($_REQUEST['monthend'])) {
         //set the start of the session date, taken from Session
         $sql .= " AND MONTH (t2.duedate) <= '" . date('m', strtotime($_REQUEST['monthend'])) . "'";
         $sql .= " AND YEAR (t2.duedate) <= '" . date('Y', strtotime($_REQUEST['monthend'])) . "'";
     }
-
     $result = dbSelect($sql);
     if (mysqli_num_rows($result)) {
         while ($row = mysqli_fetch_assoc($result)) {
@@ -427,17 +405,14 @@ function feeComponentsSql($studentid, $classid)
     }
     return 0;
 }
-
 function SelectAcademicSession()
 {
     $instsessassocid = $_SESSION['instsessassocid'];
-
     $sql = "SELECT t1.sessionstartdate, t1.sessionenddate 
         FROM `tblacademicsession`  AS t1,
         `tblinstsessassoc` AS t2
     WHERE t2.instsessassocid = '$instsessassocid'
     AND t1.academicsessionid = t2.academicsessionid ";
-
     $result = dbSelect($sql);
     $row = mysqli_fetch_assoc($result);
     $_SESSION['sessionstartdate'] = $row['sessionstartdate'];

@@ -1862,7 +1862,7 @@
               $result = dbUpdate($sql);
               // header('Location:addInstitute.php?s=2');
           }
-          header('Location:addInstitute.php?s=' . $msg);
+          header('Location:showInstitute.php?s=' . $msg);
       }
   }
 
@@ -1930,7 +1930,7 @@
           $renderArray[$value] = $dataArray['feeamount'][$key];
       }
       $sql = rtrim($sql, ",");
-
+      
       if ($result = dbInsert($sql)) {
           $result = dbUpdate($updateSql);
           header("Location: refundfeeReciept.php?pop-up=y&studentid=$studentid&totalFee=$totalFeeRefunded&recieptid=$recieptid&" . http_build_query($renderArray));

@@ -1301,7 +1301,7 @@ function breadCrumb() {
         $dirlist = array();
     }
     /* update the array with non required folders * */
-    echo '<ul class="breadcrumb"><li><a style="color:#fff;" href=' . DIR_BASE . '>Home</a></li>';
+    echo '<ul class="breadcrumb"><li><a href=' . DIR_BASE . '>Home</a></li>';
     foreach ($dirlist as $k => $v) {
         if (!in_array($v, $filterFolders)) {
             echo '<li><a href=' . DIR_BASE . $folderBasicPage[ucfirst($v)] . '>' . ucfirst($v) . '</a></li>';
@@ -1320,7 +1320,7 @@ function breadCrumb() {
                             <li><a href="#">2013-14</a></li>
                         </ul>
                       </li><li class="pull-right">' . getSessionName() . '</li> 
-                   <div class="pull-right">User:&nbsp; <span style="color:#fff;" class="text-success">' . $_SESSION['login'] . '</span></div>
+                   <div class="pull-right">User:&nbsp; <span class="text-success">' . $_SESSION['login'] . '</span></div>
                </ul>';
     }
 
@@ -1883,7 +1883,7 @@ function populateFeeRuleCheckBox($sqlName, $fieldName, $value = null, $returnAs 
                         $instCheckedAtt = '';
                     }
                     $installmentNo = rtrim(getInstallmentNumber('', $value1['duedate']), ',');
-                    $options .= "<span class=\"text-success\"><input name=\"feeInst[$id][]\" type=\"checkbox\" value=\"$value1[duedate]\" class=\"checkbox-inline\" $instCheckedAtt /> <b>$installmentNo</b> </span>";
+                    $options .= "<span class=\"text-success\">&nbsp;<input name=\"feeInst[$id][]\" type=\"checkbox\" value=\"$value1[duedate]\" class=\"checkbox-inline\" $instCheckedAtt /> <b>$installmentNo</b> </span>";
                 }
 
                 $options .= '</div></div></div>';
@@ -2473,7 +2473,7 @@ function getPaginationAJAX($count, $currentPage) {
     $pagination = '';
 
     if ($lastpage > 1) {
-        $pagination .= "<div id='pagination' style='float:right'><ul class='pagination pagination-lg'>";
+        $pagination .= "<div id='pagination' style='float:right'><ul class='pagination'>";
         if ($page > 1) {
             $pagination .= '<li><a href="#Page=' . ($prev) . "\" onClick='changePagination(" . ($prev) . ");'>" . '&laquo; Previous&nbsp;&nbsp;</a></li>';
         } else {
@@ -2751,7 +2751,7 @@ function formatCurrency($val, $symbol = '&#x20B9;', $r = 2) {
 
 function renderHeaderLinks($roleType) {
     $menu = array('Master' => array(
-            'Institute' => 'addInstitute.php',
+            'Institute' => 'showInstitute.php',
             'Add User' => 'addUser.php',
             'Academic Year' => 'addAcademicYear.php',
             'Class Master' => 'classMaster.php',
@@ -2837,36 +2837,36 @@ function renderHeaderLinks($roleType) {
             break;
     }
     $topLinks = array_keys($role[$type]);
-    $navBar = ' <ul class="nav navbar-nav">
-                    <li style="text-align: center"> 
-                        <a href="#about"><img  src="' . DIR_ASSET . '/images/about-icon.jpg" alt="About Us" width="50"></a>
-                    </li>
-                    
-                    <li style="text-align: center" >
-                        <a href="#contact"><img src="' . DIR_ASSET . '/images/contact-icon.jpg" alt="Contact Us" width="50"></a>
-                   </li>';
-    foreach ($topLinks as $key => $value) {
-        if ($value != 'Reports' && $value != 'Student Services') {
+    $navBar = ' <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
+                    <li><a href="">Home</a></li>
+                    <li><a href="#">About Us</a></li><li class="dropdown megamenu-fw">
+                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Student</a>
+                                 <ul class="dropdown-menu megamenu-content" role="menu">
+                                     <li>
+                                         <div class="row">';
+
+    foreach ($topLinks as $value) {
+        if ($value != 'Reports' && $value != 'Student Services')
             $filePath = DIR_BASE . 'files/';
-        } else {
+        else
             $filePath = DIR_BASE . '';
-        }
+        
         $innerLinks = explode(',', $role[$type][$value]);
-        $iconPath = DIR_ASSET . '/images/' . $navbarIcons[$value];
-        $navBar .= ' <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <img src="' . $iconPath . '" alt="Notification" width="50">
-                    </br><center><span id = "caretmenu" class="caret"></span></center></a>
-                    <ul class="dropdown-menu" role="menu">
-                    ';
+        $navBar.=' <div class="col-menu col-lg-2 col-md-2 col-sm-2">
+                     <h4 class="strong">' . $value . '</h4>
+                         <div class="content">
+                              <ul class="menu-col">
+                              ';
         foreach ($innerLinks as $innerKey => $innerValue) {
             $linkPath = $filePath . str_replace(' ', '', strtolower($value)) . '/' . $menu[$value][$innerValue];
-            $navBar .= '<li><a href="' . $linkPath . '">' . $innerValue . ' </a></li>';
+            $navBar.='<li><a href="'.$linkPath.'">' . $innerValue . '</a></li>';
         }
-        $navBar .= '</ul></li>';
+        $navBar.= ' </ul>
+                      </div>
+                          </div>';
     }
-    $navBar .= '<li><a href="' . DIR_FILES . '/logout.php">
-                <img src="' . DIR_ASSET . '/images/logout-icon.jpg" alt="Logout" width="50"></a></li>
+    $navBar.='</div></li></ul></li>';
+    $navBar.='<li><a href="' . DIR_FILES . '/logout.php">Logout</a></li>
               </ul>';
     return $navBar;
 }
@@ -3297,7 +3297,7 @@ function hoverList($sid, $status, $id) {
         }
         $iconpath = $icons[$key];
         $html .= "<a $href>
-            <button class=\"btn btn-sm btn-round\" style=\"background-color: #fff;\">            
+            <button class=\"btn btn-sm\" style=\"background-color: #fff;\">            
                     <span class=\"$iconpath\" aria-hidden=\"true\" $style
                     data-toggle=\"tooltip\" title=\"$key\"></span></button></a>
     ";
@@ -3489,7 +3489,7 @@ function roundOff($number){
     if($round == 2.5 || $round > 2.5 ){
         return ceil($number / 5.0 ) * 5.0;
     }
-    // if reminder is < 2.5 then it round off to previos 5
+    // if reminder is < 2.5 then it round off to previous 5
     else{
         return floor($number / 5.0 ) * 5.0;
     }

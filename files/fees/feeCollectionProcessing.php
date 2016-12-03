@@ -14,7 +14,6 @@
   require_once VIEW_HEADER;
 ?>
 <?php /* This CSS is used for checkboxes on feecollection page, dnt remove !important */ ?>
-<link href="<?php echo DIR_ASSET; ?>/css/feeform.css" rel="stylesheet">
 
 <script type="text/javascript">
     /* this portion check if the page comes tc module, then tc panel will be visible

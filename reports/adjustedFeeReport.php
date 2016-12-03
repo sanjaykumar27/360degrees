@@ -260,7 +260,7 @@ function showSelectStudent()
                         <th>Class</th>
                         <th>Original Fees</th>
                         <th>Adjusted Amount</th>
-                        <th>Reason</th>
+                        <th >Reason</th>
                         
                     </tr>
                 </thead> 
@@ -295,7 +295,7 @@ function showSelectStudent()
                 <td >".formatCurrency($detailsvalue['totaloriginalfees'])."</td>
                    
                 <td >".formatCurrency($detailsvalue['totaladjustedfees'])."</td>
-                <td class=\"col-md-2\">$detailsvalue[remarks]</td>
+                <td class=\"col-md-3\">$detailsvalue[remarks]</td>
              ";
 
 

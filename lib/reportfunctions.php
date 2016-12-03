@@ -49,7 +49,7 @@
       $details = cleanVar($_REQUEST);
       $orderBy = ' GROUP BY t1.studentid  ORDER BY t3.classid, t4.sectionid, t1.firstname ASC ';
       $limit = "  LIMIT $startPage," . ROW_PER_PAGE;
-
+      $studentdetails = array();
       $sql = "SELECT  
             t1.studentid ,t1.scholarnumber,t1.firstname ,t1.middlename, t1.lastname,
             t2.studentid, 

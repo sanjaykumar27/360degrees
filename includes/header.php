@@ -37,14 +37,12 @@
         <noscript><meta http-equiv="refresh" content="1" url=javascripterror.php"> </noscript>
         <!-- Bootstrap -->
         <link href="<?php echo DIR_ASSET; ?>/css/bootstrap-3.2.0.min.css" rel="stylesheet"> 
-        <link href="<?php echo DIR_ASSET; ?>/css/flat-ui.min.css" rel="stylesheet">
+        <link href="<?php echo DIR_ASSET; ?>/css/feeform.css" rel="stylesheet">
+
         <link href="<?php echo DIR_ASSET; ?>/css/font-awesome.min.css" rel="stylesheet">
         <link href="<?php echo DIR_ASSET; ?>/css/style.css" rel="stylesheet"> 
-        <link href="<?php echo DIR_ASSET; ?>/css/bootstrap-tour-standalone.min.css" rel="stylesheet" type="text/css"/>
         <link href="<?php echo DIR_ASSET; ?>/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css"/>
-
-        <!-- Fav icons -->
-        <link rel="shortcut icon" href="<?php echo DIR_ASSET; ?>/ico/favicon.ico" type="text/css"/>
+        <link href="https://fonts.googleapis.com/css?family=Asap" rel="stylesheet"> <link rel="shortcut icon" href="<?php echo DIR_ASSET; ?>/ico/favicon.ico" type="text/css"/>
 
         <!-- Java script -->
 
@@ -83,39 +81,38 @@
                 $menu = "<br>Please Select Module";
                 } */
               ?>
+              
+                  <nav class="navbar bootsnav navbar-fixed-top" role="navigation">
+                      <div class="container">
+                          <div class="navbar-header" >
+                              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
+                                  <i class="fa fa-bars"></i>
+                              </button>
+                              <a class="navbar-brand" href="<?php echo DIR_FILES; ?>/dashboard.php"><img class="img-responsive" src="<?php echo DIR_ASSET; ?>/images/logo.png" alt="360 | School Empowerment System" /></a>
+                          </div>   
+                          <!--<table align="right"><tr><td>
 
-              <nav class="navbar navbar-default  navbar-fixed-top navbar-form" role="navigation">
-                  <div class="container-fluid">
-                      <div class="navbar-header" >
-                          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                              <span class="sr-only">Toggle navigation</span>
-                              <span class="icon-bar"></span>
-                              <span class="icon-bar"></span>
-                              <span class="icon-bar"></span>
-                          </button>
-                          <a class="navbar-brand" href="<?php echo DIR_FILES; ?>/dashboard.php"><img class="img-responsive" src="<?php echo DIR_ASSET; ?>/images/view_logo_top.png" alt="360 | School Empowerment System" /></a>
-                      </div>   
-                      <!--<table align="right"><tr><td>
-
-                                  <span class="clearfix"><br></span>
-                      <?php if (validUser()) { ?>
-                          <!--        <div class="dropdown">
-                                      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                          Select Module &nbsp;<span class="caret"></span>
-                                      </button><?php ?>
-                                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                          <li><a href="<?php //echo DIR_FILES     ?>/dashboard.php?mod=Student">Student</a></li>
-                                          <li><a href="<?php //echo DIR_FILES     ?>/dashboard.php?mod=Employee">Employee</a></li>
-                                      </ul>
-                                  </div> --><?php } ?>
-                      <!--   </td></tr>
-                 </table>-->
-                      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="float: right">
-                          <?php if (validUser()) echo renderHeaderLinks($userGroup) ?>
+                                      <span class="clearfix"><br></span>
+                          <?php if (validUser()) { ?>
+                              <!--        <div class="dropdown">
+                                          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                              Select Module &nbsp;<span class="caret"></span>
+                                          </button><?php ?>
+                                          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                              <li><a href="<?php //echo DIR_FILES        ?>/dashboard.php?mod=Student">Student</a></li>
+                                              <li><a href="<?php //echo DIR_FILES        ?>/dashboard.php?mod=Employee">Employee</a></li>
+                                          </ul>
+                                      </div> --><?php } ?>
+                          <!--   </td></tr>
+                     </table>-->
+                          <div class="collapse navbar-collapse" id="navbar-menu">
+                              <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
+                                  <?php if (validUser()) echo renderHeaderLinks($userGroup); ?>
+                              </ul>
+                          </div>
                       </div>
-                  </div>
-
-              </nav>    
+                  </nav>    
+              
               <?php breadCrumb(); ?> 
               <script>
                   /*$(function () {
